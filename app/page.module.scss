@@ -1,0 +1,34 @@
+@import "~/app/mixins.scss";
+
+.main{
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 50px 25px 36px;
+}
+
+.main h5{
+    font-size: toRem(20);
+    font-weight: 700;
+    line-height: 160%;
+    margin-bottom: 40px;
+}
+
+.main img{
+    margin-bottom: 63px;
+}
+
+.main p{
+    font-size: toRem(24);
+    font-weight: 700;
+    line-height: 160%;
+    margin-bottom: 20px;
+}
+
+.main a{
+    margin-top: 25px;
+    margin-top: auto;
+}
