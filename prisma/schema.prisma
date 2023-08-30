@@ -1,0 +1,104 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Users {
+  id                Int          @id @default(autoincrement())
+  name              String?
+  phone             BigInt       @unique @db.UnsignedBigInt
+  role              Users_role   @default(USER)
+  status            User_status  @default(ACTIVE)
+  DOB               DateTime?
+  cafes             Cafe_user[]
+  prize             User_prize[]
+  verification_code String
+  created_at        DateTime     @default(now())
+}
+
+model Daily_codes {
+  id         Int      @id @default(autoincrement())
+  code       Int      @db.UnsignedInt
+  cafe       Cafes    @relation(fields: [cafe_id], references: [id])
+  cafe_id    Int
+  created_at DateTime @default(now())
+}
+
+model Cafes {
+  id            Int           @id @default(autoincrement())
+  name          String
+  email         String        @unique
+  address       String?
+  logo          String
+  color         String
+  ftw           Int           @db.UnsignedInt
+  link_eng      String?
+  link_heb      String?
+  contact_phone Int?          @db.UnsignedInt
+  contact_name  String?
+  users         Cafe_user[]
+  prizes        Prizes[]
+  daily_codes   Daily_codes[]
+  created_at    DateTime      @default(now())
+}
+
+model Cafe_user {
+  user       Users    @relation(fields: [user_id], references: [id])
+  user_id    Int
+  cafe       Cafes    @relation(fields: [cafe_id], references: [id])
+  cafe_id    Int
+  step       Int      @default(1) @db.UnsignedInt
+  visit_date DateTime @default(now())
+
+  @@id([user_id, cafe_id])
+}
+
+model User_prize {
+  prize      Prizes   @relation(fields: [prize_id], references: [id])
+  prize_id   Int
+  used       DateTime
+  user       Users    @relation(fields: [user_id], references: [id])
+  user_id    Int
+  created_at DateTime @default(now())
+  expires_at DateTime
+
+  @@id([prize_id, user_id])
+}
+
+model Prizes {
+  id          Int          @id @default(autoincrement())
+  cafe        Cafes        @relation(fields: [cafe_id], references: [id])
+  cafe_id     Int
+  max_amount  Int          @db.UnsignedInt
+  discount    Float
+  text        String
+  image       String
+  type        Prize_type
+  revenue     Float
+  probability Float
+  step        Int          @db.UnsignedInt
+  user        User_prize[]
+  is_active   Boolean      @default(true)
+  expires_at  Int          @db.UnsignedInt
+}
+
+enum Users_role {
+  ADMIN
+  LOCAL_ADMIN
+  USER
+}
+
+enum User_status {
+  ACTIVE
+  BLOCKED
+}
+
+enum Prize_type {
+  SCRATCH
+  SLOT
+  FREE
+}
