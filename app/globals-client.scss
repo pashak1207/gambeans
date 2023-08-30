@@ -128,3 +128,21 @@ main{
 .loadingPane p{
 	font-size: toRem(24);
 }
+
+
+/*----------------- TOASTS STYLE -------------------- */
+.Toastify{
+	.Toastify__toast-theme--colored.Toastify__toast--default, .Toastify__toast-theme--light{
+		background: var(--button-background);
+		color: var(--button-color);
+		font-size: toRem(16);
+		font-weight: 700;
+		line-height: 160%;
+		text-align: center;
+	}
+
+	.Toastify__close-button>svg{
+		fill: var(--button-color);
+	}
+}
+/*---------------- END TOASTS STYLE ----------------- */

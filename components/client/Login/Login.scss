@@ -20,6 +20,7 @@
             align-items: center;
             flex-direction: column;
             position: relative;
+            width: 100%;
         }
     }
     button.back{
@@ -63,6 +64,7 @@
         .phone{
             display: flex;
             align-items: center;
+            width: 100%;
         }
 
         input{
@@ -87,9 +89,12 @@
 
         #phone__number{
             flex: 1 1 auto;
+            display: flex;
 
             input{
                 text-align: center;
+                flex: 1 1 auto;
+                width: 100%;
             }
         }
     }
@@ -99,12 +104,24 @@
             margin-bottom: 10px;
         }
 
+        .timer{
+            width: 100%;
+
+            p{
+                margin-bottom: 0;
+                margin-top: 10px;
+                font-size: toRem(14);
+            }
+        }
+
         .code-input{
             display: flex;
             margin-bottom: 11px;
+            width: 100%;
             
             input{
-                width: 75px;
+                max-width: 75px;
+                width: 100%;
                 display: block;
                 background: transparent;
                 border-bottom: 1px solid var(--text-color);
@@ -132,5 +149,68 @@
                 text-decoration: underline;
             }
         }
+    }
+
+    .stepthird{
+        .wrapper{
+            &>h4{
+                bottom: 22px;
+                max-width: 230px;
+                width: 100%;
+            }
+        }
+
+        input{
+            background: transparent;
+            padding: 0 5px;
+            border-bottom: 1px solid var(--text-color);
+            color: var(--text-color);
+            font-size: toRem(20);
+            line-height: 160%;
+            text-align: center;
+            width: unset;
+
+            &::placeholder{
+                color: var(--text-color);
+            }
+        }
+
+        h4{
+            margin-bottom: 10px;
+            bottom: 0;
+        }
+
+        label{
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            margin-bottom: 30px;
+
+            h4{
+                text-align: left;
+            }
+
+            input{
+                text-align: left;
+            }
+        }
+
+        .stepthird__age{
+            width: 100%;
+            text-align: left;
+
+            .stepthird__age-inputs{
+                display: flex;
+                width: 100%;
+                justify-content: space-between;
+
+                input{
+                    max-width: 80px;
+                    margin: 5px;
+                }
+            }
+        }
+
     }
 }
