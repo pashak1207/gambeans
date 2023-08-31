@@ -1,21 +1,44 @@
-import Button from "@/app/components/ui/Button/Button"
-import Validation from "@/app/components/ui/Validation/Validation"
+import Button from "@/components/ui/Button/Button"
+import Validation from "@/components/ui/Validation/Validation"
 import Link from "next/link";
-import { Dispatch, SetStateAction } from "react";
-import React, { useState, useRef } from "react"
-
+import React, { SetStateAction, useState, useEffect } from "react"
+import AuthService from "@/services/auth.service";
+import LoginRegisterValidation from "@/validation/LoginRegisterValidation";
+import { toast } from 'react-toastify';
+import { useRouter } from 'next/navigation'
 
 const initCodeValues: number[] | string[] = [
     "","","",""
 ]
 
-export default function StepFirst({setStep}:{setStep:Dispatch<SetStateAction<number>>}) {
+export default function StepFirst({state, setState}:{state:ILoginRegistrationState, setState : React.Dispatch<SetStateAction<ILoginRegistrationState>>}) {
+    const TIMER_DURATION_SECONDS = 60
     const [isValid, setIsValid] = useState<boolean>(true)
     const [code, setCode] = useState<number[] | string[]>(initCodeValues)
-    const refs = useRef<HTMLInputElement[]>([]);
+    const [timer, setTimer] = useState<boolean>(false)
+    const [seconds, setSeconds] = useState(TIMER_DURATION_SECONDS);
+    const router = useRouter()
+
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+
+    useEffect(() => {
+        if (seconds > 0) {
+          setTimeout(() => setSeconds(seconds - 1), 1000);
+        }else{
+            setTimer(false)
+            setSeconds(TIMER_DURATION_SECONDS)
+        }
+    }, [timer, seconds]);
+    
 
     const prevPage = () => {
-        setStep(1)
+        setState(prev =>{
+            return{
+                 ...prev,
+                 step : prev.step! - 1
+            }
+         })
     }
 
     const onInputChangeHandler = (e:React.ChangeEvent<HTMLInputElement>, index : number) => {
@@ -29,36 +52,43 @@ export default function StepFirst({setStep}:{setStep:Dispatch<SetStateAction<num
                 return value;
             })
         )
-        if(value){
-            if(index < code.length-1){
-                refs.current[index].blur()
-                refs.current[index+1].focus()
-            }else if(index === code.length-1){
-                refs.current[index].blur()
-            }
-        }else{
-            if(index > 0){
-                refs.current[index].blur()
-                refs.current[index-1].focus()
-            }
-        }
-
     }
 
-    const validateCode = (code:string) => {
-        const fourDigitPattern = /^\d{4}$/;
-        return fourDigitPattern.test(code);
-    }
-
-
-    const nextPageClickHandler = () => {
+    const nextPageClickHandler = async () => {
         const codeFull = code.join("")
-        if(!validateCode(codeFull)){
+
+        if(!LoginRegisterValidation.validateCode(codeFull)){
             setIsValid(false)
             return
         }
+
+        const {isCorrect, isRegistrated} = await AuthService.compareCode(state.phone!, codeFull)
+                                    .catch(e => console.log("Error to compare codes: " + e.message))
+        if(!isCorrect){
+            setIsValid(false)
+            return
+        }
+        
         setIsValid(true)
-        console.log("Code correct")
+        
+
+        if(isRegistrated){
+            router.push('/dashboard')
+        }else{
+            setState(prev =>{
+                return{
+                     ...prev,
+                     step : 3
+                }
+             })
+        }
+    }
+
+    const resendCode = async () => {        
+        toast("New code has been sent");
+        setSeconds(TIMER_DURATION_SECONDS)
+        setTimer(true)
+        await AuthService.generateVerificationCode(state.phone!)
     }
 
     return (
@@ -75,7 +105,6 @@ export default function StepFirst({setStep}:{setStep:Dispatch<SetStateAction<num
                 <div className="code-input">
                     {code.map((value, index) => {
                         return <input 
-                            ref={(ref:HTMLInputElement) => !refs.current.includes(ref) && refs.current.push(ref)} 
                             key={index} 
                             type="phone" 
                             value={value} 
@@ -83,7 +112,14 @@ export default function StepFirst({setStep}:{setStep:Dispatch<SetStateAction<num
                             maxLength={1} />
                     })}
                 </div>
-                <button id="resendCode">Resend code</button>
+                {!timer &&
+                    <button disabled={timer} id="resendCode" onClick={resendCode}>Resend code</button>
+                }
+                {timer &&
+                    <div className="timer">
+                        <p>You can request the code again through {minutes.toString().padStart(2, '0')}:{remainingSeconds.toString().padStart(2, '0')}</p>
+                    </div>
+                }
                 <Validation isValid={isValid} text="The code is incorrect" />
             </div>
             <Button title="NEXT" isLink={false} onClickHandler={nextPageClickHandler}/>
