@@ -33,8 +33,6 @@
 
     h4{
         font-size: toRem(20);
-        font-weight: 700;
-        line-height: 160%;
         position: relative;
         bottom: 22px;
     }
@@ -160,6 +158,10 @@
             }
         }
 
+        &>button{
+            margin-bottom: 35px;
+        }
+
         input{
             background: transparent;
             padding: 0 5px;
@@ -212,5 +214,48 @@
             }
         }
 
+    }
+
+    .stepfourth{
+
+        &>button{
+            margin-bottom: 35px;
+        }
+
+        h2{
+            font-size: toRem(40);
+            margin-bottom: 60px;
+        }
+
+        .stepfourth__blocks{
+            .stepfourth__item{
+                display: flex;
+                max-width: 290px;
+                width: 100%;
+                text-align: left;
+                margin-bottom: 40px;
+
+                &:last-of-type{
+                    margin-bottom: 20px;
+                }
+
+                img{
+                    margin-right: 24px;
+                }
+
+                h3{
+                    font-size: toRem(24);
+                    margin-bottom: 8px;
+                }
+
+                p{
+                    margin-bottom: 0;
+                    font-size: toRem(18);
+                    font-weight: 500;
+                    line-height: 140%;
+                    letter-spacing: 0.2px;
+                }
+            }
+        }
     }
 }

@@ -21,6 +21,7 @@ time, mark, audio, video {
 	font-size: 100%;
 	font: inherit;
 	vertical-align: baseline;
+	box-sizing: border-box;
 }
 article, aside, details, figcaption, figure, 
 footer, header, hgroup, menu, nav, section {
@@ -75,6 +76,10 @@ a{
     text-decoration: none;
     font-size: inherit;
 }
+h1,h2,h3,h4,h5,h6{
+	font-weight: 700;
+	line-height: 160%;
+}
 //RESET CSS END
 
 :root{
@@ -82,6 +87,13 @@ a{
     --text-color: #4B3734;
     --button-background: #B79A81;
     --button-color: #fff;
+	--yellow-button: #EECE6D;
+	--black-color: #000;
+	--progress-color: #FD8679;
+
+	--steps-circles-bgcolour: #ebd3c1;
+
+	--white-color: #fff;
 
 	--max-width: 420px;
 

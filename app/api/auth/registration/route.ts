@@ -1,10 +1,8 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/prisma/client'
-import jwt from 'jsonwebtoken';
+import JWT from '@/utils/jwtgenerate';
  
 export async function POST(request: Request) {
-    const MAX_AGE = 60 * 60 * 24 * 5
-
     try{
         const body = await request.json()
         const { phone, name, dob } = body
@@ -20,18 +18,6 @@ export async function POST(request: Request) {
                 }
             })
 
-            const secret = process.env.JWT_SECRET || "";
-
-            const token = jwt.sign({
-                id: user.id,
-                phone: user.phone.toString(),
-                },
-                secret,
-                {
-                    expiresIn: MAX_AGE
-                }
-            )
-
             let response = NextResponse.json({ 
                 message: "Registration successful",
                 isSuccess: true,
@@ -40,11 +26,8 @@ export async function POST(request: Request) {
                 status: 200
             })
 
-            response.cookies.set("JWTToken", token, {
-                path: "/",
-                httpOnly: true,
-                maxAge: MAX_AGE
-            })
+            response.cookies.set(...await JWT.generateAccessToken(user) as any)
+            response.cookies.set(...await JWT.generateRefreshToken(user) as any)
             
             return response
 

@@ -23,11 +23,15 @@ export default function StepFirst({state, setState}:{state:ILoginRegistrationSta
     const remainingSeconds = seconds % 60;
 
     useEffect(() => {
-        if (seconds > 0) {
-          setTimeout(() => setSeconds(seconds - 1), 1000);
-        }else{
-            setTimer(false)
-            setSeconds(TIMER_DURATION_SECONDS)
+        if(timer){
+            if(seconds){
+                setTimeout(()=>{
+                    setSeconds(prev => prev - 1)
+                }, 1000)
+            }else{
+                setTimer(false)
+                setSeconds(TIMER_DURATION_SECONDS)
+            }
         }
     }, [timer, seconds]);
     

@@ -32,3 +32,15 @@ enum Prize_type {
     SLOT,
     FREE
 }
+
+interface ICookie {
+    key: string;
+    value: string;
+    cookie: {
+        path: string;
+        httpOnly: boolean;
+        maxAge: number;
+    };
+    [key: string]: any;
+    [key: symbol]: any;
+}

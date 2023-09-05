@@ -1,0 +1,169 @@
+@import "~app/mixins.scss";
+
+.dashboardmain{
+    padding: 0 23px;
+
+    h2{
+        font-size: toRem(22);
+        margin-bottom: 6px;
+    }
+}
+
+.pane{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    position: relative;
+
+    .path{
+        position: absolute;
+        width: 100%;
+        left: 0;
+        top: -120px;
+        // pointer-events: none;
+        // user-select: none;
+        display: flex;
+        flex-wrap: wrap;
+        z-index: -1;
+
+        .container{
+            flex: 1 1 100%;
+            min-height: 181px;
+            display: flex;
+            justify-content: center;
+            position: relative;
+            mask-image: linear-gradient(to left, transparent 37.5%, black 37.5%);
+            border-radius: 110px 0 0 110px;
+
+            &:first-child{
+                .inner{
+                    &:first-child{
+                        border: none !important;
+                    }
+                }
+            }
+
+            .inner{
+                display: block;
+                height: 100%;
+                flex: 0 0 37.5%;
+                position: relative;
+                border: 25px solid var(--button-background);
+                transition: border 0.3s;
+
+                &.active{
+                    border-color: var(--progress-color) !important;
+                }
+    
+                &:nth-child(2){
+                    border-left: none;
+                    border-right: none;
+                    border-top: none;
+                }
+    
+                &:nth-child(3n+2){
+                    flex: 1 1 auto;
+                }
+            }
+
+            &:nth-child(odd){
+                .inner{
+                    &:nth-child(1){
+                        border-top: 25px solid var(--button-background);
+                        border-right: none;
+                        border-radius: 110px 0 0 110px;
+                    }
+
+                    &:nth-child(3){
+                        border: none;
+                    }
+                }
+            }
+
+
+            &:nth-child(even){
+                mask-image: linear-gradient(to right, transparent 37.5%, black 37.5%);
+                border-radius: 0 110px 110px 0;
+
+                .container__inner{
+                    flex-direction: row-reverse;
+                }
+
+                .inner{
+                    &:nth-child(1){
+                        border-top: 25px solid var(--button-background);
+                        border-right: 25px solid var(--button-background);
+                        border-left: none;
+                        border-radius: 0 110px 110px 0;
+                    }
+    
+                    &:nth-child(3){
+                        border: none;
+                    }
+                }
+            }
+        }
+
+        @for $i from 1 through 30 {
+            .container:nth-child(#{$i+1}n) {
+                bottom: calc(25px * $i);
+            }
+        }
+
+        @for $i from 1 through 100 {
+            .container:nth-of-type(#{$i}) {
+                z-index: calc(100 - $i);
+            }
+        }
+
+        .container__inner{
+            display: flex;
+            flex-wrap: wrap;
+            height: 100%;
+            width: 100%;
+        }
+    }
+}
+
+.item{
+    display: flex;
+    justify-content: center;
+    flex: 0 0 50%;
+    margin-bottom: 60px;
+
+    &:nth-child(3n+1){
+        flex: 0 0 100%;
+    }
+}
+
+.content{
+    width: 96px;
+    height: 96px;
+    background: var(--steps-circles-bgcolour);
+    border-radius: 50%;
+    position: relative;
+    border: 7px solid var(--white-color);
+    transition: box-shadow 0.3s;
+
+    &.active{
+        box-shadow: 0px 0px 17px 17px #FD867940;
+    }
+
+    img{
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        object-position: center;
+        border-radius: 50%;
+    }
+
+    h4{
+        position: absolute;
+        width: 160px;
+        text-align: center;
+        left: 50%;
+        bottom: -30px;
+        transform: translate(-50%, 0);
+        font-size: toRem(16);
+    }
+}

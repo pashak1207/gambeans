@@ -1,12 +1,7 @@
 import { NextResponse } from 'next/server'
-import { generateVerificationCode } from '../../(utils)/generateVerificationCode'
-import { sentTwilioNumber } from '../../(utils)/sentTwilioNumber'
+import { generateVerificationCode } from '@/utils/generateVerificationCode'
+import { sentTwilioNumber } from '@/utils/sentTwilioNumber'
 import { prisma } from '@/prisma/client'
-import { Twilio } from "twilio";
-
-const accountSid = process.env.TWILIO_SID;
-const authToken = process.env.TWILIO_TOKEN;
-const client = new Twilio(accountSid, authToken);
 
 export async function POST(request: Request) {
     try{

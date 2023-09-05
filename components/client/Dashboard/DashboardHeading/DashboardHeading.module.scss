@@ -1,0 +1,41 @@
+@import "~app/mixins.scss";
+
+.dashboardheading{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 11px;
+}
+
+.left,
+.right{
+    display: flex;
+    align-items: center;
+}
+
+.left{
+    img{
+        object-fit: cover;
+        object-position: center;
+        margin-right: 8px;
+    }
+
+    h4{
+        font-size: toRem(20);
+    }
+}
+
+.right{
+    margin-left: 10px;
+    
+    button{
+        border-radius: 50px;
+        background: var(--yellow-button);
+        padding: 9px 30px;
+        color: var(--black-color);
+        text-align: center;
+        font-size: toRem(20);
+        font-weight: 700;
+        line-height: 160%;
+    }
+}
