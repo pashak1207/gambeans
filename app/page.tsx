@@ -1,24 +1,23 @@
 import styles from "./page.module.scss"
 import Image from "next/image"
 import Button from "@/components/ui/Button/Button"
+import CafeServerService from "@/services/cafeServer.service"
 
-interface IWelcomeProps{
-    params: {
-        cafe: string
-    }
-}
-
-export default function WelcomePage({params:{cafe}}:IWelcomeProps) {
+export default async function WelcomePage() {
+    const {cafe:{logo, name}} = await CafeServerService.getCafe()    
+    
     return (
         <main className={styles.main}>
             <h5>WELCOME TO</h5>
             <Image 
-                src="/logo.png"
+                src={logo}
+                priority
                 alt="logo"
+                id={"welcomeLogo"}
                 width={313}
                 height={182}
             />
-            <p>This is your {cafe}'s loyalty card, but cooler. More rewards. More fun. All right on your phone.</p>
+            <p>This is your {name}'s loyalty card, but cooler. More rewards. More fun. All right on your phone.</p>
             <Button title="NEXT" isLink={true} path={`/login`}/>
         </main>
     )

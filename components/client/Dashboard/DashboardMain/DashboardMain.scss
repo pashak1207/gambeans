@@ -1,7 +1,7 @@
 @import "~app/mixins.scss";
 
 .dashboardmain{
-    padding: 0 23px;
+    padding: 0 23px 170px 23px;
 
     h2{
         font-size: toRem(22);
@@ -32,8 +32,10 @@
             display: flex;
             justify-content: center;
             position: relative;
-            mask-image: linear-gradient(to left, transparent 37.5%, black 37.5%);
             border-radius: 110px 0 0 110px;
+            background-position: right 70%;
+            background-size: auto 38%;
+            background-repeat: no-repeat;
 
             &:first-child{
                 .inner{
@@ -82,11 +84,12 @@
 
 
             &:nth-child(even){
-                mask-image: linear-gradient(to right, transparent 37.5%, black 37.5%);
                 border-radius: 0 110px 110px 0;
+                background-position: left 50%;
 
                 .container__inner{
                     flex-direction: row-reverse;
+                    mask-image: linear-gradient(to right, transparent 37.5%, black 37.5%);
                 }
 
                 .inner{
@@ -121,6 +124,7 @@
             flex-wrap: wrap;
             height: 100%;
             width: 100%;
+            mask-image: linear-gradient(to left, transparent 37.5%, black 37.5%);
         }
     }
 }
@@ -133,6 +137,25 @@
 
     &:nth-child(3n+1){
         flex: 0 0 100%;
+    }
+
+    .content{
+        &.active,
+        &.visited{
+            cursor: pointer;
+        }
+    }
+}
+
+@for $i from 1 through 100 {
+    @if $i%3==0{
+        .item:nth-of-type(#{$i}) {
+            order: calc($i - 2);
+        }
+    }@else{
+        .item:nth-of-type(#{$i}) {
+            order: $i;
+        }
     }
 }
 

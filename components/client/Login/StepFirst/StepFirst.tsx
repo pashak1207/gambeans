@@ -2,8 +2,8 @@ import Button from "@/components/ui/Button/Button"
 import Validation from "@/components/ui/Validation/Validation"
 import { useRouter } from 'next/navigation'
 import React, { SetStateAction, useState } from "react"
-import AuthService from "@/services/auth.service"
-import LoginRegisterValidation from "@/validation/LoginRegisterValidation";
+import AuthClientService from "@/services/authClient.service"
+import LoginRegisterValidation from "@/utils/loginRegisterValidation";
 
 export default function StepFirst({state, setState}:{state:ILoginRegistrationState, setState : React.Dispatch<SetStateAction<ILoginRegistrationState>>}) {
     const [telCode, setTelCode] = useState<string>("+1")
@@ -37,7 +37,7 @@ export default function StepFirst({state, setState}:{state:ILoginRegistrationSta
         let isValidated = LoginRegisterValidation.validatePhone(telCode, phone)
         
         if(isValidated){
-            isValidated = await AuthService.validatePhone(telCode+phone)
+            isValidated = await AuthClientService.validatePhone(telCode+phone)
             .then(data => data?.phoneValid)
             .catch(e => console.log("Phone validation failed. Error: " + e.message))
         }
@@ -53,7 +53,7 @@ export default function StepFirst({state, setState}:{state:ILoginRegistrationSta
                 }
              })
              
-            await AuthService.generateVerificationCode(telCode+phone)
+            AuthClientService.generateVerificationCode(telCode+phone)
         }else{
             setIsValid(false)
         }

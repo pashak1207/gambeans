@@ -11,7 +11,7 @@ export function sentTwilioNumber(verification_code:string, phoneTo:string){
             body: `Your verification code is ${verification_code}`,
             to: phoneTo,
             from: process.env.TWILIO_PHONE,
-        }).catch(e => e.message)
+        }).catch(e => console.log("Twilio error: " + e.message))
 
     return response
 }

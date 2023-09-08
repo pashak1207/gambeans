@@ -1,12 +1,12 @@
 -- CreateTable
 CREATE TABLE `Users` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `name` VARCHAR(191) NOT NULL,
-    `phone` INTEGER UNSIGNED NOT NULL,
-    `step` INTEGER UNSIGNED NOT NULL DEFAULT 1,
+    `name` VARCHAR(191) NULL,
+    `phone` BIGINT UNSIGNED NOT NULL,
     `role` ENUM('ADMIN', 'LOCAL_ADMIN', 'USER') NOT NULL DEFAULT 'USER',
     `status` ENUM('ACTIVE', 'BLOCKED') NOT NULL DEFAULT 'ACTIVE',
-    `age` DATETIME(3) NOT NULL,
+    `DOB` DATETIME(3) NULL,
+    `verification_code` VARCHAR(191) NOT NULL,
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
 
     UNIQUE INDEX `Users_phone_key`(`phone`),
@@ -16,7 +16,7 @@ CREATE TABLE `Users` (
 -- CreateTable
 CREATE TABLE `Daily_codes` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `code` INTEGER UNSIGNED NOT NULL,
+    `code` VARCHAR(191) NOT NULL,
     `cafe_id` INTEGER NOT NULL,
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
 
@@ -29,7 +29,6 @@ CREATE TABLE `Cafes` (
     `name` VARCHAR(191) NOT NULL,
     `email` VARCHAR(191) NOT NULL,
     `address` VARCHAR(191) NULL,
-    `code_phone` INTEGER UNSIGNED NOT NULL,
     `logo` VARCHAR(191) NOT NULL,
     `color` VARCHAR(191) NOT NULL,
     `ftw` INTEGER UNSIGNED NOT NULL,
@@ -47,6 +46,7 @@ CREATE TABLE `Cafes` (
 CREATE TABLE `Cafe_user` (
     `user_id` INTEGER NOT NULL,
     `cafe_id` INTEGER NOT NULL,
+    `step` INTEGER UNSIGNED NOT NULL DEFAULT 1,
     `visit_date` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
 
     PRIMARY KEY (`user_id`, `cafe_id`)
@@ -76,7 +76,8 @@ CREATE TABLE `Prizes` (
     `probability` DOUBLE NOT NULL,
     `step` INTEGER UNSIGNED NOT NULL,
     `is_active` BOOLEAN NOT NULL DEFAULT true,
-    `expires_at` INTEGER UNSIGNED NOT NULL,
+    `expires_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;

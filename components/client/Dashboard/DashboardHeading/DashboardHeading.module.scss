@@ -5,6 +5,10 @@
     justify-content: space-between;
     align-items: center;
     padding: 6px 11px;
+    position: sticky;
+    top: 0;
+    background: var(--primary-background);
+    z-index: 5;
 }
 
 .left,

@@ -30,7 +30,7 @@ footer, header, hgroup, menu, nav, section {
 body {
 	line-height: 1;
 }
-ol, ul {
+ul {
 	list-style: none;
 }
 blockquote, q {
@@ -90,6 +90,7 @@ h1,h2,h3,h4,h5,h6{
 	--yellow-button: #EECE6D;
 	--black-color: #000;
 	--progress-color: #FD8679;
+	--redeem-color: #14BEA4;
 
 	--steps-circles-bgcolour: #ebd3c1;
 
@@ -139,6 +140,10 @@ main{
 
 .loadingPane p{
 	font-size: toRem(24);
+}
+
+#welcomeLogo{
+    object-fit: contain;
 }
 
 

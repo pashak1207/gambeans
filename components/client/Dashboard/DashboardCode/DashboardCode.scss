@@ -2,21 +2,35 @@
 
 .dashboardCode{
     background: #FFFFFFB2;
-    position: absolute;
+    position: fixed;
     bottom: 0;
     left: 50%;
     width: 100%;
     max-width: var(--max-width);
     transform: translate(-50%, 0);
     padding: 10px 22px 25px;
+    transition: background 0.5s linear;
 
     h5{
         font-size: toRem(22);
         margin-bottom: 8px;
     }
+
+    &.red{
+        background: linear-gradient(286.17deg, rgba(255, 90, 95, 0.8) 0%, rgba(255, 138, 155, 0.8) 100%);
+
+        .dashboardInputs{
+            animation: redAnim 0.5s ease-in-out;
+            position: relative;
+        }
+    }
+
+    &.green{
+        background: linear-gradient(286.17deg, rgba(18, 209, 142, 0.8) 0%, rgba(113, 227, 187, 0.8) 100%);
+    }
 }
 
-.inputs{
+.dashboardInputs{
     display: flex;
     justify-content: space-between;
 
@@ -37,5 +51,26 @@
         &:last-child{
             margin-right: 0;
         }
+    }
+}
+
+@keyframes redAnim {
+    0% {
+        left: 0;
+    }
+    20%{
+        left: -5px;
+    }
+    40%{
+        left: 5px;
+    }
+    60%{
+        left: -5px;
+    }
+    80%{
+        left: 5px;
+    }
+    100%{
+        left: 0;
     }
 }

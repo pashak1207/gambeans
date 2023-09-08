@@ -1,4 +1,4 @@
-const AuthService = {
+const AuthClientService = {
     async generateVerificationCode(phone:string) {
         const response = await fetch(`/api/auth/generate`, {
             method: 'POST',
@@ -66,7 +66,15 @@ const AuthService = {
         const body = await response.json()
 
         return body
+    },
+    
+    async getMe(){
+        const response = await fetch(`/api/auth/me`)
+
+        const body = await response.json()
+        
+        return body
     }
 }
 
-export default AuthService;
+export default AuthClientService;

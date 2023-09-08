@@ -1,8 +1,8 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/prisma/client'
 import JWT from '@/utils/jwtgenerate';
  
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
     try{
         const body = await request.json()
         const { phone, name, dob } = body
@@ -26,8 +26,8 @@ export async function POST(request: Request) {
                 status: 200
             })
 
-            response.cookies.set(...await JWT.generateAccessToken(user) as any)
-            response.cookies.set(...await JWT.generateRefreshToken(user) as any)
+            response.cookies.set(...await JWT.generateAccessToken(user, request) as any)
+            response.cookies.set(...await JWT.generateRefreshToken(user, request) as any)
             
             return response
 

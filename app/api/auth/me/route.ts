@@ -1,16 +1,43 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/prisma/client'
 import { cookies } from 'next/headers'
 import JWT from '@/utils/jwtgenerate';
+import CafeUtils from '@/utils/cafe';
  
-export async function GET(request: Request) {
-
+export async function GET(request: NextRequest) {   
     try{
         const cookieStore = cookies()
-        const accesToken = cookieStore.get('JWTAccessToken')?.value
+        const accessToken = cookieStore.get('JWTAccessToken')?.value || request.headers.get('authorization')
+        const cafe_id = await CafeUtils.getCurrentCafeId(request)
+        
+        if(!cafe_id){
+            return NextResponse.json({ 
+                message: "Error to find cafe"
+            }, 
+            {
+                status: 400
+            })
+        }
         
         
-        if(!accesToken){
+        if(!accessToken){
+            return NextResponse.json({ 
+                message: "You are not allowed to access"
+            }, 
+            {
+                status: 400
+            })
+        }
+
+        let accessVerified = null
+
+        try{  
+            accessVerified = await JWT.verfiyAccessToken(accessToken)
+        }catch(e){
+            accessVerified = null
+        }
+        
+        if(!accessVerified){
             return NextResponse.json({ 
                 message: "You are not allowed to access"
             }, 
@@ -19,7 +46,7 @@ export async function GET(request: Request) {
             })
         }
         
-        const userId = await JWT.verfiyAccessToken(accesToken)
+        const userId = await JWT.verfiyAccessToken(accessToken)
                             .then(data => data?.payload?.id)
                             .catch(err => console.log("Error to get userId from token: " + err.message))
 
@@ -29,11 +56,19 @@ export async function GET(request: Request) {
 
         const user = await prisma.users.findUnique({
             where: {
-                id: +userId
-            }
+                id: +userId,
+                cafes:{
+                    some:{
+                        cafe_id
+                    }
+                }
+            },
         })
-
+        
         if(!user){
+            cookieStore.delete('JWTRefreshToken')
+            cookieStore.delete('JWTAccessToken')
+
             return NextResponse.json({ 
                 message: "User not found",
             }, 
@@ -42,14 +77,20 @@ export async function GET(request: Request) {
             })
         }
 
-        const sendUser:any = {...user}
+        const user_cafe = await prisma.cafe_user.findFirst({
+            where:{
+                cafe_id,
+                user_id: +userId
+            },
+        })        
+
+        const sendUser:any = {...user, step: user_cafe!.step}
         delete sendUser.phone
         delete sendUser.verification_code
-        delete sendUser.created_at
+        delete sendUser.created_at        
         
         return NextResponse.json({ 
-            message: "Success",
-            user: sendUser
+            ...sendUser
         }, 
         {
             status: 200

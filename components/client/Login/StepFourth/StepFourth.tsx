@@ -33,6 +33,7 @@ export default function StepFourth({state, setState}:{state:ILoginRegistrationSt
                     <div className="stepfourth__item">
                         <Image
                             src="/rocket.svg"
+                            priority
                             alt="rocket"
                             width={49}
                             height={61}
@@ -45,6 +46,7 @@ export default function StepFourth({state, setState}:{state:ILoginRegistrationSt
                     <div className="stepfourth__item">
                         <Image
                             src="/confetti.svg"
+                            priority
                             alt="confetti"
                             width={51}
                             height={68}

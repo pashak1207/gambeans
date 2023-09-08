@@ -1,15 +1,31 @@
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/prisma/client'
 import JWT from '@/utils/jwtgenerate'
+import CafeUtils from '@/utils/cafe'
  
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
     try{
         const body = await request.json()
         const { phone, code } = body
+        const cafe_id = await CafeUtils.getCurrentCafeId(request)
+        
+        if(!cafe_id){
+            return NextResponse.json({ 
+                message: "Error to find cafe"
+            }, 
+            {
+                status: 400
+            })
+        }
 
         const user = await prisma.users.findUnique({
             where: {
                 phone: +phone,
+                cafes:{
+                    some:{
+                        cafe_id
+                    }
+                }
             }
         })
 
@@ -37,8 +53,8 @@ export async function POST(request: Request) {
                     status: 200
                 })
 
-                response.cookies.set(...await JWT.generateAccessToken(user) as any)
-                response.cookies.set(...await JWT.generateRefreshToken(user) as any)
+                response.cookies.set(...await JWT.generateAccessToken(user, request) as any)
+                response.cookies.set(...await JWT.generateRefreshToken(user, request) as any)
                 
             }
 

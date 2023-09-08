@@ -9,10 +9,20 @@ const privateRoutes = ["/dashboard"]
 export async function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname
   const accessToken = cookies().get('JWTAccessToken')?.value || false
-  
+
   if(privateRoutes.some(route => path.startsWith(route))){
 
-    if(!accessToken){
+    let accessVerified = null
+
+    if(accessToken){
+      try{  
+        accessVerified = await JWT.verfiyAccessToken(accessToken)
+      }catch(e){
+        accessVerified = null
+      }
+    }    
+
+    if(!accessToken || !accessVerified){
 
       const refreshToken = cookies().get('JWTRefreshToken')?.value || false
 
@@ -23,12 +33,16 @@ export async function middleware(request: NextRequest) {
       }
 
       try{
-        const userId = await JWT.verfiyRefreshToken(refreshToken)
-                  .then(data => data?.payload?.id)                  
+        const payload = await JWT.verfiyRefreshToken(refreshToken)
+                  .then(data => data?.payload)
+        const userId = payload?.id
+        const cafeId = payload?.cafe_id
+
 
         let response = NextResponse.next()
-
-        response.cookies.set(...await JWT.generateAccessToken({id: userId}) as any)
+        
+        response.cookies.set(...await JWT.generateAccessToken({id: userId}, request, cafeId as string) as any)
+        response.cookies.set(...await JWT.generateRefreshToken({id: userId}, request, cafeId as string) as any)
 
         return response;
 
@@ -39,19 +53,23 @@ export async function middleware(request: NextRequest) {
       }
 
     }
+
+    return NextResponse.next()
     
   }else if(path.startsWith("/login")){
 
-    const accessToken = cookies().get('JWTAccessToken')?.value || false
-
     if(accessToken){
-      const verified = await JWT.verfiyAccessToken(accessToken)
+      let accessVerified = null;
+
+      try{        
+        accessVerified = await JWT.verfiyAccessToken(accessToken)
+      }catch(e){
+        accessVerified = null
+      }
       
-      if(verified){
+      if(accessVerified){
         return Redirect.dashboard(request)
       }
     }
-
-    return NextResponse.next()
   }
 }
