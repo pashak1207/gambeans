@@ -7,28 +7,28 @@
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding: 50px 25px 36px;
-}
+    padding: toRem(50) toRem(25) toRem(36);
 
-.main h5{
-    font-size: toRem(20);
-    font-weight: 700;
-    line-height: 160%;
-    margin-bottom: 40px;
-}
+    h5{
+        font-size: toRem(20);
+        font-weight: 700;
+        line-height: 1.6;
+        margin-bottom: toRem(40);
+    }
 
-.main img{
-    margin-bottom: 63px;
-}
+    img{
+        margin-bottom: toRem(63);
+    }
 
-.main p{
-    font-size: toRem(24);
-    font-weight: 700;
-    line-height: 160%;
-    margin-bottom: 20px;
-}
+    p{
+        font-size: toRem(24);
+        font-weight: 700;
+        line-height: 1.6;
+        margin-bottom: toRem(20);
+    }
 
-.main a{
-    margin-top: 25px;
-    margin-top: auto;
+    a{
+        margin-top: toRem(25);
+        margin-top: auto;
+    }
 }

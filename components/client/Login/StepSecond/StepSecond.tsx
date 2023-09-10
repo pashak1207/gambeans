@@ -54,6 +54,11 @@ export default function StepFirst({state, setState}:{state:ILoginRegistrationSta
         )
     }
 
+    const validateCode = (code:string) => {
+        return /^\d{4}$/.test(code);
+    }
+
+
     const nextPageClickHandler = async () => {
         const codeFull = code.join("")
 
@@ -106,7 +111,7 @@ export default function StepFirst({state, setState}:{state:ILoginRegistrationSta
                     {code.map((value, index) => {
                         return <input 
                             key={index} 
-                            type="phone" 
+                            type="tel" 
                             value={value} 
                             onChange={(e) => onInputChangeHandler(e, index)} 
                             maxLength={1} />

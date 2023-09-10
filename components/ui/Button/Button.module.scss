@@ -1,5 +1,5 @@
 .simpleButton{
-    box-shadow: 4px 8px 24px 0px #8A463340;
+    box-shadow: 4px 8px 24px 0px var(--simple-btn-bg);
     background: var(--button-background);
     color: var(--button-color);
     max-width: 342px;
@@ -12,6 +12,6 @@
     font-size: 18px;
     font-style: normal;
     font-weight: 700;
-    line-height: 160%;
+    line-height: 1.6;
     text-decoration: none;
 }

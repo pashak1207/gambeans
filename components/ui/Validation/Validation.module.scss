@@ -2,8 +2,8 @@
 
 .validation p{
     font-size: toRem(16);
-    line-height: 160%;
-    color: #FF5A5F;
+    line-height: 1.6;
+    color: var(--validation-color);
     font-weight: 700;
     margin: 0;
     padding: 0;

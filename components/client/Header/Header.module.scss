@@ -7,11 +7,11 @@
     max-width: var(--max-width);
     margin-inline: auto;
     flex: 0 0 42px;
-}
 
-.header img{
-    object-fit: contain;
-    object-position: center;
-    height: 100%;
-    width: auto;
+    img{
+        object-fit: contain;
+        object-position: center;
+        height: 100%;
+        width: auto;
+    }
 }
