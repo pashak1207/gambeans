@@ -1,7 +1,7 @@
 @import "~app/mixins.scss";
 
 .dashboardCode{
-    background: #FFFFFFB2;
+    background: var(--dashboard-code-color);
     position: fixed;
     bottom: 0;
     left: 50%;
@@ -17,7 +17,7 @@
     }
 
     &.red{
-        background: linear-gradient(286.17deg, rgba(255, 90, 95, 0.8) 0%, rgba(255, 138, 155, 0.8) 100%);
+        background: linear-gradient(286.17deg, var(--dashboard-code-error-first) 0%, var(--dashboard-code-error-second) 100%);
 
         .dashboardInputs{
             animation: redAnim 0.5s ease-in-out;
@@ -26,7 +26,7 @@
     }
 
     &.green{
-        background: linear-gradient(286.17deg, rgba(18, 209, 142, 0.8) 0%, rgba(113, 227, 187, 0.8) 100%);
+        background: linear-gradient(286.17deg, var(--dashboard-code-success-first) 0%, var(dashboard-code-success-second) 100%);
     }
 }
 
@@ -39,8 +39,8 @@
         width: 100%;
         height: 63px;
         border-radius: 16px;
-        border: 1px solid rgba(68, 61, 58, 0.00);
-        background: rgba(161, 147, 141, 0.80);
+        border: 1px solid var(--dashboard-code-input-border-color);
+        background: var(--dashboard-code-input-bg-color);
         margin-right: toRem(5);
         text-align: center;
         color: var(--white-color);

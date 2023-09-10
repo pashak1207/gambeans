@@ -116,7 +116,7 @@ export default function StepFirst({state, setState}:{state:ILoginRegistrationSta
                     {code.map((value, index) => {
                         return <input 
                             key={index} 
-                            type="phone"
+                            type="tel"
                             ref={(el) => inputRefs.current.push(el as never)} 
                             value={value} 
                             onChange={(e) => onInputChangeHandler(e, index)} 

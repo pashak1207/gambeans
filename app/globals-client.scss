@@ -91,6 +91,15 @@ h1,h2,h3,h4,h5,h6{
 	--black-color: #000;
 	--progress-color: #FD8679;
 	--redeem-color: #14BEA4;
+	--validation-color: #FF5A5F;
+	--prize-about-color: rgba(75, 55, 52, 0.80);
+	--dashboard-code-color: #FFFFFFB2;
+	--dashboard-code-error-first: rgba(255, 90, 95, 0.8);
+	--dashboard-code-error-second: rgba(255, 138, 155, 0.8);
+	--dashboard-code-success-first: rgba(18, 209, 142, 0.8);
+	--dashboard-code-success-second: rgba(113, 227, 187, 0.8);
+	--dashboard-code-input-border-color: rgba(68, 61, 58, 0.00);
+	--dashboard-code-input-bg-color: rgba(161, 147, 141, 0.80);
 
 	--steps-circles-bgcolour: #ebd3c1;
 
@@ -131,15 +140,16 @@ main{
 	line-height: 1.1;
 	font-family: var(--loading-font-family);
 	color: var(--loading-color);
-}
 
-.loadingPane h2{
-	font-size: toRem(48);
-	margin: toRem(30) 0;
-}
+	h2{
+		font-size: toRem(48);
+		margin: toRem(30) 0;
+		text-transform: uppercase;
+	}
 
-.loadingPane p{
-	font-size: toRem(24);
+	p{
+		font-size: toRem(24);
+	}
 }
 
 #welcomeLogo{

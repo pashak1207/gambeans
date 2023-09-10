@@ -10,7 +10,7 @@ export default function Loading() {
                 priority
                 height={224}
             />
-            <h2>GAMBEANS</h2>
+            <h2>GamBeans</h2>
             <p>Boosting Cafe Loyalty</p>
         </div>
     )

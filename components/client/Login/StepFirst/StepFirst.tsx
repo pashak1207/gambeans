@@ -72,10 +72,10 @@ export default function StepFirst({state, setState}:{state:ILoginRegistrationSta
                 <p>For added security, please enter your phone number. We'll send you a verification code to ensure it's really you.</p>
                 <div className="phone">
                     <label id="phone__code">
-                        <input value={telCode} maxLength={4} onBlur={onCodeBlurHandler} onChange={onCodeChangeHandler} type="phone"/>
+                        <input value={telCode} maxLength={4} onBlur={onCodeBlurHandler} onChange={onCodeChangeHandler} type="tel"/>
                     </label>
                     <label id="phone__number">
-                        <input value={phone} maxLength={12} onChange={onPhoneChangeHandler} type="phone"/>
+                        <input value={phone} maxLength={12} onChange={onPhoneChangeHandler} type="tel"/>
                     </label>
                 </div>
                 <small>We will send a text with a verification code</small>
