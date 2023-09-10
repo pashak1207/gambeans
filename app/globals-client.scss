@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@800&display=swap');
+@import "~app/mixins.scss";
+
+:root{
+    --primary-background: #F2E8DE;
+    --text-color: #4B3734;
+    --button-background: #B79A81;
+    --button-color: #fff;
+	--simple-btn-bg: #8A463340;
+	--validation-color: #FF5A5F;
+
+	--max-width: 420px;
+
+	--loading-font-family: 'Urbanist';
+	--loading-color: #B79A81;
+}
+
+body{
+    background: var(--primary-background);
+    height: 100vh;
+	display: flex;
+	flex-direction: column;
+	color: var(--text-color);
+	font-family: "Nunito", serif;
+}
+
+main{
+	margin-inline: auto;
+    max-width: var(--max-width);
+    width: 100%;
+	flex: 1 1 auto;
+}
+
+.loadingPane{
+	max-width: var(--max-width);
+	margin-inline: auto;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	height: 100%;
+	font-weight: 800;
+	text-align: center;
+	line-height: 1.1;
+	font-family: var(--loading-font-family);
+	color: var(--loading-color);
+
+	h2{
+		font-size: toRem(48);
+		margin: toRem(30) 0;
+		text-transform: uppercase;
+	}
+
+	p{
+		font-size: toRem(24);
+	}
+}

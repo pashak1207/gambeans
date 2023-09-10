@@ -1,0 +1,16 @@
+.simpleButton{
+    box-shadow: 4px 8px 24px 0px var(--simple-btn-bg);
+    background: var(--button-background);
+    color: var(--button-color);
+    width: 342px;
+    height: 65px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100px;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 1.6;
+    text-decoration: none;
+}
