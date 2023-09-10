@@ -52,11 +52,7 @@ export default function PrizeScratch({prize}:{prize:IPrize}) {
                         <Confetti active={ opened } config={config}/>
                     </PrizeCoupon>
                 </div>
-                {opened &&
-                <>  
-                    <h5 className="prize_expires">{`Expires ${expireDate}`}</h5>
-                </>
-                }
+                <h5 style={{opacity: opened ? "1" : "0"}} className="prize_expires">{`Expires ${expireDate}`}</h5>
                 <hr />
                 <div className="prize__how">
                     <h3>How it work?</h3>

@@ -50,36 +50,36 @@ export default function StepThird({state, setState}:{state:ILoginRegistrationSta
     }
 
     const onDayChangeHandler = (e:React.ChangeEvent<HTMLInputElement>) => {
-        let value:string | number = +e.target.value
+        let value:number = +e.target.value
         if(value > 31) value=31
-        else if(value < 1) value = ""
+        else if(value < 1) value = 1
         setDay(`${value}`)
     }
 
     const onMonthChangeHandler = (e:React.ChangeEvent<HTMLInputElement>) => {
-        let value:string | number = +e.target.value
+        let value:number = +e.target.value
         if(value > 12) value=12
-        else if(value < 1) value = ""
+        else if(value < 1) value = 1
         setMonth(`${value}`)
     }
 
     const onYearChangeHandler = (e:React.ChangeEvent<HTMLInputElement>) => {
-        let value:string | number = +e.target.value
+        let value:number = +e.target.value
         const currentDate = new Date();
         const currentYear = currentDate.getFullYear();
 
         if(value > currentYear) value=currentYear
-        else if(value < 1) value = ""
+        else if(value < 1) value = 1
         setYear(`${value}`)
     }
 
     const onYearBlurHandler = (e:React.FocusEvent<HTMLInputElement>) => {
-        let value:string | number = +e.target.value
+        let value: number = +e.target.value
         const currentDate = new Date();
         const currentYear = currentDate.getFullYear();
 
         if(value < (currentYear - 100) && value > 1) value = currentYear - 100
-        if(value < 1) value = ""
+        if(value < 1) value = 1
         setYear(`${value}`)
     }
 

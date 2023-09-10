@@ -1,6 +1,7 @@
 import "@/app/globals-client.scss"
 import type { Metadata } from 'next'
 import 'react-toastify/dist/ReactToastify.min.css';
+import 'normalize.css'
 import { ToastContainer, Slide } from 'react-toastify';
 
 export const metadata: Metadata = {
