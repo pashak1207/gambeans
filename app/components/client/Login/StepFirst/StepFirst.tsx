@@ -38,7 +38,7 @@ export default function StepFirst({setStep}:{setStep:Dispatch<SetStateAction<num
 
     const codeSent = () => {
         if(validatePhone(telCode, phone)){
-            console.log("Code sended")
+            console.log("Code sent")
             setIsValid(true)
             setStep(2)
         }else{
