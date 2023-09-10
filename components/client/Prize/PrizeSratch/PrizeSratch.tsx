@@ -1,24 +1,28 @@
 'use client'
 
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import PrizeCoupon from "./PrizeCoupon/PrizeCoupon"
 import Image from "next/image"
+import Confetti from 'react-dom-confetti';
 
 export default function PrizeScratch({prize}:{prize:IPrize}) {
 
     const [opened, setOpened] = useState<boolean>(false)
 
-    function renderConfetti() {
-        return [...Array(15)].map((e, i) => <div key={i} className="confetti-piece"></div>);
-    }
+    const expireDate = new Date(prize.expires_at).toLocaleDateString(`en-US`, { year: '2-digit', month: 'long', day: 'numeric' })
 
-    useEffect(() => {
-        setOpened(localStorage.getItem(`opened${prize.id}`) === "true")        
-    }, [])
-
-    useEffect(() => {
-        localStorage.setItem(`opened${prize.id}`, opened.toString())
-    }, [opened])
+    const config  = {
+        angle: 90,
+        spread: 90,
+        startVelocity: 40,
+        elementCount: 200,
+        dragFriction: 0.12,
+        duration: 3000,
+        stagger: 3,
+        width: "10px",
+        height: "10px",
+        colors: ["#a864fd", "#29cdff", "#78ff44", "#ff718d", "#fdff6a"]
+      };
 
     return (
         <div className="prize__scratch">
@@ -45,14 +49,12 @@ export default function PrizeScratch({prize}:{prize:IPrize}) {
                         />
                         <h3>{prize.text}</h3>
                         <h4>Yay! You’ve won 🎉</h4>
-                        <div className="confetti">
-                            {opened && renderConfetti()}
-                        </div>
+                        <Confetti active={ opened } config={config}/>
                     </PrizeCoupon>
                 </div>
                 {opened &&
                 <>  
-                    <h5 className="prize_expires">{`Expires ${new Date(prize.expires_at).toLocaleDateString(`en-US`, { year: '2-digit', month: 'long', day: 'numeric' })}`}</h5>
+                    <h5 className="prize_expires">{`Expires ${expireDate}`}</h5>
                 </>
                 }
                 <hr />

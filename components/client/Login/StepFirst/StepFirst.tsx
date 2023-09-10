@@ -31,7 +31,7 @@ export default function StepFirst({state, setState}:{state:ILoginRegistrationSta
         route.push('/')
     }
 
-    const sendCodeButton = async () => {
+    const codeSentButton = async () => {
         setIsValid(true)
 
         let isValidated = LoginRegisterValidation.validatePhone(telCode, phone)
@@ -81,7 +81,7 @@ export default function StepFirst({state, setState}:{state:ILoginRegistrationSta
                 <small>We will send a text with a verification code</small>
                 <Validation isValid={isValid} text={"Enter the correct phone number"} />
             </div>
-            <Button title="Send Verification Code" isLink={false} onClickHandler={sendCodeButton}/>
+            <Button title="Send Verification Code" isLink={false} onClickHandler={codeSentButton}/>
         </div>
     )
 }

@@ -8,12 +8,12 @@
     width: 100%;
     max-width: var(--max-width);
     transform: translate(-50%, 0);
-    padding: 10px 22px 25px;
+    padding: toRem(10) toRem(22) toRem(25);
     transition: background 0.5s linear;
 
     h5{
         font-size: toRem(22);
-        margin-bottom: 8px;
+        margin-bottom: toRem(8);
     }
 
     &.red{
@@ -41,12 +41,12 @@
         border-radius: 16px;
         border: 1px solid rgba(68, 61, 58, 0.00);
         background: rgba(161, 147, 141, 0.80);
-        margin-right: 5px;
+        margin-right: toRem(5);
         text-align: center;
         color: var(--white-color);
         font-size: toRem(28);
         font-weight: 700;
-        line-height: 160%;
+        line-height: 1.6;
 
         &:last-child{
             margin-right: 0;

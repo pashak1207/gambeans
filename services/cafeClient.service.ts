@@ -1,7 +1,7 @@
 const CafeClientService = {
 
     async compareCodes(code: string) {
-        const response = await fetch(`/api/cafe/compareCodes`, 
+        const response = await fetch(`/api/cafes/compareCodes`, 
         {
             method: "POST", 
             body:JSON.stringify({

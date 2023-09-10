@@ -3,14 +3,12 @@ import moment from "moment";
 const LoginRegisterValidation = {
     validatePhone(code:string, phoneNum:string) {
         const phone = code + phoneNum
-        const phoneNumberPattern = /^\+\d{9,}$/;
         
-        return phoneNumberPattern.test(phone);
+        return /^\+\d{9,}$/.test(phone);
     },
 
     validateCode(code:string) : boolean {
-        const fourDigitPattern = /^\d{4}$/;
-        return fourDigitPattern.test(code);
+        return /^\d{4}$/.test(code);
     },
 
     validateName(name:string) : boolean {

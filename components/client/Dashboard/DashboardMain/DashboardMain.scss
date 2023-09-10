@@ -1,11 +1,11 @@
 @import "~app/mixins.scss";
 
 .dashboardmain{
-    padding: 0 23px 170px 23px;
+    padding: 0 toRem(23) toRem(170) toRem(23);
 
     h2{
         font-size: toRem(22);
-        margin-bottom: 6px;
+        margin-bottom: toRem(6);
     }
 }
 
@@ -133,7 +133,7 @@
     display: flex;
     justify-content: center;
     flex: 0 0 50%;
-    margin-bottom: 60px;
+    margin-bottom: toRem(60);
 
     &:nth-child(3n+1){
         flex: 0 0 100%;

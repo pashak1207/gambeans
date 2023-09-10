@@ -78,7 +78,7 @@ a{
 }
 h1,h2,h3,h4,h5,h6{
 	font-weight: 700;
-	line-height: 160%;
+	line-height: 1.6;
 }
 //RESET CSS END
 
@@ -128,14 +128,14 @@ main{
 	height: 100%;
 	font-weight: 800;
 	text-align: center;
-	line-height: 110%;
+	line-height: 1.1;
 	font-family: var(--loading-font-family);
 	color: var(--loading-color);
 }
 
 .loadingPane h2{
 	font-size: toRem(48);
-	margin: 30px 0;
+	margin: toRem(30) 0;
 }
 
 .loadingPane p{
@@ -154,7 +154,7 @@ main{
 		color: var(--button-color);
 		font-size: toRem(16);
 		font-weight: 700;
-		line-height: 160%;
+		line-height: 1.6;
 		text-align: center;
 	}
 

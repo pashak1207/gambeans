@@ -1,14 +1,14 @@
 @import "~app/mixins.scss";
 
 .prize{
-    padding: 0 10px;
+    padding: 0 toRem(10);
     
     h2{
         color: var(--redeem-color);
         text-align: center;
         font-size: toRem(32);
         letter-spacing: 1.44px;
-        margin-bottom: 10px;
+        margin-bottom: toRem(10);
     }
 
     h3{
@@ -16,7 +16,7 @@
         line-height: 38px;
         letter-spacing: 0.045em;
         text-align: center;
-        margin-bottom: 15px;
+        margin-bottom: toRem(15);
     }
 
     h4{
@@ -30,29 +30,29 @@
         line-height: 26px;
 
         &.prize_expires{
-            margin-bottom: -21px;
-            margin-top: 3px;
+            margin-bottom: toRem(-21);
+            margin-top: toRem(3);
         }
     }
 
     hr{
-        margin: 25px 0 15px;
+        margin: toRem(25) 0 toRem(15);
         border: 1px solid var(--button-background)
     }
 
     .prize__how{
-        padding: 0 15px;
+        padding: 0 toRem(15);
 
         h3{
-            margin-bottom: 7px;
+            margin-bottom: toRem(7);
             text-align: left;
         }
     
         ol{
-            padding: 0 15px;
+            padding: 0 toRem(15);
 
             li{
-                margin-bottom: 5px;
+                margin-bottom: toRem(5);
 
                 &:last-child{
                     margin-bottom: 0;
@@ -62,14 +62,14 @@
                 h6{
                     font-size: toRem(15);
                     font-weight: 700;
-                    line-height: 160%;
+                    line-height: 1.6;
                 }
 
                 p{
                     font-size: toRem(15);
                     color: rgba(75, 55, 52, 0.80);
                     font-weight: 700;
-                    line-height: 160%;
+                    line-height: 1.6;
                 }
             }
         }
@@ -103,7 +103,7 @@
                 text-align: center;
                 font-size: toRem(24);
                 letter-spacing: 1.08px;
-                margin-top: 15px;
+                margin-top: toRem(15);
             }
 
             h4{
@@ -141,92 +141,6 @@
                 justify-content: center;
                 align-items: center;
                 flex-direction: column;
-                visibility: visible !important;
-            }
-
-            $yellow: #ffd300;
-            $blue: #17d3ff;
-            $pink: #ff4e91;
-
-            $duration: 1000;
-
-            @function randomNum($min, $max) {
-                $rand: random();
-                $randomNum: $min + floor($rand * (($max - $min) + 1));
-
-                @return $randomNum;
-            }
-
-
-            .confetti {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                position: relative;
-                width: 100%;
-                height: 100%;
-                overflow: hidden;
-                position: absolute;
-                left: 0;
-                top: 0;
-            }
-
-            .confetti-piece {
-                position: absolute;
-                width: 8px;
-                height: 16px;
-                background: $yellow;
-                top: 0;
-                opacity: 0;
-                
-                @for $i from 1 through 13 {
-                    &:nth-child(#{$i}) {
-                    left: $i * 7%;
-                    transform: rotate(#{randomNum(-80, 80)}deg);
-                    animation: makeItRain $duration * 1ms infinite ease-out;
-                    animation-delay: #{randomNum(0, $duration * .5)}ms;
-                    animation-duration: #{randomNum($duration * .7, $duration * 1.2)}ms
-                    }
-                }
-                
-                &:nth-child(odd) {
-                    background: $blue;
-                }
-                
-                &:nth-child(even) {
-                    z-index: 1;
-                }
-                
-                &:nth-child(4n) {
-                    width: 5px;
-                    height: 12px;
-                    animation-duration: $duration * 2ms;
-                }
-                
-                &:nth-child(3n) {
-                    width: 3px;
-                    height: 10px;
-                    animation-duration: $duration * 2.5ms;
-                    animation-delay: $duration * 1ms;
-                }
-                
-                &:nth-child(4n-7) {
-                    background: $pink;
-                }
-                }
-
-                @keyframes makeItRain {
-                from {
-                    opacity: 0;
-                }
-                
-                50% {
-                    opacity: 1;
-                }
-            
-            to {
-                transform: translateY(200px);
-            }
             }
         }
     }

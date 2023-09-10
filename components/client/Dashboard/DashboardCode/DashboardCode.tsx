@@ -14,8 +14,7 @@ export default function DashboardCode() {
     const [inputState, setInputState] = useState<(number | string)[]>(initialState)
 
     const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>, index:number) => {
-        const pattern = /^\d+$/
-        const value = pattern.test(e.target.value) ? e.target.value : ""
+        const value = /^\d+$/.test(e.target.value) ? e.target.value : ""
         
         setInputState((prev:any) =>
             prev.map((el:any, i:number) => {

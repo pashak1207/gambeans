@@ -4,7 +4,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 6px 11px;
+    padding: toRem(6) toRem(11);
     position: sticky;
     top: 0;
     background: var(--primary-background);
@@ -21,7 +21,7 @@
     img{
         object-fit: cover;
         object-position: center;
-        margin-right: 8px;
+        margin-right: toRem(8);
     }
 
     h4{
@@ -30,16 +30,16 @@
 }
 
 .right{
-    margin-left: 10px;
+    margin-left: toRem(10);
     
     button{
         border-radius: 50px;
         background: var(--yellow-button);
-        padding: 9px 30px;
+        padding: toRem(9) toRem(30);
         color: var(--black-color);
         text-align: center;
         font-size: toRem(20);
         font-weight: 700;
-        line-height: 160%;
+        line-height: 1.6;
     }
 }

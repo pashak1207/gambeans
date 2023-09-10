@@ -5,23 +5,25 @@
 import { useEffect, useRef } from 'react';
 
 function PrizeCoupon(props) {
-	const coverImg = useRef(null);
+	const canvasRef = useRef(null);
 
 	function main() {
 		let isDrawing, lastPoint;
-		let canvas = document.getElementById('js-canvas')
-		if(!canvas) return
+		let canvas = canvasRef.current		
 		
 		let canvasWidth = canvas?.width || 0,
 			canvasHeight = canvas?.height || 0,
 			ctx = canvas?.getContext('2d'),
-			image = coverImg.current,
 			brush = new Image();
 
-		if (coverImg.current.complete) {
+		let image = new Image();
+		image.src = props.cover;
+		
+		image.onload = function() {
 			ctx.drawImage(image, 0, 0, canvasWidth, canvasHeight);
 			document.querySelectorAll('.originalDiv')[0].style.visibility = 'visible';
-		}
+		};
+
 		brush.src = 'data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgNDAgNDAiIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSIyMCIgY3k9IjIwIiByPSIyMCIvPjwvc3ZnPg==';
 
 		canvas.addEventListener('mousedown', handleMouseDown, false);
@@ -116,11 +118,6 @@ function PrizeCoupon(props) {
 		function handleMouseUp(e) {
 			isDrawing = false;
 		}
-		
-		if(canvas && props.opened){
-			canvas.parentNode.removeChild(canvas);
-			return
-		}
 
 	}
 	
@@ -131,12 +128,11 @@ function PrizeCoupon(props) {
 	return (
 		<div className="prize__scratchcard-inner">
 			<div className="container" id="js-container">
-				<canvas className="canvas" id="js-canvas" width={props.width} height={props.height} style={{position: 'absolute',top: 0}}>
+				<canvas  className="canvas" ref={canvasRef} width={props.width} height={props.height} style={{position: 'absolute',top: 0}}>
 				</canvas>
 				<div className="originalDiv" style={{ visibility: "hidden"}}>
 					{props.children}
 				</div>
-				<img ref={coverImg} alt='bg' src={props.cover} className="hidden" style={{ visibility: 'hidden' }}/>
 			</div>
 		</div >
 	);

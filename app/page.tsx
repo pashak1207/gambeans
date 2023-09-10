@@ -8,7 +8,7 @@ export default async function WelcomePage() {
     
     return (
         <main className={styles.main}>
-            <h5>WELCOME TO</h5>
+            <h5>Welcome to</h5>
             <Image 
                 src={logo}
                 priority
