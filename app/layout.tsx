@@ -1,4 +1,5 @@
 import "@/app/globals-client.scss"
+import 'normalize.css';
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
