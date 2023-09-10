@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE `Users` MODIFY `name` VARCHAR(191) NULL,
+    MODIFY `DOB` DATETIME(3) NULL;
