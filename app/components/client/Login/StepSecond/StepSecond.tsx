@@ -46,8 +46,7 @@ export default function StepFirst({setStep}:{setStep:Dispatch<SetStateAction<num
     }
 
     const validateCode = (code:string) => {
-        const fourDigitPattern = /^\d{4}$/;
-        return fourDigitPattern.test(code);
+        return /^\d{4}$/.test(code);
     }
 
 
@@ -77,7 +76,7 @@ export default function StepFirst({setStep}:{setStep:Dispatch<SetStateAction<num
                         return <input 
                             ref={(ref:HTMLInputElement) => !refs.current.includes(ref) && refs.current.push(ref)} 
                             key={index} 
-                            type="phone" 
+                            type="tel" 
                             value={value} 
                             onChange={(e) => onInputChangeHandler(e, index)} 
                             maxLength={1} />

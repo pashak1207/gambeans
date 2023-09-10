@@ -28,16 +28,15 @@ export default function StepFirst({setStep}:{setStep:Dispatch<SetStateAction<num
 
     const validatePhone = (code:string, phoneNum:string) : boolean => {
         const phone = code + phoneNum
-        const phoneNumberPattern = /^\+\d{9,}$/;
         
-        return phoneNumberPattern.test(phone);
+        return /^\+\d{9,}$/.test(phone);
     }
 
     const returnBack = () => {
         route.push('/')
     }
 
-    const sendCode = () => {
+    const codeSent = () => {
         if(validatePhone(telCode, phone)){
             console.log("Code sended")
             setIsValid(true)
@@ -60,16 +59,16 @@ export default function StepFirst({setStep}:{setStep:Dispatch<SetStateAction<num
                 <p>For added security, please enter your phone number. We'll send you a verification code to ensure it's really you.</p>
                 <div className="phone">
                     <label id="phone__code">
-                        <input value={telCode} maxLength={4} onBlur={onCodeBlurHandler} onChange={onCodeChangeHandler} type="phone"/>
+                        <input value={telCode} maxLength={4} onBlur={onCodeBlurHandler} onChange={onCodeChangeHandler} type="tel"/>
                     </label>
                     <label id="phone__number">
-                        <input value={phone} maxLength={12} onChange={onPhoneChangeHandler} type="phone"/>
+                        <input value={phone} maxLength={12} onChange={onPhoneChangeHandler} type="tel"/>
                     </label>
                 </div>
                 <small>We will send a text with a verification code</small>
                 <Validation isValid={isValid} text={"Enter the correct phone number"} />
             </div>
-            <Button title="Send Verification Code" isLink={false} onClickHandler={sendCode}/>
+            <Button title="Send Verification Code" isLink={false} onClickHandler={codeSent}/>
         </div>
     )
 }

@@ -10,7 +10,7 @@
         flex-direction: column;
         align-items: center;
         text-align: center;
-        padding: 10px;
+        padding: toRem(10);
         flex: 1 1 auto;
 
         .wrapper{
@@ -33,22 +33,22 @@
     h4{
         font-size: toRem(20);
         font-weight: 700;
-        line-height: 160%;
+        line-height: 1.6;
         position: relative;
         bottom: 22px;
     }
 
     p{
         font-size: toRem(20);
-        line-height: 160%;
-        margin-bottom: 50px;
+        line-height: 1.6;
+        margin-bottom: toRem(50);
     }
 
     small{
         font-size: toRem(14);
-        line-height: 160%;
-        margin-top: 7px;
-        margin-bottom: 15px;
+        line-height: 1.6;
+        margin-top: toRem(7);
+        margin-bottom: toRem(15);
         display: block;
     }
 
@@ -57,7 +57,7 @@
             margin-bottom: 0;
         }
         button{
-            margin-bottom: 30px;
+            margin-bottom: toRem(30);
         }
 
         .phone{
@@ -66,17 +66,17 @@
         }
 
         input{
-            padding: 0 9px;
+            padding: 0 toRem(9);
             background: transparent;
             border-bottom: 1px solid var(--text-color);
             display: block;
 
             font-size: toRem(20);
-            line-height: 160%;
+            line-height: 1.6;
         }
         
         #phone__code{
-            margin-right: 13px;
+            margin-right: toRem(13);
             flex: 0 0 48px;
 
             input{
@@ -96,37 +96,37 @@
 
     .stepsecond{
         &>button{
-            margin-bottom: 10px;
+            margin-bottom: toRem(10);
         }
 
         .code-input{
             display: flex;
-            margin-bottom: 11px;
+            margin-bottom: toRem(11);
             
             input{
                 width: 75px;
                 display: block;
                 background: transparent;
                 border-bottom: 1px solid var(--text-color);
-                padding: 0 9px;
-                margin: 0 4px;
+                padding: 0 toRem(9);
+                margin: 0 toRem(4);
                 text-align: center;
 
                 font-size: toRem(35);
-                line-height: 160%;
+                line-height: 1.6;
             }
         }
 
         #resendCode{
             font-size: toRem(14);
             text-align: center;
-            line-height: 160%;
+            line-height: 1.6;
             text-decoration-line: underline;
         }
 
         small{
-            margin-top: 0px;
-            margin-bottom: 10px;
+            margin-top: 0;
+            margin-bottom: toRem(10);
 
             a{
                 text-decoration: underline;

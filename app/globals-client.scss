@@ -82,6 +82,8 @@ a{
     --text-color: #4B3734;
     --button-background: #B79A81;
     --button-color: #fff;
+	--simple-btn-bg: #8A463340;
+	--validation-color: #FF5A5F;
 
 	--max-width: 420px;
 
@@ -115,16 +117,17 @@ main{
 	height: 100%;
 	font-weight: 800;
 	text-align: center;
-	line-height: 110%;
+	line-height: 1.1;
 	font-family: var(--loading-font-family);
 	color: var(--loading-color);
-}
 
-.loadingPane h2{
-	font-size: toRem(48);
-	margin: 30px 0;
-}
+	h2{
+		font-size: toRem(48);
+		margin: toRem(30) 0;
+		text-transform: uppercase;
+	}
 
-.loadingPane p{
-	font-size: toRem(24);
+	p{
+		font-size: toRem(24);
+	}
 }
