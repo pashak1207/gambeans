@@ -1,10 +1,11 @@
-import Button from "@/app/components/ui/Button/Button"
-import Validation from "@/app/components/ui/Validation/Validation"
+import Button from "@/components/ui/Button/Button"
+import Validation from "@/components/ui/Validation/Validation"
 import { useRouter } from 'next/navigation'
-import { Dispatch, SetStateAction } from "react";
-import React, { useState } from "react"
+import React, { SetStateAction, useState } from "react"
+import AuthService from "@/services/auth.service"
+import LoginRegisterValidation from "@/validation/LoginRegisterValidation";
 
-export default function StepFirst({setStep}:{setStep:Dispatch<SetStateAction<number>>}) {
+export default function StepFirst({state, setState}:{state:ILoginRegistrationState, setState : React.Dispatch<SetStateAction<ILoginRegistrationState>>}) {
     const [telCode, setTelCode] = useState<string>("+1")
     const [phone, setPhone] = useState<string>("")
     const [isValid, setIsValid] = useState<boolean>(true)
@@ -26,22 +27,33 @@ export default function StepFirst({setStep}:{setStep:Dispatch<SetStateAction<num
         setPhone(inputValue)
     }
 
-    const validatePhone = (code:string, phoneNum:string) : boolean => {
-        const phone = code + phoneNum
-        const phoneNumberPattern = /^\+\d{9,}$/;
-        
-        return phoneNumberPattern.test(phone);
-    }
-
     const returnBack = () => {
         route.push('/')
     }
 
-    const sendCode = () => {
-        if(validatePhone(telCode, phone)){
-            console.log("Code sended")
+    const sendCodeButton = async () => {
+        setIsValid(true)
+
+        let isValidated = LoginRegisterValidation.validatePhone(telCode, phone)
+        
+        if(isValidated){
+            isValidated = await AuthService.validatePhone(telCode+phone)
+            .then(data => data?.phoneValid)
+            .catch(e => console.log("Phone validation failed. Error: " + e.message))
+        }
+        
+        if(isValidated){
             setIsValid(true)
-            setStep(2)
+            
+            setState((prev) =>{
+                return{
+                     ...prev,
+                     phone : telCode+phone,
+                     step : prev.step! + 1
+                }
+             })
+             
+            await AuthService.generateVerificationCode(telCode+phone)
         }else{
             setIsValid(false)
         }
@@ -60,16 +72,16 @@ export default function StepFirst({setStep}:{setStep:Dispatch<SetStateAction<num
                 <p>For added security, please enter your phone number. We'll send you a verification code to ensure it's really you.</p>
                 <div className="phone">
                     <label id="phone__code">
-                        <input value={telCode} maxLength={4} onBlur={onCodeBlurHandler} onChange={onCodeChangeHandler} type="phone"/>
+                        <input value={telCode} maxLength={4} onBlur={onCodeBlurHandler} onChange={onCodeChangeHandler} type="tel"/>
                     </label>
                     <label id="phone__number">
-                        <input value={phone} maxLength={12} onChange={onPhoneChangeHandler} type="phone"/>
+                        <input value={phone} maxLength={12} onChange={onPhoneChangeHandler} type="tel"/>
                     </label>
                 </div>
                 <small>We will send a text with a verification code</small>
                 <Validation isValid={isValid} text={"Enter the correct phone number"} />
             </div>
-            <Button title="Send Verification Code" isLink={false} onClickHandler={sendCode}/>
+            <Button title="Send Verification Code" isLink={false} onClickHandler={sendCodeButton}/>
         </div>
     )
 }

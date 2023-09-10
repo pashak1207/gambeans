@@ -1,0 +1,215 @@
+@import "~/app/mixins.scss";
+
+.login{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    .loginstep{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: toRem(10);
+        flex: 1 1 auto;
+
+        .wrapper{
+            flex: 1 1 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            position: relative;
+            width: 100%;
+        }
+    }
+    button.back{
+        display: inline-block;
+        position: absolute;
+        z-index: 1;
+        left: 0;
+        top: 0;
+    }
+
+    h4{
+        font-size: toRem(20);
+        font-weight: 700;
+        line-height: 1.6;
+        position: relative;
+        bottom: 22px;
+    }
+
+    p{
+        font-size: toRem(20);
+        line-height: 1.6;
+        margin-bottom: toRem(50);
+    }
+
+    small{
+        font-size: toRem(14);
+        line-height: 1.6;
+        margin-top: toRem(7);
+        margin-bottom: toRem(15);
+        display: block;
+    }
+
+    .stepfirst{
+        button.back{
+            margin-bottom: 0;
+        }
+        button{
+            margin-bottom: toRem(30);
+        }
+
+        .phone{
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+
+        input{
+            padding: 0 toRem(9);
+            background: transparent;
+            border-bottom: 1px solid var(--text-color);
+            display: block;
+
+            font-size: toRem(20);
+            line-height: 1.6;
+        }
+        
+        #phone__code{
+            margin-right: toRem(13);
+            flex: 0 0 48px;
+
+            input{
+                width: 48px;
+                text-align: right;
+            }
+        }
+
+        #phone__number{
+            flex: 1 1 auto;
+            display: flex;
+
+            input{
+                text-align: center;
+                flex: 1 1 auto;
+                width: 100%;
+            }
+        }
+    }
+
+    .stepsecond{
+        &>button{
+            margin-bottom: toRem(10);
+        }
+
+        .timer{
+            width: 100%;
+
+            p{
+                margin-bottom: 0;
+                margin-top: 10px;
+                font-size: toRem(14);
+            }
+        }
+
+        .code-input{
+            display: flex;
+            margin-bottom: toRem(11);
+            
+            input{
+                max-width: 75px;
+                width: 100%;
+                display: block;
+                background: transparent;
+                border-bottom: 1px solid var(--text-color);
+                padding: 0 toRem(9);
+                margin: 0 toRem(4);
+                text-align: center;
+
+                font-size: toRem(35);
+                line-height: 1.6;
+            }
+        }
+
+        #resendCode{
+            font-size: toRem(14);
+            text-align: center;
+            line-height: 1.6;
+            text-decoration-line: underline;
+        }
+
+        small{
+            margin-top: 0;
+            margin-bottom: toRem(10);
+
+            a{
+                text-decoration: underline;
+            }
+        }
+    }
+
+    .stepthird{
+        .wrapper{
+            &>h4{
+                bottom: 22px;
+                max-width: 230px;
+                width: 100%;
+            }
+        }
+
+        input{
+            background: transparent;
+            padding: 0 5px;
+            border-bottom: 1px solid var(--text-color);
+            color: var(--text-color);
+            font-size: toRem(20);
+            line-height: 160%;
+            text-align: center;
+            width: unset;
+
+            &::placeholder{
+                color: var(--text-color);
+            }
+        }
+
+        h4{
+            margin-bottom: 10px;
+            bottom: 0;
+        }
+
+        label{
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            margin-bottom: 30px;
+
+            h4{
+                text-align: left;
+            }
+
+            input{
+                text-align: left;
+            }
+        }
+
+        .stepthird__age{
+            width: 100%;
+            text-align: left;
+
+            .stepthird__age-inputs{
+                display: flex;
+                width: 100%;
+                justify-content: space-between;
+
+                input{
+                    max-width: 80px;
+                    margin: 5px;
+                }
+            }
+        }
+
+    }
+}
