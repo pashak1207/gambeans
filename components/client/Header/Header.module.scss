@@ -1,3 +1,5 @@
+@import "~app/mixins.scss";
+
 .header{
     display: flex;
     justify-content: center;
@@ -7,7 +9,10 @@
     max-width: var(--max-width);
     margin-inline: auto;
     flex: 0 0 42px;
+    padding: toRem(5) 0;
+}
 
+.header{
     img{
         object-fit: contain;
         object-position: center;

@@ -7,6 +7,7 @@ export default function Loading() {
                 src="/loading.png"
                 alt="loading..."
                 width={185}
+                priority
                 height={224}
             />
             <h2>GamBeans</h2>

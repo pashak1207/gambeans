@@ -14,7 +14,7 @@ export default function RootLayout({
   }) {
     return (
       <>
-        <Header logoURL='/logo.png' color='#FD8679' />
+        <Header/>
         {children}
       </>
     )

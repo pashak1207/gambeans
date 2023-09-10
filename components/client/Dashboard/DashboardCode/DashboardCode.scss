@@ -1,0 +1,76 @@
+@import "~app/mixins.scss";
+
+.dashboardCode{
+    background: var(--dashboard-code-color);
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    width: 100%;
+    max-width: var(--max-width);
+    transform: translate(-50%, 0);
+    padding: toRem(10) toRem(22) toRem(25);
+    transition: background 0.5s linear;
+
+    h5{
+        font-size: toRem(22);
+        margin-bottom: toRem(8);
+    }
+
+    &.red{
+        background: linear-gradient(286.17deg, var(--dashboard-code-error-first) 0%, var(--dashboard-code-error-second) 100%);
+
+        .dashboardInputs{
+            animation: redAnim 0.5s ease-in-out;
+            position: relative;
+        }
+    }
+
+    &.green{
+        background: linear-gradient(286.17deg, var(--dashboard-code-success-first) 0%, var(dashboard-code-success-second) 100%);
+    }
+}
+
+.dashboardInputs{
+    display: flex;
+    justify-content: space-between;
+
+    input{
+        max-width: 74px;
+        width: 100%;
+        height: 63px;
+        border-radius: 16px;
+        border: 1px solid var(--dashboard-code-input-border-color);
+        background: var(--dashboard-code-input-bg-color);
+        margin-right: toRem(5);
+        text-align: center;
+        color: var(--white-color);
+        font-size: toRem(28);
+        font-weight: 700;
+        line-height: 1.6;
+
+        &:last-child{
+            margin-right: 0;
+        }
+    }
+}
+
+@keyframes redAnim {
+    0% {
+        left: 0;
+    }
+    20%{
+        left: -5px;
+    }
+    40%{
+        left: 5px;
+    }
+    60%{
+        left: -5px;
+    }
+    80%{
+        left: 5px;
+    }
+    100%{
+        left: 0;
+    }
+}

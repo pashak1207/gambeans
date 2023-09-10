@@ -33,8 +33,6 @@
 
     h4{
         font-size: toRem(20);
-        font-weight: 700;
-        line-height: 1.6;
         position: relative;
         bottom: 22px;
     }
@@ -101,7 +99,7 @@
 
     .stepsecond{
         &>button{
-            margin-bottom: toRem(10);
+            -bottom: 10px;
         }
 
         .timer{
@@ -109,7 +107,7 @@
 
             p{
                 margin-bottom: 0;
-                margin-top: 10px;
+                margin-top: toRem(10);
                 font-size: toRem(14);
             }
         }
@@ -117,6 +115,7 @@
         .code-input{
             display: flex;
             margin-bottom: toRem(11);
+            width: 100%;
             
             input{
                 max-width: 75px;
@@ -159,13 +158,17 @@
             }
         }
 
+        &>button{
+            margin-bottom: toRem(35);
+        }
+
         input{
             background: transparent;
-            padding: 0 5px;
+            padding: 0 toRem(5);
             border-bottom: 1px solid var(--text-color);
             color: var(--text-color);
             font-size: toRem(20);
-            line-height: 160%;
+            line-height: 1.6;
             text-align: center;
             width: unset;
 
@@ -175,7 +178,7 @@
         }
 
         h4{
-            margin-bottom: 10px;
+            -bottom: 10px;
             bottom: 0;
         }
 
@@ -184,7 +187,7 @@
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
-            margin-bottom: 30px;
+            margin-bottom: toRem(30);
 
             h4{
                 text-align: left;
@@ -206,10 +209,53 @@
 
                 input{
                     max-width: 80px;
-                    margin: 5px;
+                    margin: toRem(5);
                 }
             }
         }
 
+    }
+
+    .stepfourth{
+
+        &>button{
+            margin-bottom: toRem(35);
+        }
+
+        h2{
+            font-size: toRem(40);
+            margin-bottom: toRem(60);
+        }
+
+        .stepfourth__blocks{
+            .stepfourth__item{
+                display: flex;
+                max-width: 290px;
+                width: 100%;
+                text-align: left;
+                margin-bottom: toRem(40);
+
+                &:last-of-type{
+                    margin-bottom: toRem(20);
+                }
+
+                img{
+                    margin-right: toRem(24);
+                }
+
+                h3{
+                    font-size: toRem(24);
+                    margin-bottom: toRem(8);
+                }
+
+                p{
+                    margin-bottom: 0;
+                    font-size: toRem(18);
+                    font-weight: 500;
+                    line-height: 1.4;
+                    letter-spacing: 0.2px;
+                }
+            }
+        }
     }
 }

@@ -16,6 +16,22 @@ interface IUser{
     created_at: Date
 }
 
+interface IPrize{
+    id: number
+    cafe_id: number
+    max_amount: number
+    discount: number
+    text: string
+    image: string
+    type: Prize_type
+    revenue: number
+    probability: number
+    step: number
+    is_active: boolean
+    expires_at: Date
+    created_at: Date
+}
+
 enum Users_role {
     ADMIN,
     LOCAL_ADMIN,
@@ -28,7 +44,19 @@ enum User_status {
 }
 
 enum Prize_type {
-    SCRATCH,
-    SLOT,
-    FREE
+    SCRATCH = "SCRATCH",
+    SLOT = "SLOT",
+    FREE = "FREE",
+}
+
+interface ICookie {
+    key: string;
+    value: string;
+    cookie: {
+        path: string;
+        httpOnly: boolean;
+        maxAge: number;
+    };
+    [key: string]: any;
+    [key: symbol]: any;
 }

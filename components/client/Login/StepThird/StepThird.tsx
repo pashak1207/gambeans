@@ -1,8 +1,7 @@
 import Button from "@/components/ui/Button/Button"
 import Validation from "@/components/ui/Validation/Validation"
-import AuthService from "@/services/auth.service"
-import LoginRegisterValidation from "@/validation/LoginRegisterValidation"
-import moment from "moment"
+import AuthClientService from "@/services/authClient.service"
+import LoginRegisterValidation from "@/utils/loginRegisterValidation"
 import React, { SetStateAction, useState } from "react"
 
 
@@ -32,7 +31,7 @@ export default function StepThird({state, setState}:{state:ILoginRegistrationSta
         if(LoginRegisterValidation.validateDate(day, month, year) && LoginRegisterValidation.validateName(name)){
             const inputDate =  new Date(`${year}-${month}-${day}`)           
             
-            await AuthService.registration(+state.phone!, name, inputDate)
+            await AuthClientService.registration(+state.phone!, name, inputDate)
                              .then(data => console.log(data))
                              .catch(e => console.log("Registration error: " + e.message))
             
@@ -51,36 +50,36 @@ export default function StepThird({state, setState}:{state:ILoginRegistrationSta
     }
 
     const onDayChangeHandler = (e:React.ChangeEvent<HTMLInputElement>) => {
-        let value:string | number = +e.target.value
+        let value:number = +e.target.value
         if(value > 31) value=31
-        else if(value < 1) value = ""
+        else if(value < 1) value = 1
         setDay(`${value}`)
     }
 
     const onMonthChangeHandler = (e:React.ChangeEvent<HTMLInputElement>) => {
-        let value:string | number = +e.target.value
+        let value:number = +e.target.value
         if(value > 12) value=12
-        else if(value < 1) value = ""
+        else if(value < 1) value = 1
         setMonth(`${value}`)
     }
 
     const onYearChangeHandler = (e:React.ChangeEvent<HTMLInputElement>) => {
-        let value:string | number = +e.target.value
+        let value:number = +e.target.value
         const currentDate = new Date();
         const currentYear = currentDate.getFullYear();
 
         if(value > currentYear) value=currentYear
-        else if(value < 1) value = ""
+        else if(value < 1) value = 1
         setYear(`${value}`)
     }
 
     const onYearBlurHandler = (e:React.FocusEvent<HTMLInputElement>) => {
-        let value:string | number = +e.target.value
+        let value: number = +e.target.value
         const currentDate = new Date();
         const currentYear = currentDate.getFullYear();
 
         if(value < (currentYear - 100) && value > 1) value = currentYear - 100
-        if(value < 1) value = ""
+        if(value < 1) value = 1
         setYear(`${value}`)
     }
 

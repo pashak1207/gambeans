@@ -8,7 +8,7 @@ datasource db {
 }
 
 model Users {
-  id                Int          @id @default(autoincrement())
+  id                Int          @id @default(autoincrement()) @db.UnsignedInt
   name              String?
   phone             BigInt       @unique @db.UnsignedBigInt
   role              Users_role   @default(USER)
@@ -21,15 +21,15 @@ model Users {
 }
 
 model Daily_codes {
-  id         Int      @id @default(autoincrement())
-  code       Int      @db.UnsignedInt
+  id         Int      @id @default(autoincrement()) @db.UnsignedInt
+  code       String
   cafe       Cafes    @relation(fields: [cafe_id], references: [id])
-  cafe_id    Int
+  cafe_id    Int      @db.UnsignedInt
   created_at DateTime @default(now())
 }
 
 model Cafes {
-  id            Int           @id @default(autoincrement())
+  id            Int           @id @default(autoincrement()) @db.UnsignedInt
   name          String
   email         String        @unique
   address       String?
@@ -48,9 +48,9 @@ model Cafes {
 
 model Cafe_user {
   user       Users    @relation(fields: [user_id], references: [id])
-  user_id    Int
+  user_id    Int      @db.UnsignedInt
   cafe       Cafes    @relation(fields: [cafe_id], references: [id])
-  cafe_id    Int
+  cafe_id    Int      @db.UnsignedInt
   step       Int      @default(1) @db.UnsignedInt
   visit_date DateTime @default(now())
 
@@ -59,10 +59,10 @@ model Cafe_user {
 
 model User_prize {
   prize      Prizes   @relation(fields: [prize_id], references: [id])
-  prize_id   Int
+  prize_id   Int      @db.UnsignedInt
   used       DateTime
   user       Users    @relation(fields: [user_id], references: [id])
-  user_id    Int
+  user_id    Int      @db.UnsignedInt
   created_at DateTime @default(now())
   expires_at DateTime
 
@@ -70,20 +70,21 @@ model User_prize {
 }
 
 model Prizes {
-  id          Int          @id @default(autoincrement())
+  id          Int          @id @default(autoincrement())  @db.UnsignedInt
   cafe        Cafes        @relation(fields: [cafe_id], references: [id])
-  cafe_id     Int
+  cafe_id     Int          @db.UnsignedInt
   max_amount  Int          @db.UnsignedInt
   discount    Float
   text        String
   image       String
   type        Prize_type
-  revenue     Float
+  revenue     Float       
   probability Float
   step        Int          @db.UnsignedInt
   user        User_prize[]
   is_active   Boolean      @default(true)
-  expires_at  Int          @db.UnsignedInt
+  expires_at  DateTime     @default(now())
+  created_at  DateTime     @default(now())
 }
 
 enum Users_role {

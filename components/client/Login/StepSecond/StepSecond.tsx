@@ -1,9 +1,9 @@
 import Button from "@/components/ui/Button/Button"
 import Validation from "@/components/ui/Validation/Validation"
 import Link from "next/link";
-import React, { SetStateAction, useState, useEffect } from "react"
-import AuthService from "@/services/auth.service";
-import LoginRegisterValidation from "@/validation/LoginRegisterValidation";
+import React, { SetStateAction, useState, useEffect, useRef } from "react"
+import AuthClientService from "@/services/authClient.service";
+import LoginRegisterValidation from "@/utils/loginRegisterValidation";
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation'
 
@@ -14,7 +14,8 @@ const initCodeValues: number[] | string[] = [
 export default function StepFirst({state, setState}:{state:ILoginRegistrationState, setState : React.Dispatch<SetStateAction<ILoginRegistrationState>>}) {
     const TIMER_DURATION_SECONDS = 60
     const [isValid, setIsValid] = useState<boolean>(true)
-    const [code, setCode] = useState<number[] | string[]>(initCodeValues)
+    const inputRefs = useRef<(HTMLInputElement | null)[]>([])
+    const [code, setCode] = useState<(number | string)[]>(initCodeValues)
     const [timer, setTimer] = useState<boolean>(false)
     const [seconds, setSeconds] = useState(TIMER_DURATION_SECONDS);
     const router = useRouter()
@@ -23,11 +24,15 @@ export default function StepFirst({state, setState}:{state:ILoginRegistrationSta
     const remainingSeconds = seconds % 60;
 
     useEffect(() => {
-        if (seconds > 0) {
-          setTimeout(() => setSeconds(seconds - 1), 1000);
-        }else{
-            setTimer(false)
-            setSeconds(TIMER_DURATION_SECONDS)
+        if(timer){
+            if(seconds){
+                setTimeout(()=>{
+                    setSeconds(prev => prev - 1)
+                }, 1000)
+            }else{
+                setTimer(false)
+                setSeconds(TIMER_DURATION_SECONDS)
+            }
         }
     }, [timer, seconds]);
     
@@ -52,6 +57,10 @@ export default function StepFirst({state, setState}:{state:ILoginRegistrationSta
                 return value;
             })
         )
+
+        if(value){
+            inputRefs.current[index+1] ? inputRefs?.current[index+1]?.focus() : inputRefs.current[index]?.blur()
+        }
     }
 
     const validateCode = (code:string) => {
@@ -67,7 +76,7 @@ export default function StepFirst({state, setState}:{state:ILoginRegistrationSta
             return
         }
 
-        const {isCorrect, isRegistrated} = await AuthService.compareCode(state.phone!, codeFull)
+        const {isCorrect, isRegistrated} = await AuthClientService.compareCode(state.phone!, codeFull)
                                     .catch(e => console.log("Error to compare codes: " + e.message))
         if(!isCorrect){
             setIsValid(false)
@@ -89,11 +98,12 @@ export default function StepFirst({state, setState}:{state:ILoginRegistrationSta
         }
     }
 
-    const resendCode = async () => {        
+    const resendCode = async () => {
+        setCode(initCodeValues)     
         toast("New code has been sent");
         setSeconds(TIMER_DURATION_SECONDS)
         setTimer(true)
-        await AuthService.generateVerificationCode(state.phone!)
+        await AuthClientService.generateVerificationCode(state.phone!)
     }
 
     return (
@@ -111,7 +121,8 @@ export default function StepFirst({state, setState}:{state:ILoginRegistrationSta
                     {code.map((value, index) => {
                         return <input 
                             key={index} 
-                            type="tel" 
+                            type="tel"
+                            ref={(el) => inputRefs.current.push(el as never)} 
                             value={value} 
                             onChange={(e) => onInputChangeHandler(e, index)} 
                             maxLength={1} />

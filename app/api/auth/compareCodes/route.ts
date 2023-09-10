@@ -1,17 +1,31 @@
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/prisma/client'
-import jwt from 'jsonwebtoken';
+import JWT from '@/utils/jwtgenerate'
+import CafeUtils from '@/utils/cafe'
  
-export async function POST(request: Request) {
-    const MAX_AGE = 60 * 60 * 24 * 5
-
+export async function POST(request: NextRequest) {
     try{
         const body = await request.json()
         const { phone, code } = body
+        const cafe_id = await CafeUtils.getCurrentCafeId(request)
+        
+        if(!cafe_id){
+            return NextResponse.json({ 
+                message: "Error to find cafe"
+            }, 
+            {
+                status: 400
+            })
+        }
 
         const user = await prisma.users.findUnique({
             where: {
                 phone: +phone,
+                cafes:{
+                    some:{
+                        cafe_id
+                    }
+                }
             }
         })
 
@@ -30,18 +44,6 @@ export async function POST(request: Request) {
             if(user?.DOB || user?.name){
                 isRegistrated = true;
 
-                const secret = process.env.JWT_SECRET || "";
-
-                const token = jwt.sign({
-                    id: user.id,
-                    phone: user.phone.toString(),
-                    },
-                    secret,
-                    {
-                        expiresIn: MAX_AGE
-                    }
-                )
-
                 response = NextResponse.json({ 
                     message: "Code is correct",
                     isCorrect: true,
@@ -50,12 +52,9 @@ export async function POST(request: Request) {
                 {
                     status: 200
                 })
-                
-                response.cookies.set("JWTToken", token, {
-                    path: "/",
-                    httpOnly: true,
-                    maxAge: MAX_AGE
-                  })
+
+                response.cookies.set(...await JWT.generateAccessToken(user, request) as any)
+                response.cookies.set(...await JWT.generateRefreshToken(user, request) as any)
                 
             }
 
