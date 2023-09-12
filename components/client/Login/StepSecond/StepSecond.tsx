@@ -63,11 +63,6 @@ export default function StepFirst({state, setState}:{state:ILoginRegistrationSta
         }
     }
 
-    const validateCode = (code:string) => {
-        return /^\d{4}$/.test(code);
-    }
-
-
     const nextPageClickHandler = async () => {
         const codeFull = code.join("")
 
@@ -76,8 +71,8 @@ export default function StepFirst({state, setState}:{state:ILoginRegistrationSta
             return
         }
 
-        const {isCorrect, isRegistrated} = await AuthClientService.compareCode(state.phone!, codeFull)
-                                    .catch(e => console.log("Error to compare codes: " + e.message))
+        const {isCorrect, isRegistrated} = await AuthClientService.login(state.phone!, codeFull)
+                                    .catch(e => console.log("Error during codes comparison: " + e.message))
         if(!isCorrect){
             setIsValid(false)
             return
@@ -87,7 +82,7 @@ export default function StepFirst({state, setState}:{state:ILoginRegistrationSta
         
 
         if(isRegistrated){
-            router.push('/dashboard')
+            router.push('/dashboard')                        
         }else{
             setState(prev =>{
                 return{

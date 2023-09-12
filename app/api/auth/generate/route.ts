@@ -1,28 +1,26 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { generateVerificationCode } from '@/utils/generateVerificationCode'
+import { prisma} from '@/prisma/client'
+import LoginRegisterValidation from '@/utils/loginRegisterValidation'
 import { sentTwilioNumber } from '@/utils/sentTwilioNumber'
-import { prisma } from '@/prisma/client'
-import CafeUtils from '@/utils/cafe'
 
 export async function POST(request: NextRequest) {
     try{
-        const body = await request.json()
-        const { phone } = body
-        const code = generateVerificationCode()
-        const cafe_id = await CafeUtils.getCurrentCafeId(request)
+        const body = await request.json()        
+        const { phone }:{ phone:string } = body
+        const code:string = generateVerificationCode()
+        const cafe_id:number = +request.headers.get('x-cafe-id')!
 
-        console.log(code);
-        
-        
-        if(!cafe_id){
+        console.log(code);     
+
+        if(!phone || !LoginRegisterValidation.validatePhone(phone)){
             return NextResponse.json({ 
-                message: "Error to find cafe"
+                message: "Phone number is wrong"
             }, 
             {
                 status: 400
             })
         }
-
         
         let user = await prisma.users.findUnique({
             where: {
@@ -86,11 +84,6 @@ export async function POST(request: NextRequest) {
             name: user?.name,
             DOB: user?.DOB
         })
-
-
-
-
-
 
 
     }catch(e){

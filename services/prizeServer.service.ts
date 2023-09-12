@@ -14,9 +14,7 @@ const PrizeServerService = {
             response = await fetch(`http://${domain}/api/prizes/${id}`)
         });
 
-        const body = await response!.json()
-
-        return body
+        return await response!.json()
     }
 }
 

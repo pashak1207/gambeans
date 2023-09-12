@@ -1,13 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/prisma/client'
-import CafeUtils from '@/utils/cafe';
  
 export async function POST(request: NextRequest) {
 
     try{
         const body = await request.json()
-        const { userCode } = body
-        const cafeId = await CafeUtils.getCurrentCafeId(request)
+        const { userCode }:{ userCode: string} = body
+        const cafeId:number = +request.headers.get('x-cafe-id')!                
 
         const dailyCode = await prisma.daily_codes.findFirst({
             where:{
@@ -42,7 +41,7 @@ export async function POST(request: NextRequest) {
         console.log(e)
 
         return NextResponse.json({ 
-            message: "Errer to compare cafe code"
+            message: "Error during codes comparison"
         }, 
         {
             status: 400

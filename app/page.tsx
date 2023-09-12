@@ -17,7 +17,7 @@ export default async function WelcomePage() {
                 width={313}
                 height={182}
             />
-            <p>This is your {name}'s loyalty card, but cooler. More rewards. More fun. All right on your phone.</p>
+            <p>This is your {name}'s loyalty card, but cooler.<br/>More rewards.<br/>More fun.<br/>All right on your phone.</p>
             <Button title="NEXT" isLink={true} path={`/login`}/>
         </main>
     )

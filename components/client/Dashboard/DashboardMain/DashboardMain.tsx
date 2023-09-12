@@ -109,7 +109,7 @@ export default function DashboardMain() {
             }
         }
 
-        AuthClientService.getMe().then(data => setStep(data.step))
+        AuthClientService.getMe().then(data => setStep(data.cafes[0].step))        
         
     }, [step])
 

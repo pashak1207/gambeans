@@ -3,14 +3,41 @@ import type { NextRequest } from 'next/server'
 import { cookies } from 'next/headers'
 import JWT from './utils/jwtgenerate'
 import Redirect from './utils/redirects'
+import CafeServerService from './services/cafeServer.service'
+
 
 const privateRoutes = ["/dashboard"]
- 
-export async function middleware(request: NextRequest) {
-  const path = request.nextUrl.pathname
-  const accessToken = cookies().get('JWTAccessToken')?.value || false
 
-  if(privateRoutes.some(route => path.startsWith(route))){
+export async function middleware(request: NextRequest){
+  const path:string = request.nextUrl.pathname
+  const cookiesStore= cookies()
+  const accessToken:string|boolean = cookiesStore.get('JWTAccessToken')?.value || false
+  const currentCafeId:number = await CafeServerService.getCafeId().then(data => data.cafeId)
+
+  if(!currentCafeId){
+    return Redirect.notFound(request)
+  } 
+
+
+
+
+
+  if(path.startsWith("/api")){
+    const requestHeaders = new Headers(request.headers)
+    requestHeaders.set('x-cafe-id', currentCafeId.toString())
+        
+    return NextResponse.next({
+      request: {
+        headers: requestHeaders,
+      }
+    })
+  }
+  
+  
+  
+  
+  
+  else if(privateRoutes.some(route => path.startsWith(route))){
 
     let accessVerified = null
 
@@ -20,7 +47,7 @@ export async function middleware(request: NextRequest) {
       }catch(e){
         accessVerified = null
       }
-    }    
+    }
 
     if(!accessToken || !accessVerified){
 
@@ -31,20 +58,16 @@ export async function middleware(request: NextRequest) {
         return Redirect.loginPage(request)
 
       }
-
+      
       try{
         const payload = await JWT.verfiyRefreshToken(refreshToken)
                   .then(data => data?.payload)
-        const userId = payload?.id
-        const cafeId = payload?.cafe_id
+        if(payload?.id && payload?.role && payload?.cafe_id){
+          cookiesStore.set(...await JWT.generateAccessToken(+payload?.id, payload?.role as Users_role, request, payload?.cafe_id as string) as any)
+          cookiesStore.set(...await JWT.generateRefreshToken(+payload?.id, payload?.role as Users_role, request, payload?.cafe_id as string) as any)
 
-
-        let response = NextResponse.next()
-        
-        response.cookies.set(...await JWT.generateAccessToken({id: userId}, request, cafeId as string) as any)
-        response.cookies.set(...await JWT.generateRefreshToken({id: userId}, request, cafeId as string) as any)
-
-        return response;
+          return NextResponse.next();
+        }
 
       }catch(err){
         console.log(err);
@@ -56,7 +79,13 @@ export async function middleware(request: NextRequest) {
 
     return NextResponse.next()
     
-  }else if(path.startsWith("/login")){
+  }
+  
+  
+  
+  
+  
+  else if(path.startsWith("/login")){
 
     if(accessToken){
       let accessVerified = null;
@@ -71,5 +100,14 @@ export async function middleware(request: NextRequest) {
         return Redirect.dashboard(request)
       }
     }
+    
+    return NextResponse.next()
+    
   }
+}
+
+export const config = {
+  matcher: [
+    '/((?!_next/static|_next/image|favicon.ico).*)',
+  ],
 }

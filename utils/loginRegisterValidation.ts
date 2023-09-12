@@ -1,8 +1,15 @@
 import moment from "moment";
 
 const LoginRegisterValidation = {
-    validatePhone(code:string, phoneNum:string) {
-        const phone = code + phoneNum
+    validatePhone(code:string, phoneNum?:string) {
+        if(!phoneNum){
+            
+            const phone = `${code}`.replace(/\D/g, '')
+
+            return /^\d{9,}$/.test(phone);
+        }
+
+        const phone = `${code}` + `${phoneNum}`
         
         return /^\+\d{9,}$/.test(phone);
     },

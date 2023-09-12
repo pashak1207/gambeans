@@ -24,7 +24,7 @@ const CafeUtils = {
                     }
                 })    
             }catch (err){
-                console.log("Error to find cafe: " + err);
+                console.log("Cafe not found: " + err);
             }           
         }else{
             const cafe_id = await JWT.verfiyAccessToken(accesToken!)
@@ -39,7 +39,7 @@ const CafeUtils = {
                 })                
                 
             }catch(err){
-                console.log("Error to find cafe: " + err);
+                console.log("Cafe not found: " + err);
             }            
         }
 
@@ -63,10 +63,13 @@ const CafeUtils = {
                                 link_heb: request.headers.get('host')
                             }
                         ]
+                    },
+                    select:{
+                        id: true
                     }
-                }).then(data => data?.id)
+                }).then(data => data?.id)          
             }catch (err){
-                console.log("Error to find cafe: " + err);
+                console.log("Cafe not found: " + err);
             }
      
         }else{

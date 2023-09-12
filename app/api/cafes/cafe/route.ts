@@ -5,7 +5,7 @@ import CafeUtils from '@/utils/cafe';
 export async function GET(request: NextRequest) {
 
     try{        
-        const cafeId = await CafeUtils.getCurrentCafeId(request)        
+        const cafeId:number | unknown = await CafeUtils.getCurrentCafeId(request)              
 
         if(!cafeId){
             return NextResponse.json({ 
@@ -13,6 +13,15 @@ export async function GET(request: NextRequest) {
             }, 
             {
                 status: 400
+            })
+        }
+
+        if(request.nextUrl.searchParams.has("id")){
+            return NextResponse.json({ 
+                cafeId
+            }, 
+            {
+                status: 200
             })
         }
 

@@ -34,7 +34,7 @@ export default function DashboardCode() {
         if(inputState.every(item => item)){
 
             CafeClientService.compareCodes(inputState.join(''))
-                .then(data => {
+                .then(data => {                    
                     if(data?.isEqual){
                         codeContainer.current?.classList.add('green')
 

@@ -77,10 +77,10 @@
         
         #phone__code{
             margin-right: toRem(13);
-            flex: 0 0 48px;
+            flex: 0 0 75px;
 
             input{
-                width: 48px;
+                width: 75px;
                 text-align: right;
             }
         }
@@ -98,10 +98,6 @@
     }
 
     .stepsecond{
-        &>button{
-            -bottom: 10px;
-        }
-
         .timer{
             width: 100%;
 
@@ -115,6 +111,7 @@
         .code-input{
             display: flex;
             margin-bottom: toRem(11);
+            justify-content: center;
             width: 100%;
             
             input{
@@ -140,8 +137,8 @@
         }
 
         small{
-            margin-top: 0;
-            margin-bottom: toRem(10);
+            margin-top: toRem(10);
+            margin-bottom: 0;
 
             a{
                 text-decoration: underline;

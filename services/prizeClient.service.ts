@@ -3,9 +3,7 @@ const PrizeClientService = {
     async getAllPrizes() {
         const response = await fetch(`/api/prizes`)
 
-        const body = await response.json()
-
-        return body
+        return await response.json()
     }
 }
 

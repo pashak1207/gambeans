@@ -1,4 +1,3 @@
-import { redirect } from 'next/navigation'
 import { headers } from 'next/headers';
 import { cookies } from 'next/headers'
 
@@ -23,9 +22,7 @@ const AuthServerService = {
             response = await fetch(`http://${domain}/api/auth/me`, { headers: hds })
         });
     
-        const body = await response!.json()
-
-        return body
+        return await response!.json()
 
     }
 }

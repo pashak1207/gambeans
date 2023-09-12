@@ -7,13 +7,11 @@ const AuthClientService = {
             })
         })
 
-        const body = await response.json()
-
-        return body
+        return await response.json()
     },
 
-    async compareCode(phone:string, code:string) {
-        const response = await fetch(`/api/auth/compareCodes`, {
+    async login(phone:string, code:string) {
+        const response = await fetch(`/api/auth/login`, {
             method: 'POST',
             body: JSON.stringify({
                 phone,
@@ -21,9 +19,7 @@ const AuthClientService = {
             })
         })
 
-        const body = await response.json()
-
-        return body
+        return await response.json()
     },
 
     async validatePhone(phone:string) {
@@ -34,9 +30,7 @@ const AuthClientService = {
             })
         })
 
-        const body = await response.json()
-
-        return body
+        return await response.json()
     },
 
     async sendVerificationCode(code:string, phone:string) {
@@ -48,9 +42,7 @@ const AuthClientService = {
             })
         })
 
-        const body = await response.json()
-
-        return body
+        return await response.json()
     },
 
     async registration(phone:number, name:string, dob:Date){
@@ -63,17 +55,13 @@ const AuthClientService = {
             })
         })
 
-        const body = await response.json()
-
-        return body
+        return await response.json()
     },
     
     async getMe(){
         const response = await fetch(`/api/auth/me`)
-
-        const body = await response.json()
         
-        return body
+        return await response.json()
     }
 }
 

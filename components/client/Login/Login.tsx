@@ -23,7 +23,7 @@ export default function Login() {
         case 3:
             return <StepThird state={state} setState={setState}/>
         case 4:
-            return <StepFourth state={state} setState={setState}/>
+            return <StepFourth setState={setState}/>
 
     }
 }

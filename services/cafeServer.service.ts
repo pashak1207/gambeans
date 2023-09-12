@@ -12,11 +12,24 @@ const CafeServerService = {
         .catch(async err => {
             response = await fetch(`http://${domain}/api/cafes/cafe`)
         });
-
-        const body = await response!.json()
         
-        return body
+        return await response!.json()
     },
+
+    async getCafeId(){
+        const domain = headers().get('host')
+        let response;
+        
+        await fetch(`https://${domain}/api/cafes/cafe?id`, { method: 'HEAD' })
+        .then(async data => {
+            response = await fetch(`https://${domain}/api/cafes/cafe?id`)
+        })
+        .catch(async err => {
+            response = await fetch(`http://${domain}/api/cafes/cafe?id`)
+        });
+        
+        return await response!.json()
+    }
 }
 
 export default CafeServerService;

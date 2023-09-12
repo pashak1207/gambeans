@@ -3,7 +3,7 @@ import React, { SetStateAction } from "react"
 import { useRouter } from "next/navigation"
 import Image from "next/image"
 
-export default function StepFourth({state, setState}:{state:ILoginRegistrationState, setState : React.Dispatch<SetStateAction<ILoginRegistrationState>>}) {
+export default function StepFourth({setState}:{ setState : React.Dispatch<SetStateAction<ILoginRegistrationState>>}) {
     const router = useRouter()
 
     const prevPage = () => {
@@ -15,7 +15,7 @@ export default function StepFourth({state, setState}:{state:ILoginRegistrationSt
          })
     }
 
-    const nextPageClickHandler = () => {
+    const nextPageClickHandler = () => {        
         router.push('/dashboard')
     }
 

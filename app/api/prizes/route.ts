@@ -1,22 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/prisma/client'
-import CafeUtils from '@/utils/cafe';
  
 export async function GET(request: NextRequest) {
-
     try{
-
-        const cafeId = await CafeUtils.getCurrentCafeId(request)        
-
-        if(!cafeId){
-            return NextResponse.json({ 
-                message: "Can`t get current cafe"
-            }, 
-            {
-                status: 400
-            })
-        }
-
+        const cafeId = +request.headers.get('x-cafe-id')!
         const prizes = await prisma.prizes.findMany({
             where: {
                 cafe_id: cafeId,
@@ -34,7 +21,15 @@ export async function GET(request: NextRequest) {
                 }
             ],
         })
-        
+
+        if(!prizes){
+            return NextResponse.json({ 
+                message: "Prizes not found"
+            }, 
+            {
+                status: 400
+            })
+        }
 
         return NextResponse.json({ 
             prizes

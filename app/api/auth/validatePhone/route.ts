@@ -1,14 +1,20 @@
 import { NextResponse } from 'next/server'
 import { Twilio } from "twilio";
 
-const accountSid = process.env.TWILIO_SID;
-const authToken = process.env.TWILIO_TOKEN;
-const client = new Twilio(accountSid, authToken);
+const client = new Twilio(process.env.TWILIO_SID, process.env.TWILIO_TOKEN);
  
 export async function POST(request: Request) {
     try{
         const body = await request.json()
         const { phone } = body
+
+        if(!phone){
+            return NextResponse.json({
+                message: 'Invalid phone number',
+                phoneValid: false,
+                phoneNumber: phone
+            })
+        }
 
         const isNumberValid = await client.lookups.v2.phoneNumbers(phone)
                  .fetch()

@@ -1,13 +1,20 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/prisma/client'
 import JWT from '@/utils/jwtgenerate';
+import LoginRegisterValidation from '@/utils/loginRegisterValidation';
  
 export async function POST(request: NextRequest) {
     try{
         const body = await request.json()
         const { phone, name, dob } = body
 
-        if(phone && name && dob){
+        const isPhoneValid = LoginRegisterValidation.validatePhone(phone)
+        const isNameValid = LoginRegisterValidation.validateName(name)
+        const date = new Date(dob)
+        const isDateValid = LoginRegisterValidation.validateDate(`${date.getUTCDate()}`, `${(date.getUTCMonth() + 1)}`, `${date.getUTCFullYear()}`)
+        
+
+        if(isPhoneValid && isNameValid && isDateValid){
             let user = await prisma.users.update({
                 where: {
                     phone: +phone,
@@ -26,8 +33,8 @@ export async function POST(request: NextRequest) {
                 status: 200
             })
 
-            response.cookies.set(...await JWT.generateAccessToken(user, request) as any)
-            response.cookies.set(...await JWT.generateRefreshToken(user, request) as any)
+            response.cookies.set(...await JWT.generateAccessToken(+user.id, user.role as Users_role, request) as any)
+            response.cookies.set(...await JWT.generateRefreshToken(+user.id, user.role as Users_role, request) as any)
             
             return response
 
@@ -35,7 +42,7 @@ export async function POST(request: NextRequest) {
 
         }else{
             return NextResponse.json({ 
-                message: "Not all fields are filled in",
+                message: "Not all fields are filled in or some fields are wrong",
                 isSuccess: false,
             }, 
             {

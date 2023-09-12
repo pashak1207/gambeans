@@ -2,9 +2,8 @@
     box-shadow: 4px 8px 24px 0px var(--simple-btn-bg);
     background: var(--button-background);
     color: var(--button-color);
-    max-width: 342px;
-    width: 100%;
-    height: 65px;
+    min-width: 342px;
+    padding: 18px 5px;
     display: flex;
     justify-content: center;
     align-items: center;

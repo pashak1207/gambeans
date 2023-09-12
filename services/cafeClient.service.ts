@@ -9,9 +9,7 @@ const CafeClientService = {
             })}
         )
 
-        const body = await response.json()
-
-        return body
+        return await response.json()
     }
 }
 

@@ -1,16 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/prisma/client'
-import CafeUtils from '@/utils/cafe';
  
 export async function GET(request: NextRequest, {params}:{params:{id:string}}) {
-
     try{
         const prizeId = params.id
-        const cafeId = await CafeUtils.getCurrentCafeId(request)        
+        const cafeId = +request.headers.get('x-cafe-id')!            
 
-        if(!cafeId){
+        if(!prizeId){
             return NextResponse.json({ 
-                message: "Can`t get current cafe"
+                message: "Can`t get current prize by id"
             }, 
             {
                 status: 400
@@ -24,8 +22,16 @@ export async function GET(request: NextRequest, {params}:{params:{id:string}}) {
                     id: cafeId
                 },
             },
-
         })
+
+        if(!prize){
+            return NextResponse.json({ 
+                message: "Can`t get current prize"
+            }, 
+            {
+                status: 400
+            })
+        }
 
         return NextResponse.json({
             ...prize
@@ -33,19 +39,13 @@ export async function GET(request: NextRequest, {params}:{params:{id:string}}) {
         {
             status: 200
         })
-
-        console.log(prize);
-        
-        
-        
-        
         
 
     }catch(e){
         console.log(e)
 
         return NextResponse.json({ 
-            message: "Errer to get prize"
+            message: "Error to get prize"
         }, 
         {
             status: 400
