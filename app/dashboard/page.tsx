@@ -1,6 +1,6 @@
 import Dashboard from "@/components/client/Dashboard/Dashboard";
 
-export default function LoginPage() {
+export default function DashboardPage() {
     return (
         <main>
             <section className="dashboard">

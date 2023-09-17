@@ -1,19 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { generateVerificationCode } from '@/utils/generateVerificationCode'
 import { prisma} from '@/prisma/client'
-import LoginRegisterValidation from '@/utils/loginRegisterValidation'
-import { sentTwilioNumber } from '@/utils/sentTwilioNumber'
+import UserUtils from '@/utils/userUtils'
+import { sendTwilioNumber } from '@/utils/sendTwilioNumber'
 
 export async function POST(request: NextRequest) {
     try{
         const body = await request.json()        
         const { phone }:{ phone:string } = body
-        const code:string = generateVerificationCode()
+        const code:string = UserUtils.generateVerificationCode()
         const cafe_id:number = +request.headers.get('x-cafe-id')!
 
         console.log(code);     
 
-        if(!phone || !LoginRegisterValidation.validatePhone(phone)){
+        if(!phone || !UserUtils.validatePhone(phone)){
             return NextResponse.json({ 
                 message: "Phone number is wrong"
             }, 
@@ -24,49 +23,30 @@ export async function POST(request: NextRequest) {
         
         let user = await prisma.users.findUnique({
             where: {
-                phone: +phone,
-                cafes: {
-                    some: {
-                        cafe_id
-                    }
+                phone_cafe_id:{
+                    phone,
+                    cafe_id
                 }
             },
         }).catch(e => console.log("Find user error: " + e.message))
 
         if(!user){
-            await prisma.cafes.update({
-                where:{
-                    id: +cafe_id
-                },
-                data: {
-                    users:{
-                        create: {
-                            user:{
-                                create: {
-                                    phone: +phone,
-                                    verification_code: code,
-                                },
-                            }
-                        }
-                    }
+            user = await prisma.users.create({
+                data:{
+                    phone,
+                    verification_code: code,
+                    cafe_id,
+                    avatar: UserUtils.selectRandomAvatar()
                 }
-            })
-
-            user = await prisma.users.findUnique({
-                where: {
-                    phone: +phone,
-                    cafes: {
-                        some: {
-                            cafe_id
-                        }
-                    }
-                },
-            }).catch(e => console.log("Find user error: " + e.message))
+            }).catch(e => console.log("Create user error: " + e.message))
 
         }else{
             user = await prisma.users.update({
                 where: {
-                    phone: +phone,
+                    phone_cafe_id:{
+                        phone,
+                        cafe_id
+                    }
                 },
                 data: {
                     verification_code: code
@@ -76,7 +56,7 @@ export async function POST(request: NextRequest) {
         }
 
 
-        // await sentTwilioNumber(code, phone)
+        // await sendTwilioNumber(code, phone)
 
 
         return NextResponse.json({

@@ -1,7 +1,7 @@
 import Button from "@/components/ui/Button/Button"
 import Validation from "@/components/ui/Validation/Validation"
 import AuthClientService from "@/services/authClient.service"
-import LoginRegisterValidation from "@/utils/loginRegisterValidation"
+import UserUtils from "@/utils/userUtils"
 import React, { SetStateAction, useState } from "react"
 
 
@@ -17,21 +17,21 @@ export default function StepThird({state, setState}:{state:ILoginRegistrationSta
     const  nextBtnHandler = async () => {
         setValidation(null)        
 
-        if(!LoginRegisterValidation.validateName(name)){
+        if(!UserUtils.validateName(name)){
             setValidation("Enter correct name")
             return
         }
 
-        if(!LoginRegisterValidation.validateDate(day, month, year)){
+        if(!UserUtils.validateDate(day, month, year)){
             setValidation("Enter correct date of birth")
             return
         }
         
 
-        if(LoginRegisterValidation.validateDate(day, month, year) && LoginRegisterValidation.validateName(name)){
+        if(UserUtils.validateDate(day, month, year) && UserUtils.validateName(name)){
             const inputDate =  new Date(`${year}-${month}-${day}`)           
             
-            await AuthClientService.registration(+state.phone!, name, inputDate)
+            await AuthClientService.registration(state.phone!, name, inputDate)
                              .then(data => console.log(data))
                              .catch(e => console.log("Registration error: " + e.message))
             

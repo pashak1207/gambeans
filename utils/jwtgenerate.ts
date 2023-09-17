@@ -1,5 +1,5 @@
 import * as jose from 'jose'
-import CafeUtils from './cafe';
+import CafeUtils from './cafeUtils';
 import { NextRequest } from 'next/server';
 
 const accessSecret = process.env.JWT_ACCESS_SECRET || "ACCESS_SECRET";

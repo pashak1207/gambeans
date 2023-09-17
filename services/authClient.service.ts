@@ -45,7 +45,7 @@ const AuthClientService = {
         return await response.json()
     },
 
-    async registration(phone:number, name:string, dob:Date){
+    async registration(phone:string, name:string, dob:Date){
         const response = await fetch(`/api/auth/registration`, {
             method: 'POST',
             body: JSON.stringify({
@@ -58,8 +58,8 @@ const AuthClientService = {
         return await response.json()
     },
     
-    async getMe(){
-        const response = await fetch(`/api/auth/me`)
+    async getMe(param = ""){
+        const response = await fetch(`/api/auth/me?${param}`)
         
         return await response.json()
     }

@@ -1,6 +1,18 @@
 import moment from "moment";
 
-const LoginRegisterValidation = {
+
+const UserUtils = {
+    selectRandomAvatar() : string {
+
+        const avatarsUrl:string[] = []
+
+        for(let i = 1; i <= 5; i++) {
+            avatarsUrl[i] = `/avatar_${i}.svg`;
+        }
+
+        return avatarsUrl[Math.floor(Math.random() * avatarsUrl.length)];
+    },
+
     validatePhone(code:string, phoneNum?:string) {
         if(!phoneNum){
             
@@ -11,7 +23,7 @@ const LoginRegisterValidation = {
 
         const phone = `${code}` + `${phoneNum}`
         
-        return /^\+\d{9,}$/.test(phone);
+        return /^\d{9,}$/.test(phone);
     },
 
     validateCode(code:string) : boolean {
@@ -24,7 +36,14 @@ const LoginRegisterValidation = {
 
     validateDate(day:string, month:string, year:string) : boolean {
         return moment(`${day}/${month}/${year}`, 'DD/MM/YYYY').isValid()
+    },
+
+    generateVerificationCode() : string {
+        const randomNumber = Math.floor(Math.random() * 10000);
+        const paddedNumber = randomNumber.toString().padStart(4, '0');
+    
+        return paddedNumber;
     }
 }
 
-export default LoginRegisterValidation
+export default UserUtils

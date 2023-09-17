@@ -3,6 +3,7 @@
 import React, { useEffect, useRef, useState } from "react"
 import "./DashboardCode.scss"
 import CafeClientService from "@/services/cafeClient.service"
+import PrizeClientService from "@/services/prizeClient.service"
 
 const initialState = [
     "", "", "", ""
@@ -37,7 +38,7 @@ export default function DashboardCode() {
                 .then(data => {                    
                     if(data?.isEqual){
                         codeContainer.current?.classList.add('green')
-
+                        PrizeClientService.setOpenedPrize()
                         setTimeout(() => {
                             codeContainer.current?.classList.remove('green')
                         }, 1000)

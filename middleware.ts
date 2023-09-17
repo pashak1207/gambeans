@@ -4,7 +4,7 @@ import { cookies } from 'next/headers'
 import JWT from './utils/jwtgenerate'
 import Redirect from './utils/redirects'
 import CafeServerService from './services/cafeServer.service'
-
+import AuthServerService from './services/authServer.service'
 
 const privateRoutes = ["/dashboard"]
 
@@ -44,6 +44,17 @@ export async function middleware(request: NextRequest){
     if(accessToken){
       try{  
         accessVerified = await JWT.verfiyAccessToken(accessToken)
+
+        const user = await AuthServerService.getMe()
+        if(!user?.id){         
+          const response = Redirect.loginPage(request);
+
+          response.cookies.delete('JWTRefreshToken');
+          response.cookies.delete('JWTAccessToken');
+
+          return response;
+        }
+        
       }catch(e){
         accessVerified = null
       }

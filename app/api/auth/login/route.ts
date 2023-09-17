@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/prisma/client'
 import JWT from '@/utils/jwtgenerate'
-import LoginRegisterValidation from '@/utils/loginRegisterValidation'
+import UserUtils from '@/utils/userUtils'
 import { cookies } from 'next/headers'
  
 export async function POST(request: NextRequest) {    
@@ -14,7 +14,7 @@ export async function POST(request: NextRequest) {
         if(
             !phone ||
             !code ||
-            !LoginRegisterValidation.validatePhone(phone)
+            !UserUtils.validatePhone(phone)
         ){
             return NextResponse.json({ 
                 message: "Wrong request data"
@@ -26,11 +26,9 @@ export async function POST(request: NextRequest) {
 
         const user = await prisma.users.findUnique({
             where: {
-                phone: +phone,
-                cafes:{
-                    some:{
-                        cafe_id
-                    }
+                phone_cafe_id:{
+                    phone,
+                    cafe_id
                 }
             }
         })!
@@ -40,8 +38,8 @@ export async function POST(request: NextRequest) {
 
             if(user?.DOB || user?.name){
                 isRegistrated = true;
-                cookiesStore.set(...await JWT.generateAccessToken(+user.id, user.role as Users_role, request, cafe_id.toString()) as any)
-                cookiesStore.set(...await JWT.generateRefreshToken(+user.id, user.role as Users_role, request, cafe_id.toString()) as any)
+                cookiesStore.set(...await JWT.generateAccessToken(+user.id, user.role as any, request, cafe_id.toString()) as any)
+                cookiesStore.set(...await JWT.generateRefreshToken(+user.id, user.role as any, request, cafe_id.toString()) as any)
                 
             }
 

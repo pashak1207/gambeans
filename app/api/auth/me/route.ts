@@ -7,7 +7,6 @@ export async function GET(request: NextRequest) {
     try{
         const cookieStore = cookies()
         const accessToken = cookieStore.get('JWTAccessToken')?.value || request.headers.get('authorization')
-        const cafe_id:number = +request.headers.get('x-cafe-id')!         
         
         const userId:number|void = await JWT.verfiyAccessToken(accessToken!)
                                     .then(data => data?.payload?.id)
@@ -23,29 +22,42 @@ export async function GET(request: NextRequest) {
             })
         }
 
-        const user = await prisma.users.findUnique({
-            where: {
-                id: userId,
-                cafes:{
-                    some:{
-                        cafe_id
-                    }
+        let user;
+        
+        if(request.nextUrl.searchParams.has("prizes")){                                   
+            user = await prisma.users.findUnique({
+                where: {
+                    id: userId,
+                },
+                include:{
+                    prizes: {
+                        include:{
+                            prize: true
+                        },
+                        orderBy:{
+                            id: "asc"
+                        }
+                    },
+                },
+            })
+            
+        }else{
+            user = await prisma.users.findUnique({
+                where: {
+                    id: userId,
+                },
+                select:{
+                    id: true,
+                    DOB: true,
+                    name:true,
+                    avatar: true,
+                    role: true,
+                    status:true,
+                    prizes: true,
+                    cafe_id: true,
                 }
-            },
-            select:{
-                id: true,
-                DOB: true,
-                name:true,
-                role: true,
-                status:true,
-                prize: true,
-                cafes:{
-                    where:{
-                        cafe_id: cafe_id
-                    }
-                }
-            }
-        })        
+            })
+        }    
         
         if(!user){
             cookieStore.delete('JWTRefreshToken')

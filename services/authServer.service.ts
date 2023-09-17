@@ -2,7 +2,7 @@ import { headers } from 'next/headers';
 import { cookies } from 'next/headers'
 
 const AuthServerService = {   
-    async getMe(){
+    async getMe(param = ""){
         const accessToken = cookies().get('JWTAccessToken')?.value;
         
         const hds = new Headers({
@@ -11,15 +11,15 @@ const AuthServerService = {
 
         const domain = headers().get('host')
 
-        let response;
+        let response;        
 
         
-        await fetch(`https://${domain}/api/auth/me`, { method: 'HEAD', headers: hds, })
+        await fetch(`https://${domain}/api/auth/me?${param}`, { method: 'HEAD', headers: hds })
         .then(async data => {
-            response = await fetch(`https://${domain}/api/auth/me`, { headers: hds })
+            response = await fetch(`https://${domain}/api/auth/me?${param}`, { headers: hds })
         })
         .catch(async err => {            
-            response = await fetch(`http://${domain}/api/auth/me`, { headers: hds })
+            response = await fetch(`http://${domain}/api/auth/me?${param}`, { headers: hds })
         });
     
         return await response!.json()

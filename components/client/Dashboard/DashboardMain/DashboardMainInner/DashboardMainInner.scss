@@ -20,8 +20,8 @@
         width: 100%;
         left: 0;
         top: -120px;
-        // pointer-events: none;
-        // user-select: none;
+        pointer-events: none;
+        user-select: none;
         display: flex;
         flex-wrap: wrap;
         z-index: -1;
@@ -143,6 +143,17 @@
         &.active,
         &.visited{
             cursor: pointer;
+        }
+
+        &.active.expired,
+        &.visited.expired{
+            cursor: auto;
+        }
+
+        &.expired,
+        &.used{
+            filter: grayscale(0.4);
+            cursor: auto;
         }
     }
 }

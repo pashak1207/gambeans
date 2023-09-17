@@ -23,13 +23,25 @@ interface IPrize{
     discount: number
     text: string
     image: string
+    step_image: string
     type: Prize_type
     revenue: number
     probability: number
-    step: number
     is_active: boolean
-    expires_at: Date
+    expires_at: number
     created_at: Date
+}
+
+interface IUserPrize{
+    id: number
+    prize_id: number,
+    used: null | Date,
+    opened: null | Date,
+    user_id: number,
+    created_at: Date,
+    updated_at: Date,
+    expires_at: null | Date,
+    prize: IPrize
 }
 
 enum Users_role {

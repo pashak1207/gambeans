@@ -4,22 +4,16 @@ import { prisma } from '@/prisma/client'
 export async function GET(request: NextRequest) {
     try{
         const cafeId = +request.headers.get('x-cafe-id')!
+
         const prizes = await prisma.prizes.findMany({
             where: {
                 cafe_id: cafeId,
-                is_active: true,
-                expires_at: {
-                    gte: new Date()
-                }
             },
             orderBy: [
                 {
-                    step: 'asc',
-                },
-                {
-                    created_at: 'asc'
+                    created_at: 'desc'
                 }
-            ],
+            ]
         })
 
         if(!prizes){

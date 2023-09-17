@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/prisma/client'
-import CafeUtils from '@/utils/cafe';
+import CafeUtils from '@/utils/cafeUtils';
  
 export async function GET(request: NextRequest) {
 

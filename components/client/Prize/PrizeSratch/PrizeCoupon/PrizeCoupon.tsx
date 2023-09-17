@@ -5,7 +5,7 @@
 import { useEffect, useRef } from 'react';
 
 function PrizeCoupon(props) {
-	const canvasRef = useRef(null);
+	const canvasRef = useRef(null);	
 
 	function main() {
 		let isDrawing, lastPoint;
@@ -25,6 +25,10 @@ function PrizeCoupon(props) {
 		};
 
 		brush.src = 'data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgNDAgNDAiIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSIyMCIgY3k9IjIwIiByPSIyMCIvPjwvc3ZnPg==';
+
+		if(props.opened && canvas?.parentNode){			
+			canvas.parentNode.removeChild(canvas);
+		}
 
 		canvas.addEventListener('mousedown', handleMouseDown, false);
 		canvas.addEventListener('touchstart', handleMouseDown, false);

@@ -5,8 +5,7 @@ import AuthServerService from "@/services//authServer.service"
 export default async function DashboardHeading() {
     
 
-    const user = await AuthServerService.getMe()
-
+    const user = await AuthServerService.getMe()    
 
     return (
             <div className={style.dashboardheading}>
@@ -16,7 +15,7 @@ export default async function DashboardHeading() {
                         width={40}
                         priority
                         height={40}
-                        src={"/avatar.png"}
+                        src={user.avatar}
                     />
                     <h4>{user.name}</h4>
                 </div>

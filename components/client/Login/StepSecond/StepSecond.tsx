@@ -3,9 +3,9 @@ import Validation from "@/components/ui/Validation/Validation"
 import Link from "next/link";
 import React, { SetStateAction, useState, useEffect, useRef } from "react"
 import AuthClientService from "@/services/authClient.service";
-import LoginRegisterValidation from "@/utils/loginRegisterValidation";
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation'
+import UserUtils from "@/utils/userUtils";
 
 const initCodeValues: number[] | string[] = [
     "","","",""
@@ -66,7 +66,7 @@ export default function StepFirst({state, setState}:{state:ILoginRegistrationSta
     const nextPageClickHandler = async () => {
         const codeFull = code.join("")
 
-        if(!LoginRegisterValidation.validateCode(codeFull)){
+        if(!UserUtils.validateCode(codeFull)){
             setIsValid(false)
             return
         }

@@ -1,11 +1,8 @@
 import { Twilio } from "twilio";
 
-const accountSid = process.env.TWILIO_SID;
-const authToken = process.env.TWILIO_TOKEN;
-const client = new Twilio(accountSid, authToken);
+const client = new Twilio(process.env.TWILIO_SID, process.env.TWILIO_TOKEN);
 
-
-export async function sentTwilioNumber(verification_code:string, phoneTo:string){
+export async function sendTwilioNumber(verification_code:string, phoneTo:string){
     return await client.messages
         .create({
             body: `Your verification code is ${verification_code}`,

@@ -1,0 +1,55 @@
+@import "~app/mixins.scss";
+
+.useswipe-container{
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, 0);
+    width: 100%;
+    height: 85px;
+    background: var(--swipeuse-bg);
+    max-width: var(--max-width);
+    display: flex;
+    padding: toRem(10) toRem(13);
+
+    .useswipe-wrapper{
+        width: 100%;
+        display: flex;
+        align-items: center;
+        border-radius: 100px;
+        padding: toRem(3) toRem(5);
+        background: linear-gradient(286deg, var(--white-color) 0%, var(--swipeuse-gradient-second) 100%);
+
+        button{
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            border-radius: 100px;
+            padding: toRem(5) toRem(30);
+            background: linear-gradient(286deg, var(--swipeuse-btn-color-first) 0%, var(--swipeuse-btn-color-second) 100%);
+            color: var(--white-color);
+            text-align: center;
+            font-size: toRem(20);
+            font-weight: 700;
+            line-height: 1.6;
+            transition: transform 0.3s;
+            position: relative;
+
+            span{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 100%;
+                height: 100%;
+
+                &.unredemed{
+                    position: absolute;
+                    left: 50%;
+                    top: 50%;
+                    transform: translate(-50%, -50%);
+                }
+            }
+        }
+    }
+}
