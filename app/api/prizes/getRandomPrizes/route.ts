@@ -17,7 +17,7 @@ export async function POST(request: NextRequest) {
                     }
                 },
                 type: {
-                    not: 'FREE'
+                    not: 'FIRST'
                 }
             },
             take: +randNum,

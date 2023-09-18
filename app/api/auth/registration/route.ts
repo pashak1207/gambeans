@@ -34,7 +34,7 @@ export async function POST(request: NextRequest) {
                     cafe_id: cafe_id,
                     is_active: true,
                     type: {
-                        not: 'FREE'
+                        not: 'FIRST'
                     }
                 },
                 take: +process.env.PRIZES_REGISTRATION_COUNT!,
@@ -44,7 +44,7 @@ export async function POST(request: NextRequest) {
 
             const welcome_prize = await prisma.prizes.findMany({
                 where: {
-                    type: 'FREE'
+                    type: 'FIRST'
                 },
             })            
 
