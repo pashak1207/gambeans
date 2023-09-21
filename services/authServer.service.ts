@@ -24,7 +24,7 @@ const AuthServerService = {
     
         return await response!.json()
 
-    }
+    },
 }
 
 export default AuthServerService;

@@ -1,0 +1,20 @@
+@import "~app/mixins.scss";
+
+.statisticLineChart{
+    max-width: 662px;
+    padding: toRem(24);
+    margin-top: toRem(50);
+    border-radius: 16px;
+    background: var(--admin-chart-bg);
+
+    h4{
+        display: inline-block;
+        font-family: var(--admin-text-font-family);
+        font-weight: 600;
+        line-height: 20px;
+        color: var(--admin-black-color);
+        margin-bottom: toRem(16);
+        padding-right: toRem(16);
+        border-right: 2px solid var(--gray-color);
+    }
+}

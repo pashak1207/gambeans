@@ -1,0 +1,19 @@
+@import "~app/mixins.scss";
+
+.adminMain{
+    background: var(--white-color);
+    display: flex;
+    height: auto;
+    margin-inline: unset;
+    max-width: none;
+    padding-left: toRem(300);
+
+    @include breakpoint("md"){
+        padding-left: toRem(250);
+    }
+
+    @include breakpoint("sm"){
+        padding-left: 0;
+        flex-direction: column;
+    }
+}

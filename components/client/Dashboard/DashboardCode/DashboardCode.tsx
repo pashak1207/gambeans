@@ -42,6 +42,7 @@ export default function DashboardCode() {
                         setTimeout(() => {
                             codeContainer.current?.classList.remove('green')
                         }, 1000)
+                        window.location.reload()
                     }else{
                         codeContainer.current?.classList.add('red')
                 

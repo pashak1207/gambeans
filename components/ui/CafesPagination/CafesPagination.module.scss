@@ -1,0 +1,32 @@
+@import "~app/mixins.scss";
+
+.pagination{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: toRem(10);
+    padding: toRem(15);
+
+    a{
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        padding: toRem(15);
+        font-family: var(--admin-second-font-family);
+        font-size: toRem(16);
+        line-height: 9px;
+        color: var(--black-color);
+        padding-bottom: toRem(16);
+        transition: background 0.3s;
+
+        &.active{
+            border-bottom: 1px solid #000;
+            padding-bottom: toRem(15);
+            font-weight: 500;
+        }
+
+        &:hover{
+            background: var(--gray-color);
+        }
+    }
+}

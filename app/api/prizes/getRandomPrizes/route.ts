@@ -16,6 +16,9 @@ export async function POST(request: NextRequest) {
                         user_id: +userId
                     }
                 },
+                max_amount:{
+                    gt: 0
+                },
                 type: {
                     not: 'FIRST'
                 }

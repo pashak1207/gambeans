@@ -33,20 +33,26 @@ export async function POST(request: NextRequest) {
                 where:{
                     cafe_id: cafe_id,
                     is_active: true,
+                    max_amount:{
+                        gt: 0
+                    },
                     type: {
                         not: 'FIRST'
                     }
                 },
-                take: +process.env.PRIZES_REGISTRATION_COUNT!,
-                skip: Math.floor(Math.random() * (await prisma.prizes.count() - +process.env.PRIZES_REGISTRATION_COUNT!)),
-            }).catch(err => console.log("Out from array index: " + err));
+            }).then(data => data.sort((a,b) => 0.5 - Math.random()).slice(0, 30))
+            .catch(err => console.log("Out from array index: " + err));            
 
 
             const welcome_prize = await prisma.prizes.findMany({
                 where: {
-                    type: 'FIRST'
+                    type: 'FIRST',
+                    max_amount:{
+                        gt: 0
+                    },
                 },
-            })            
+            }).then(data => data[Math.floor(Math.random() * data.length)])
+            .catch(err => console.log("Cafe didn`t have first prizes: " + err));         
 
             if(!prizes || !welcome_prize){
                 return NextResponse.json({ 
@@ -55,17 +61,18 @@ export async function POST(request: NextRequest) {
                 {
                     status: 400
                 })
-            }
+            }            
             
             await prisma.user_prize.create({
                 data:{
                     user_id: user.id,
-                    prize_id: welcome_prize[Math.floor(Math.random() * welcome_prize.length)].id,
-                    opened: new Date()
+                    prize_id: welcome_prize.id,
+                    opened: new Date(),
+                    expires_at: new Date(new Date().setDate(new Date().getDate() + welcome_prize.expires_at))
                 }
             })            
 
-            await Promise.all(prizes.map(async (prize) => {
+            await Promise.all(prizes.map(async (prize) => {                
                 await prisma.user_prize.create({
                     data:{
                         user_id: user.id,

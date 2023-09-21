@@ -1,0 +1,59 @@
+@import "~app/mixins.scss";
+
+.statisticDoughnutChart{
+    max-width: 400px;
+    height: 256px;
+    border-radius: 16px;
+    background: var(--admin-chart-bg);
+    margin-top: toRem(40);
+    padding: toRem(24);
+    font-family: var(--admin-text-font-family);
+    display: flex;
+    flex-direction: column;
+
+    h4{
+        margin-bottom: toRem(42);
+        font-size: var(14);
+        font-weight: 600;
+        line-height: 20px;
+    }
+}
+
+
+.chartWrapper{
+    display: flex;
+    flex: 1 1 auto;
+    
+    .chart{
+        flex: 0 0 50%;
+        position: relative;
+        height: 100%;
+    }
+
+    .data{
+        flex: 0 0 50%;
+
+        tr{
+
+            th{
+                text-align: right;
+                font-size: toRem(14);
+                line-height: 18px;
+
+                span{
+                    display: inline-block;
+                    position: relative;
+                    bottom: 2px;
+                    width: 7px;
+                    height: 7px;
+                    border-radius: 50%;
+                    margin-right: 7px;
+                }
+
+                &:first-of-type{
+                    text-align: left;
+                }
+            }
+        }
+    }
+}

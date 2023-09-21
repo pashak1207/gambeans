@@ -1,0 +1,21 @@
+@import "~app/mixins.scss";
+
+.logOutBtn{
+    display: flex;
+    align-items: center;
+    padding: toRem(5) toRem(15);
+    font-family: var(--admin-heading-font-family);
+    font-size: toRem(16);
+    line-height: 1.1;
+    color: var(--black-color);
+    text-transform: capitalize;
+    margin-top: auto;
+    
+    svg{
+        margin-right: toRem(4);
+    }
+
+    @include breakpoint("sm"){
+        justify-content: center;
+    }
+}

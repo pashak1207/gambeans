@@ -1,0 +1,109 @@
+@import "~app/mixins.scss";
+
+.adminMenu{
+    display: flex;
+    flex-direction: column;
+    padding: toRem(30) toRem(15);
+    box-shadow: 0px 0px 16px 8px var(--admin-menu-shadow);
+    border-radius: 10px;
+    background: var(--white-color);
+    position: fixed;
+    height: 100vh;
+    width: 300px;
+    z-index: 2;
+    left: 0;
+    top: 0;
+    
+    @include breakpoint("md"){
+        width: 250px;
+    }
+
+    @include breakpoint("sm"){
+        position: static;
+        height: auto;
+        width: 100%;
+    }
+
+    ul{
+        padding: 0 toRem(15);
+        li{
+            margin-bottom: toRem(5);
+
+            &:last-child{
+                margin-bottom: 0;
+            }
+            
+            a{
+                display: flex;
+                align-items: center;
+                text-transform: capitalize;
+                font-family: var(--admin-heading-font-family);
+                color: var(--admin-menu-text-color);
+                font-size: toRem(16);
+                line-height: 1.1;
+                padding: toRem(10) toRem(5);
+                border-radius: 6px;
+                transition: background 0.3s, color 0.3s;
+
+                &:hover{
+                    background: #eee;
+                }
+
+                svg{
+                    margin-right: toRem(4);
+
+                    *{
+                        fill: var(--admin-icon-blure);
+                    }
+                }
+
+                &.active{
+                    background: var(--button-background);
+                    color: var(--white-color);
+
+                    svg{    
+                        *{
+                            fill: var(--white-color);
+                        }
+                    }
+                }
+
+                @include breakpoint("sm"){
+                    justify-content: center;
+                }
+            }
+        }
+    }
+
+    .logo{
+    
+        padding-bottom: toRem(12);
+        border-bottom: 1px solid var(--gray-color);
+        margin-bottom: toRem(50);
+    
+        a{
+            display: flex;
+            align-items: center;
+    
+            h1{
+                color: var(--admin-text-color);
+                text-transform: uppercase;
+                font-family: var(--admin-heading-font-family);
+                font-size: toRem(28);
+                font-weight: 800;
+                line-height: 1.1;
+                margin-left: 7px;
+            }
+        
+            img{
+                object-fit: contain;
+                object-position: center;
+            }
+
+            @include breakpoint("sm"){
+                justify-content: center;
+            }
+        }
+    }
+}
+

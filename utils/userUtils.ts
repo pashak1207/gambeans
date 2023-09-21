@@ -7,8 +7,8 @@ const UserUtils = {
         const avatarsUrl:string[] = []
 
         for(let i = 1; i <= 5; i++) {
-            avatarsUrl[i] = `/avatar_${i}.svg`;
-        }
+            avatarsUrl[i-1] = `/avatar_${i}.svg`;
+        }        
 
         return avatarsUrl[Math.floor(Math.random() * avatarsUrl.length)];
     },
@@ -43,6 +43,15 @@ const UserUtils = {
         const paddedNumber = randomNumber.toString().padStart(4, '0');
     
         return paddedNumber;
+    },
+
+    isDifferentDate (date1:Date, date2:Date){
+        return !!moment(moment(date1).format('YYYY-MM-DD')).diff(moment(moment(date2).format('YYYY-MM-DD')), 'days');
+    },
+
+    getStartOfDay(date: Date) {
+        date.setHours(new Date().getHours(), 0, 0, 0);
+        return date.toISOString();
     }
 }
 

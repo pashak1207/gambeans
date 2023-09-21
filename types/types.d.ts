@@ -10,10 +10,22 @@ interface IUser{
     role: Users_role
     status: User_status
     DOB?: Date
-    cafes: Cafe_user[]
-    prize: User_prize[]
+    daily_code?: string,
+    cafe_id: number
+    prizes: User_prize[]
+    visits: IVisit[]
     verification_code: String
-    created_at: Date
+    updated_at: string
+    created_at: string
+}
+
+interface IVisit{
+    id: number,
+    user_id: number,
+    cafe_id: number,
+    visit_date: string,
+    user?: IUser,
+    cafe?: ICafe
 }
 
 interface IPrize{
@@ -25,11 +37,12 @@ interface IPrize{
     image: string
     step_image: string
     type: Prize_type
+    cost: number,
     revenue: number
     probability: number
     is_active: boolean
     expires_at: number
-    created_at: Date
+    created_at: string
 }
 
 interface IUserPrize{
@@ -38,27 +51,48 @@ interface IUserPrize{
     used: null | Date,
     opened: null | Date,
     user_id: number,
-    created_at: Date,
-    updated_at: Date,
-    expires_at: null | Date,
+    created_at: string,
+    updated_at: string,
+    expires_at: null | string,
     prize: IPrize
 }
 
+interface ICafe {
+    id: number,
+    name: string,
+    email: string,
+    address: string | null,
+    logo: string,
+    color: string,
+    send_phone: string,
+    ftw: number,
+    link_eng: string | null,
+    link_heb: string | null,
+    contact_phone: string | null,
+    contact_name: string | null,
+    daily_code: string,
+    created_at: string,
+    users?: IUser[]
+    prizes?: IPrize[]
+    visits?: IVisit[]
+}
+
 enum Users_role {
-    ADMIN,
-    LOCAL_ADMIN,
-    USER
+    ADMIN = "ADMIN",
+    SUPERADMIN ="SUPERADMIN",
+    USER = "USER"
 }
 
 enum User_status {
-    ACTIVE,
-    BLOCKED
+    ACTIVE = "ACTIVE",
+    BLOCKED = "BLOCKED",
 }
 
 enum Prize_type {
     SCRATCH = "SCRATCH",
     SLOT = "SLOT",
     FREE = "FREE",
+    FIRST = "FIRST",
 }
 
 interface ICookie {

@@ -1,5 +1,5 @@
 import 'reset-css';
-import "@/app/globals-client.scss"
+import "@/app/globals.scss"
 import type { Metadata } from 'next'
 import 'react-toastify/dist/ReactToastify.min.css';
 import { ToastContainer, Slide } from 'react-toastify';

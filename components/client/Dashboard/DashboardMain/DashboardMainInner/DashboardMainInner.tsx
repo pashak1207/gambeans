@@ -6,7 +6,7 @@ import Image from "next/image"
 import AuthClientService from "@/services/authClient.service"
 
 export default function DashboardMainInner({prizes, bgImages}:{prizes:IUserPrize[], bgImages:string[]}) {
-    const [step, setStep] = useState<number>(prizes.filter(prize => prize.opened !== null).length + 1)
+    const [step, setStep] = useState<number>(prizes.filter(prize => prize.opened !== null).length)
     const [allPrizes, setAllPrizes] = useState<IUserPrize[]>(prizes)   
     const stepsRef = useRef([]) as any;
     const itemsRef = useRef([]) as any;
@@ -67,7 +67,7 @@ export default function DashboardMainInner({prizes, bgImages}:{prizes:IUserPrize
     }, [])
 
     useEffect(() => {
-        setStep(allPrizes.filter(prize => prize.opened !== null).length + 1)
+        setStep(allPrizes.filter(prize => prize.opened !== null).length)
     }, [allPrizes])
 
     useEffect(() => {

@@ -1,0 +1,120 @@
+@import "~app/mixins.scss";
+
+.adminCafe{
+    .top{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-bottom: toRem(5);
+        border-bottom: 1px solid var(--gray-color);
+
+        h1{
+            color: var(--admin-second-heading-color);
+            font-family: var(--admin-second-font-family);
+            font-size: toRem(64);
+            font-weight: 400;
+            line-height: 50px;
+            text-transform: capitalize;
+        }
+
+        a{
+            padding: 0 toRem(34);
+            font-family: var(--admin-text-font-family);
+            font-size: toRem(20);
+            line-height: 36px;
+            font-weight: 600;
+            color: var(--black-color);
+            background: var(--admin-btn-bg);
+            transition: background 0.3s;
+
+            &:hover{
+                background: var(--gray-color);
+            }
+        }
+    }
+
+    .middle{
+        display: flex;
+        margin-top: toRem(20);
+        margin-bottom: toRem(80);
+
+        .middle__left{
+            margin-right: toRem(35);
+
+            img{
+                object-fit: contain;
+                object-position: center;
+                margin-bottom: toRem(20);
+            }
+
+            h5{
+                color: var(--admin-second-heading-color);
+                font-family: var(--admin-second-font-family);
+                font-size: toRem(24);
+                font-weight: 700;
+                line-height: 35.5px;
+            }
+
+            a{
+                color: var(--admin_links-color);
+                font-family: var(--admin-second-font-family);
+                font-size: toRem(24);
+                font-weight: 400;
+                line-height: 35.5px;
+            }
+        }
+
+        .middle__right{
+            ul{
+                li{
+                    margin-bottom: toRem(15);
+                    color: var(--admin-second-heading-color);
+                    font-family: var(--admin-second-font-family);
+                    font-size: toRem(24);
+                    font-weight: 400;
+
+                    &:last-child{
+                        margin-bottom: 0;
+                    }
+
+                    span{
+                        font-weight: 700;
+                    }
+                }
+            }
+        }
+    }
+
+    .blocks{
+        .blocks__top{
+            display: grid;
+            grid-template-columns: repeat(4, minmax(210px, 1fr));
+            grid-template-rows: repeat(1, 1fr);
+            gap: toRem(10);
+            justify-content: center;
+            margin-bottom: toRem(10);
+
+            @include breakpoint("xl"){
+                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+
+                &>div{
+                    &:first-child,
+                    &:last-child{
+                        display: none;
+                    }
+                }
+            }
+        }
+
+        .blocks__bottom{
+            display: grid;
+            grid-template-columns: repeat(4, minmax(210px, 1fr));
+            grid-template-rows: repeat(2, 1fr);
+            gap: toRem(10);
+
+            @include breakpoint("xl"){
+                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            }
+        }
+    }
+}

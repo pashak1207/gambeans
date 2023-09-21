@@ -1,5 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;700;800&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@400;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
 @import "~app/mixins.scss";
 
 html{
@@ -14,7 +17,7 @@ html{
 		display: flex;
 		flex-direction: column;
 		color: var(--text-color);
-		font-family: "Nunito", serif;
+		font-family: var(--client-font-family);
 	}
 
 	ol {
@@ -65,10 +68,10 @@ html{
 	}
 
 	main{
-		margin-inline: auto;
+		display: flex;
+		height: 100%;
 		max-width: var(--max-width);
-		width: 100%;
-		flex: 1 1 auto;
+		margin-inline: auto;
 	}
 }
 //RESET CSS END
@@ -78,6 +81,7 @@ html{
     --text-color: #4B3734;
     --button-background: #B79A81;
     --button-color: #fff;
+	--gray-color: #eee;
 	--yellow-button: #EECE6D;
 	--black-color: #000;
 	--progress-color: #FD8679;
@@ -104,8 +108,30 @@ html{
 
 	--max-width: 420px;
 
-	--loading-font-family: 'Urbanist';
+	--client-font-family: "Nunito", serif;
+
+	--loading-font-family: 'Urbanist', sans-serif;
 	--loading-color: #B79A81;
+
+	--admin-text-color: #212121;
+	--admin-black-color: #1C1C1C;
+	--admin-heading-font-family: 'Urbanist', sans-serif;
+	--admin-menu-shadow: rgba(0, 0, 0, 0.05);
+	--admin-icon-blure: rgb(84, 84, 84);
+	--admin-menu-text-color: #545454;
+	--admin-text-font-family: 'Inter', sans-serif;
+	--admin-statistic-block-odd: #E3F5FF;
+	--admin-statistic-block-even: #E5ECF6;
+	--admin-chart-bg: #F7F9FB;
+	--admin-second-font-family: 'Poppins', sans-serif;
+	--admin-btn-bg: #D9D9D9;
+	--admin-checkbox-border-color: #6C757D;
+	--admin-table-heading-font-family: 'Roboto', sans-serif;
+	--admin-border-silver: #DFDFDF;
+	--admin-th-color: #343A40;
+	--admin-border-light-silver: #EAEAEA;
+	--admin-second-heading-color: #666;
+	--admin_links-color: #0038FF;
 }
 
 .loadingPane{

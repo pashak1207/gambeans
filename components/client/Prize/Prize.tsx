@@ -7,8 +7,7 @@ import { notFound } from 'next/navigation'
 export default async function Prize({prizeId}:{prizeId:string}) {
     const userId = await AuthServerService.getMe().then(data => data.id)    
     const userprize:IUserPrize = await PrizeServerService.getUserPrize(userId, prizeId)
-                                        .then(data => data?.prize)
-    
+                                        .then(data => data?.prize)    
     if(!userprize){
         notFound()
     }
@@ -25,6 +24,10 @@ export default async function Prize({prizeId}:{prizeId:string}) {
         case "SLOT":
             return <div className="prize">
                         <div>slot</div>
+                    </div>
+        case "FIRST":
+            return <div className="prize">
+                        <div>first</div>
                     </div>
     }
 }

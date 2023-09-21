@@ -15,22 +15,16 @@ model Users {
   status            User_status  @default(ACTIVE)
   DOB               DateTime?
   avatar            String
+  daily_code        String?
   prizes            User_prize[]
   visits            Visits[]  
   cafe              Cafes        @relation(fields: [cafe_id], references: [id])
   cafe_id           Int          @db.UnsignedInt
   verification_code String
+  updated_at        DateTime     @updatedAt
   created_at        DateTime     @default(now())
 
   @@id([phone, cafe_id])
-}
-
-model Daily_codes {
-  id         Int      @id @default(autoincrement()) @db.UnsignedInt
-  code       String
-  cafe       Cafes    @relation(fields: [cafe_id], references: [id])
-  cafe_id    Int      @db.UnsignedInt
-  created_at DateTime @default(now())
 }
 
 model Cafes {
@@ -40,15 +34,16 @@ model Cafes {
   address       String?
   logo          String
   color         String
+  send_phone    String        @unique
   ftw           Int           @db.UnsignedInt
   link_eng      String?
   link_heb      String?
-  contact_phone Int?          @db.UnsignedInt
+  contact_phone String?
   contact_name  String?
   prizes        Prizes[]
   visits        Visits[]
   users         Users[]
-  daily_codes   Daily_codes[]
+  daily_code    String
   created_at    DateTime      @default(now())
 }
 
@@ -84,6 +79,7 @@ model Prizes {
   image       String
   step_image  String
   type        Prize_type
+  cost        Float
   revenue     Float       
   probability Float
   user        User_prize[]
@@ -94,7 +90,7 @@ model Prizes {
 
 enum Users_role {
   ADMIN
-  LOCAL_ADMIN
+  SUPERADMIN
   USER
 }
 

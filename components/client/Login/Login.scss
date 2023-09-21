@@ -1,10 +1,6 @@
 @import "~/app/mixins.scss";
 
-.login{
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-
+main{
     .loginstep{
         display: flex;
         flex-direction: column;
@@ -22,33 +18,34 @@
             position: relative;
             width: 100%;
         }
-    }
-    button.back{
-        display: inline-block;
-        position: absolute;
-        z-index: 1;
-        left: 0;
-        top: 0;
-    }
 
-    h4{
-        font-size: toRem(20);
-        position: relative;
-        bottom: 22px;
-    }
+        button.back{
+            display: inline-block;
+            position: absolute;
+            z-index: 1;
+            left: 0;
+            top: 0;
+        }
 
-    p{
-        font-size: toRem(20);
-        line-height: 1.6;
-        margin-bottom: toRem(50);
-    }
+        h4{
+            font-size: toRem(20);
+            position: relative;
+            bottom: 22px;
+        }
 
-    small{
-        font-size: toRem(14);
-        line-height: 1.6;
-        margin-top: toRem(7);
-        margin-bottom: toRem(15);
-        display: block;
+        p{
+            font-size: toRem(20);
+            line-height: 1.6;
+            margin-bottom: toRem(50);
+        }
+
+        small{
+            font-size: toRem(14);
+            line-height: 1.6;
+            margin-top: toRem(7);
+            margin-bottom: toRem(15);
+            display: block;
+        }
     }
 
     .stepfirst{

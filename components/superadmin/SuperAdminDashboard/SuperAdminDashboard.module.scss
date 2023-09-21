@@ -1,0 +1,23 @@
+@import "~app/mixins.scss";
+
+.superDashboard{
+    h2{
+        font-size: toRem(36);
+        font-weight: 400;
+        line-height: 1.1;
+        text-transform: capitalize;
+        font-family: var(--admin-heading-font-family);
+        padding-bottom: toRem(30);
+        width: 100%;
+        border-bottom: 1px solid var(--gray-color);
+        margin-bottom: toRem(30);
+        max-width: 890px;
+    }
+}
+
+.statisticBlocks{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 14px;
+}

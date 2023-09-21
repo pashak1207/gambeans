@@ -2,3 +2,22 @@
     $remValue: ($value / 16) + rem; 
     @return $remValue;
 }
+
+$breakpoints: (
+	"sm": 500px,
+	"md": 768px,
+	"lg": 992,
+	"xl": 1200px,
+) !default;
+
+@mixin breakpoint($name, $param: 'max-width') {
+	@if not map-has-key($breakpoints, $name) {
+		@media ($param: $name) {
+			@content;
+		}
+	} @else {
+		@media ($param: map-get($breakpoints, $name)) {
+			@content;
+		}
+	}
+}

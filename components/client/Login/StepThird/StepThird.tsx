@@ -32,7 +32,6 @@ export default function StepThird({state, setState}:{state:ILoginRegistrationSta
             const inputDate =  new Date(`${year}-${month}-${day}`)           
             
             await AuthClientService.registration(state.phone!, name, inputDate)
-                             .then(data => console.log(data))
                              .catch(e => console.log("Registration error: " + e.message))
             
             setState(prev =>{

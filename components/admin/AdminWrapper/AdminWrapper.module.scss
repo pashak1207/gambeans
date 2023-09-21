@@ -1,0 +1,9 @@
+@import "~app/mixins.scss";
+
+.adminWrapper{
+    padding: toRem(45) toRem(30);
+    color: var(--admin-black-color);
+    flex: 1 1 auto;
+    min-height: 100vh;
+    width: 100%;
+}

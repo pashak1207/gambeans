@@ -3,7 +3,6 @@ import { prisma } from '@/prisma/client'
 import CafeUtils from '@/utils/cafeUtils';
  
 export async function GET(request: NextRequest) {
-
     try{        
         const cafeId:number | unknown = await CafeUtils.getCurrentCafeId(request)              
 
@@ -24,12 +23,65 @@ export async function GET(request: NextRequest) {
                 status: 200
             })
         }
+        
+        let cafe;
+        
 
-        const cafe = await prisma.cafes.findUnique({
-            where: {
-                id: +cafeId
-            }
-        })
+        if(request.nextUrl.searchParams.has("cafeId")){
+            cafe = await prisma.cafes.findUnique({
+                where: {
+                    id: +request.nextUrl.searchParams.get("cafeId")!
+                },
+                include:{
+                    prizes: true,
+                    visits: true,
+                    users: {
+                        where:{
+                            DOB:{
+                                not: null
+                            },
+                            name:{
+                                not: null
+                            }
+                        },
+                        include:{
+                            prizes: {
+                                include:{
+                                    prize: true
+                                }
+                            }
+                        }
+                    }
+                }
+            })
+        }else{
+            cafe = await prisma.cafes.findUnique({
+                where: {
+                    id: +cafeId
+                },
+                include:{
+                    prizes: true,
+                    visits: true,
+                    users: {
+                        where:{
+                            DOB:{
+                                not: null
+                            },
+                            name:{
+                                not: null
+                            }
+                        },
+                        include:{
+                            prizes: {
+                                include:{
+                                    prize: true
+                                }
+                            }
+                        }
+                    }
+                }
+            })
+        }
 
         if(!cafe){
             return NextResponse.json({ 

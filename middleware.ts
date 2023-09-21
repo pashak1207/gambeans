@@ -6,7 +6,7 @@ import Redirect from './utils/redirects'
 import CafeServerService from './services/cafeServer.service'
 import AuthServerService from './services/authServer.service'
 
-const privateRoutes = ["/dashboard"]
+const privateRoutes = ["/dashboard", "/admin", "/superadmin"]
 
 export async function middleware(request: NextRequest){
   const path:string = request.nextUrl.pathname
@@ -16,10 +16,7 @@ export async function middleware(request: NextRequest){
 
   if(!currentCafeId){
     return Redirect.notFound(request)
-  } 
-
-
-
+  }
 
 
   if(path.startsWith("/api")){
@@ -45,8 +42,9 @@ export async function middleware(request: NextRequest){
       try{  
         accessVerified = await JWT.verfiyAccessToken(accessToken)
 
-        const user = await AuthServerService.getMe()
-        if(!user?.id){         
+        const user:IUser = await AuthServerService.getMe()        
+        
+        if(!user?.id || user.status === "BLOCKED"){         
           const response = Redirect.loginPage(request);
 
           response.cookies.delete('JWTRefreshToken');
@@ -54,6 +52,16 @@ export async function middleware(request: NextRequest){
 
           return response;
         }
+
+        await AuthServerService.getMe("visit")
+
+        if(path.startsWith("/admin") && user.role === "USER"){
+          return Redirect.notFound(request)
+        }  
+        
+        if(path.startsWith("/superadmin") && user.role !== "SUPERADMIN"){
+          return Redirect.notFound(request)
+        } 
         
       }catch(e){
         accessVerified = null

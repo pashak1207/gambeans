@@ -29,7 +29,7 @@ export async function POST(request: NextRequest) {
                 }
             },
         }).catch(e => console.log("Find user error: " + e.message))
-
+        
         if(!user){
             user = await prisma.users.create({
                 data:{
@@ -55,8 +55,20 @@ export async function POST(request: NextRequest) {
             .catch(e => console.log("Update user error: " + e.message))
         }
 
+        const dailyPhone = await prisma.cafes.findUnique({
+            where: {
+                id: cafe_id
+            },
+            select:{
+                send_phone: true
+            }
+        }).then(data => data?.send_phone)        
 
-        // await sendTwilioNumber(code, phone)
+        if(dailyPhone){
+            // await sendTwilioNumber(code, phone, dailyPhone)
+        }else{
+            console.log("This cafe does not have daily phone number");
+        }
 
 
         return NextResponse.json({

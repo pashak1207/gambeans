@@ -71,8 +71,14 @@ export default function StepFirst({state, setState}:{state:ILoginRegistrationSta
             return
         }
 
-        const {isCorrect, isRegistrated} = await AuthClientService.login(state.phone!, codeFull)
+        const {isCorrect, isRegistrated, isBlocked} = await AuthClientService.login(state.phone!, codeFull)
                                     .catch(e => console.log("Error during codes comparison: " + e.message))
+
+        if(isBlocked){            
+            toast("You are currently blocked");
+            return
+        }
+        
         if(!isCorrect){
             setIsValid(false)
             return
@@ -98,7 +104,7 @@ export default function StepFirst({state, setState}:{state:ILoginRegistrationSta
         toast("New code has been sent");
         setSeconds(TIMER_DURATION_SECONDS)
         setTimer(true)
-        await AuthClientService.generateVerificationCode(state.phone!)
+        AuthClientService.generateVerificationCode(state.phone!)
     }
 
     return (

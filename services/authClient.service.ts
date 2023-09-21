@@ -33,18 +33,6 @@ const AuthClientService = {
         return await response.json()
     },
 
-    async sendVerificationCode(code:string, phone:string) {
-        const response = await fetch(`/api/auth/login`, {
-            method: 'POST',
-            body: JSON.stringify({
-                verification_code: code,
-                phone 
-            })
-        })
-
-        return await response.json()
-    },
-
     async registration(phone:string, name:string, dob:Date){
         const response = await fetch(`/api/auth/registration`, {
             method: 'POST',
@@ -62,6 +50,14 @@ const AuthClientService = {
         const response = await fetch(`/api/auth/me?${param}`)
         
         return await response.json()
+    },
+
+    async logOut(){
+        
+        const response = await fetch(`/api/auth/logout`)
+        
+        return await response!.json()
+
     }
 }
 

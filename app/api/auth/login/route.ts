@@ -33,6 +33,18 @@ export async function POST(request: NextRequest) {
             }
         })!
 
+        if(user?.status === "BLOCKED"){
+            return NextResponse.json({ 
+                message: "User blocked",
+                isCorrect: false,
+                isRegistrated: false,
+                isBlocked: true
+            }, 
+            {
+                status: 200
+            })
+        }
+
         if(user?.verification_code === code) {
             let isRegistrated = false;
 
@@ -46,7 +58,8 @@ export async function POST(request: NextRequest) {
             return NextResponse.json({ 
                 message: "Code is correct",
                 isCorrect: true,
-                isRegistrated
+                isRegistrated,
+                isBlocked: false
             }, 
             {
                 status: 200
@@ -55,7 +68,8 @@ export async function POST(request: NextRequest) {
 
         return NextResponse.json({ 
             message: "Code is wrong",
-            isCorrect: false
+            isCorrect: false,
+            isBlocked: false
         }, 
         {
             status: 400

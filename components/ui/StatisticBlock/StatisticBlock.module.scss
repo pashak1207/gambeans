@@ -1,0 +1,47 @@
+@import "~app/mixins.scss";
+
+.item{
+    flex: 1 1 auto;
+    padding: toRem(24);
+    font-family: var(--admin-text-font-family);
+    color: var(--admin-black-color);
+    background: var(--admin-statistic-block-even);
+    border-radius: 16px;
+    min-width: toRem(200);
+
+    &:nth-of-type(odd){
+        background: var(--admin-statistic-block-odd);
+    }
+
+    h5{
+        font-size: toRem(14);
+        font-weight: 600;
+        line-height: 20px;
+        margin-bottom: 8px;
+    }
+
+    .numbers{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        h4{
+            font-size: toRem(24);
+            font-weight: 600;
+            line-height: 36px;
+            margin-right: 5px;
+        }
+
+        p{
+            font-size: toRem(12);
+            font-weight: 400;
+            line-height: 18px; 
+            display: flex;
+            align-items: center;
+
+            svg{
+                margin-left: toRem(4);
+            }
+        }
+    }
+}
