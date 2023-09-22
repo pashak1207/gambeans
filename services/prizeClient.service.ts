@@ -31,7 +31,44 @@ const PrizeClientService = {
         })
 
         return await response!.json()
-    }
+    },
+
+    
+    async updateChecked(prizeId: number, isActive: boolean): Promise<any> {
+
+        const response = await fetch(`/api/prizes/${prizeId}?check`, {
+            method: "PUT",
+            body: JSON.stringify({
+                isActive
+            })
+        })
+
+        return await response!.json()
+    },
+
+    async updatePrize(prizeObj: IPrize): Promise<any> {
+
+        const response = await fetch(`/api/prizes/${prizeObj.id}`, {
+            method: "PUT",
+            body: JSON.stringify({
+                prizeObj
+            })
+        })
+
+        return await response!.json()
+    },
+
+    async createPrize(prizeObj: IPrize): Promise<any> {
+
+        const response = await fetch(`/api/prizes/${prizeObj.id}`, {
+            method: "PUT",
+            body: JSON.stringify({
+                prizeObj
+            })
+        })
+
+        return await response!.json()
+    },
 }
 
 export default PrizeClientService;

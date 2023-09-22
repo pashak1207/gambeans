@@ -71,7 +71,7 @@ const PrizeServerService = {
         });
 
         return await response!.json()
-    }
+    },
 }
 
 export default PrizeServerService;

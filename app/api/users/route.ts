@@ -108,19 +108,12 @@ export async function GET(request: NextRequest) {
                 status: 200
             })            
 
-        }else if(request.nextUrl.searchParams.has("actMonth")){
-            const days = +request.nextUrl.searchParams.get("actMonth")!
-
+        }else if(request.nextUrl.searchParams.has("year")){
             const counts = [];
 
-            for (let i = 0; i < days; i++) {
-                const startDate = new Date();
-                startDate.setMonth(startDate.getMonth() - i);
-                startDate.setDate(1);
-                startDate.setHours(0, 0, 0, 0);
-
-                const endDate = new Date(startDate);
-                endDate.setMonth(endDate.getMonth() + 1);
+            for (let month = 0; month < 12; month++) {
+                let startDate = new Date(new Date().getFullYear(), month, 1);
+                let lastDate = new Date(new Date().getFullYear(), month+1, 0);                
 
                 const count = await prisma.users.count({
                     where: {
@@ -134,14 +127,14 @@ export async function GET(request: NextRequest) {
                             some:{
                                 visit_date: {
                                     gte: startDate,
-                                    lt: endDate,
+                                    lt: lastDate,
                                 },
                             }
                         }
                     },
                 });
 
-                counts.unshift(count);
+                counts.push(count);
             }            
 
             return NextResponse.json({ 

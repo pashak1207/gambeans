@@ -33,7 +33,14 @@ export async function GET(request: NextRequest) {
                     id: +request.nextUrl.searchParams.get("cafeId")!
                 },
                 include:{
-                    prizes: true,
+                    prizes: {
+                        include:{
+                            users: true
+                        },
+                        orderBy:{
+                            id: "desc"
+                        }
+                    },
                     visits: true,
                     users: {
                         where:{
@@ -60,7 +67,14 @@ export async function GET(request: NextRequest) {
                     id: +cafeId
                 },
                 include:{
-                    prizes: true,
+                    prizes: {
+                        include:{
+                            users: true
+                        },
+                        orderBy:{
+                            id: "desc"
+                        }
+                    },
                     visits: true,
                     users: {
                         where:{

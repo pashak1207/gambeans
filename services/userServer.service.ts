@@ -61,16 +61,16 @@ const UserServerService = {
         return await response!.json()
     },
 
-    async getActiveMonthUsersCount(months = 7) {
+    async getActiveYearUsersCount() {
         const domain = headers().get('host')
         let response;
         
-        await fetch(`https://${domain}/api/users${months ? ("?actMonth=" + months) : ""}`, { method: 'HEAD' })
+        await fetch(`https://${domain}/api/users?year`, { method: 'HEAD' })
         .then(async data => {
-            response = await fetch(`https://${domain}/api/users${months ? ("?actMonth=" + months) : ""}`)
+            response = await fetch(`https://${domain}/api/users?year`)
         })
         .catch(async err => {
-            response = await fetch(`http://${domain}/api/users${months ? ("?actMonth=" + months) : ""}`)
+            response = await fetch(`http://${domain}/api/users?year`)
         });
         
         return await response!.json()

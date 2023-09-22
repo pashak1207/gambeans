@@ -41,6 +41,7 @@ interface IPrize{
     revenue: number
     probability: number
     is_active: boolean
+    users?: IUserPrize[]
     expires_at: number
     created_at: string
 }
@@ -105,4 +106,14 @@ interface ICookie {
     };
     [key: string]: any;
     [key: symbol]: any;
+}
+
+enum Prize_change_fields {
+    TEXT="TEXT",
+    IMAGE="IMAGE",
+    EXPIRES="EXPIRES",
+    COST="COST",
+    REVENUE="REVENUE",
+    PROBABILITY="PROBABILITY",
+    MAX_AMOUNT="MAX_AMOUNT",
 }

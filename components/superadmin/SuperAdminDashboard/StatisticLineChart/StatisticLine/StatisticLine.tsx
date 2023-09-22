@@ -1,68 +1,68 @@
 'use client'
 import { useEffect } from "react";
 import "./StatisticLine.scss"
-import Chart from "@/utils/Chart.min.js"
+import  { Chart, LinearScale, BarElement, BarController, CategoryScale, ChartItem } from "chart.js"
 
-const date = new Date();
-const months = ["JAN", "FEB", "MARCH", "APR", "MAY", "JUNE", "JULY", "AUG", "SEPT", "OCT", "NOV", "DEC"];
-const lastSevenMonths:string[] = [];
+Chart.register(LinearScale, BarElement, BarController, CategoryScale);
 
-for (let i = 0; i < 7; i++) {
-    lastSevenMonths.unshift(months[date.getMonth()]);
-    date.setMonth(date.getMonth() - 1);
-}
+const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+const colors = ["#95A4FC", "#BAEDBD", "#1C1C1C", "#B1E3FF", "#A8C5DA", "#A1E3CB"]
 
 export function StatisticLine({dataCounts}:{dataCounts:number[]}) {
     const data = {
-        labels: lastSevenMonths,
+        labels: months,
         datasets: [{
             data: dataCounts,
             fill: false,
-            borderColor: 'rgb(149, 164, 252)',
-            tension: 0.1
+            borderRadius: 4,
+            barThickness: 16,
+            backgroundColor: (c:any) => colors.concat(colors)[c.dataIndex],
         }]
     };
 
     useEffect(() => {
-        const chart = new Chart(document.getElementById('chartLine'), {
-            type: 'line',
+        new Chart(document.getElementById('chartLine') as ChartItem, {
+            type: 'bar',
             data: data,
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                legend: {
-                    display: false
-                },
                 scales : {
-                    xAxes: [
-                    {
-                        gridLines : {
-                            display : false,
-                        },
+                    x: {
                         offset: true,
-                        ticks: {
-                            fontSize: 12,
-                            fontColor: "rgba(28, 28, 28, 0.40)",
-                            fontFamily: "Inter",
+                        grid:{
+                            display: false
                         },
-                    }],
-                    yAxes: [{
-                        gridLines: {
+                        ticks: {
+                            color: "rgba(28, 28, 28, 0.40)",
+                            font:{
+                                size: 12,
+                                family: "Inter"
+                            }
+                        },
+                    },
+                    y: {
+                        grid: {
                             color: 'rgba(28, 28, 28, 0.05)',
-                            drawBorder: false,
+                        },
+                        border:{
+                            display: false
                         },
                         ticks: {
-                            fontSize: 12,
-                            fontColor: "rgba(28, 28, 28, 0.40)",
-                            fontFamily: "Inter",
-                            stepSize: 20000,
+                            callback: function(val, index) {
+                                return +val > 999 ? (Math.floor(+val/1000) + "K") : val;
+                            },
+                            stepSize: 1,
+                            color: "rgba(28, 28, 28, 0.40)",
+                            font:{
+                                size: 12,
+                                family: "Inter"
+                            },
                             padding: 16,
                             maxTicksLimit: 5,
-                            callback: function (value:number, index:number, values:number[]) {
-                                return value > 999 ? (Math.floor(value/1000) + "K") : Math.round(value);
-                            },
+                            
                         }
-                    }]
+                    }
                 },
                 
             }

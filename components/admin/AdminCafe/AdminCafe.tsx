@@ -6,6 +6,7 @@ import { headers } from "next/headers"
 import StatisticBlock from "@/components/ui/StatisticBlock/StatisticBlock"
 import UserUtils from "@/utils/userUtils"
 import { calculatePercentage } from "@/utils/calculatePercentage"
+import AdminPrizeTable from "../AdminPrizeTable/AdminPrizeTable"
 
 export default async function AdminCafe({cafeId}:{cafeId?:number}) {
 
@@ -30,6 +31,8 @@ export default async function AdminCafe({cafeId}:{cafeId?:number}) {
     const prevNewUsers30 = cafe.users?.filter((user:IUser) => (new Date(user.created_at).getTime() > new Date(UserUtils.getStartOfDay(new Date(new Date().setDate(new Date().getDate() - 60)))).getTime()) && ((new Date(user.created_at).getTime() < new Date(UserUtils.getStartOfDay(new Date(new Date().setDate(new Date().getDate() - 30)))).getTime()))).length
     const currReturnedUsers30 = cafe.users?.filter((user:IUser) => (new Date(user.created_at).getTime() < new Date(UserUtils.getStartOfDay(new Date(new Date().setDate(new Date().getDate() - 30)))).getTime()) && (new Date(user.updated_at).getTime() > new Date(UserUtils.getStartOfDay(new Date(new Date().setDate(new Date().getDate() - 30)))).getTime())).length
     const prevReturnedUsers30 = cafe.users?.filter((user:IUser) => (new Date(user.created_at).getTime() < new Date(UserUtils.getStartOfDay(new Date(new Date().setDate(new Date().getDate() - 60)))).getTime()) && (new Date(user.updated_at).getTime() > new Date(UserUtils.getStartOfDay(new Date(new Date().setDate(new Date().getDate() - 30)))).getTime())).length! - currReturnedUsers30!   
+
+    const scrathPrizes = cafe.prizes?.filter((prize:IPrize) => prize.type === "SCRATCH")    
 
     return <div className={styles.adminCafe}>
                 <div className={styles.top}>
@@ -83,5 +86,7 @@ export default async function AdminCafe({cafeId}:{cafeId?:number}) {
                         <StatisticBlock title="Returned Users (30 days)" num={currReturnedUsers30!} progress={calculatePercentage(prevReturnedUsers30!, currReturnedUsers30!)} />
                     </div>
                 </div>
+
+                <AdminPrizeTable type={"SCRATCH"} cafeId={cafe.id} prizesArr={scrathPrizes!} />
             </div>
 }
