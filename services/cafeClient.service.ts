@@ -10,7 +10,19 @@ const CafeClientService = {
         )
 
         return await response.json()
-    }
+    },
+
+    async updateCafe(cafeObj: ICafe): Promise<any> {
+
+        const response = await fetch(`/api/cafes/${cafeObj.id}`, {
+            method: "PUT",
+            body: JSON.stringify({
+                cafeObj
+            })
+        })
+
+        return await response!.json()
+    },
 }
 
 export default CafeClientService;

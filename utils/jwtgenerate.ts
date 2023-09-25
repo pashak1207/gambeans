@@ -12,7 +12,7 @@ const alg = 'HS256'
 const JWT = {
     async generateAccessToken(user_id:number, user_role:Users_role, request: NextRequest, cafeId?:string) {
 
-        const cafe_id = cafeId || await CafeUtils.getCurrentCafeId(request)
+        const cafe_id = cafeId || await CafeUtils.getCurrentCafeId(request)        
         
         const token = await new jose.SignJWT({ 'id': user_id, 'cafe_id': +cafe_id!, 'role': user_role })
                 .setProtectedHeader({ alg })

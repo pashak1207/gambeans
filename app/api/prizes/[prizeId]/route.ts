@@ -21,6 +21,18 @@ export async function PUT(request: NextRequest, {params: {prizeId}} : {params:{p
                     is_active: isActive,
                 }
             })
+        }else if(request.nextUrl.searchParams.has("image")){
+            const { url }:{url:string} = body
+
+            prize = await prisma.prizes.update({
+                where:{
+                    cafe_id: cafeId,
+                    id: +prizeId
+                },
+                data:{
+                    image: url
+                }
+            })
         }else{
             const { prizeObj }:{prizeObj:IPrize} = body
 
@@ -63,7 +75,7 @@ export async function PUT(request: NextRequest, {params: {prizeId}} : {params:{p
         console.log(e)
 
         return NextResponse.json({ 
-            message: "Errer to update prize"
+            message: "Error to update prize"
         }, 
         {
             status: 400

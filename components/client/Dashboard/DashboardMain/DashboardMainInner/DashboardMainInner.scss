@@ -140,6 +140,8 @@
     }
 
     .content{
+        padding: toRem(5);
+        
         &.active,
         &.visited{
             cursor: pointer;

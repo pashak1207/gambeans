@@ -1,6 +1,7 @@
 import style from "./DashboardHeading.module.scss"
 import Image from "next/image"
 import AuthServerService from "@/services//authServer.service"
+import Link from "next/link"
 
 export default async function DashboardHeading() {
     
@@ -20,7 +21,7 @@ export default async function DashboardHeading() {
                     <h4>{user.name}</h4>
                 </div>
                 <div className={style.right}>
-                    <button>Prizes</button>
+                    <Link href={"/dashboard/prizes"}>Prizes</Link>
                 </div>
             </div>
         )

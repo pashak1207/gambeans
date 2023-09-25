@@ -11,7 +11,7 @@ export default async function StatisticDoughnutChart() {
             <h4>User by stage</h4>
             <div className={styles.chartWrapper}>
                 <div className={styles.chart}>
-                    <StatisticDoughnut percentageData={percentageData}/>
+                    {/* <StatisticDoughnut percentageData={percentageData}/> */}
                 </div>
                 <table className={styles.data}>
                     <tbody>

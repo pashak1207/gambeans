@@ -14,10 +14,9 @@
             font-size: toRem(64);
             font-weight: 400;
             line-height: 50px;
-            text-transform: capitalize;
         }
 
-        a{
+        button{
             padding: 0 toRem(34);
             font-family: var(--admin-text-font-family);
             font-size: toRem(20);
@@ -37,6 +36,11 @@
         display: flex;
         margin-top: toRem(20);
         margin-bottom: toRem(80);
+
+        
+        @include breakpoint("lg"){
+            flex-direction: column;
+        }
 
         .middle__left{
             margin-right: toRem(35);
@@ -62,6 +66,11 @@
                 font-weight: 400;
                 line-height: 35.5px;
             }
+
+            @include breakpoint("lg"){
+                margin-right: 0;
+                margin-bottom: toRem(20);
+            }
         }
 
         .middle__right{
@@ -77,7 +86,7 @@
                         margin-bottom: 0;
                     }
 
-                    span{
+                    &>span{
                         font-weight: 700;
                     }
                 }

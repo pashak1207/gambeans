@@ -32,10 +32,10 @@
 .right{
     margin-left: toRem(10);
     
-    button{
+    a{
         border-radius: 50px;
         background: var(--yellow-button);
-        padding: toRem(9) toRem(30);
+        padding: toRem(7) toRem(30);
         color: var(--black-color);
         text-align: center;
         font-size: toRem(20);

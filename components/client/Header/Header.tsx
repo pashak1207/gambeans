@@ -1,6 +1,7 @@
 import styles from './Header.module.scss'
 import Image from 'next/image';
 import CafeServerService from '@/services/cafeServer.service';
+import Link from 'next/link';
 
 export default async function Header() {
  
@@ -8,13 +9,15 @@ export default async function Header() {
 
   return (
     <header className={styles.header} style={{background: color}}>
-      <Image
-          src={logo}
-          priority
-          alt="logo"
-          width={70}
-          height={41}
-      />
+      <Link href={"/dashboard"} >
+        <Image
+            src={logo}
+            priority
+            alt="logo"
+            width={70}
+            height={41}
+        />
+      </Link>
     </header>
   )
   }

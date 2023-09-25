@@ -10,24 +10,22 @@
     margin: 0;
     color: inherit;
     background: transparent;
-    width: 100%;
-    height: auto;
     display: inline;
 
     span, input{
         padding: 0;
         margin: 0;
-        width: 100%;
         resize: none;
     }
 
     span{
-        padding: toRem(15);
+        width: 100%;
     }
 
-    input{        
+    input{
+        width: auto;
+
         &:focus{
-            padding: toRem(15);
             color: var(--admin-black-color);
         }
     }

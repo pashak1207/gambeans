@@ -38,7 +38,7 @@ export async function GET(request: NextRequest) {
             const cafeId:number|void = await JWT.verfiyAccessToken(accessToken!)
                                     .then(data => data?.payload?.cafe_id)
                                     .then(data => +data!)
-                                    .catch(err => console.log("Error to get userId from token: " + err.message))
+                                    .catch(err => console.log("Error to get userId from token: " + err.message))            
 
             const lastVisit = await prisma.visits.findFirst({
                 where:{

@@ -56,7 +56,8 @@ export async function GET(request: NextRequest) {
                                 include:{
                                     prize: true
                                 }
-                            }
+                            },
+                            visits: true
                         }
                     }
                 }
@@ -90,7 +91,8 @@ export async function GET(request: NextRequest) {
                                 include:{
                                     prize: true
                                 }
-                            }
+                            },
+                            visits: true
                         }
                     }
                 }

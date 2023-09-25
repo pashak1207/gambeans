@@ -62,6 +62,7 @@ model User_prize {
   prize_id   Int      @db.UnsignedInt
   used       DateTime?
   opened     DateTime?
+  is_won     Boolean  @default(false)
   user       Users    @relation(fields: [user_id], references: [id])
   user_id    Int      @db.UnsignedInt
   created_at DateTime @default(now())
@@ -74,7 +75,6 @@ model Prizes {
   cafe        Cafes        @relation(fields: [cafe_id], references: [id])
   cafe_id     Int          @db.UnsignedInt
   max_amount  Int          @db.UnsignedInt
-  discount    Float
   text        String
   image       String
   step_image  String
@@ -83,7 +83,7 @@ model Prizes {
   revenue     Float       
   probability Float
   users       User_prize[]
-  is_active   Boolean      @default(true)
+  is_active   Boolean      @default(false)
   expires_at  Int          @default(1)
   created_at  DateTime     @default(now())
 }

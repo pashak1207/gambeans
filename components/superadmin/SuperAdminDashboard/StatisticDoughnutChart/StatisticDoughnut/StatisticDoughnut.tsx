@@ -1,7 +1,9 @@
 'use client'
 import { useEffect } from "react";
-import Chart from "@/utils/Chart.min.js"
 import "./StatisticDoughnut.scss"
+import  { Chart, LinearScale, BarElement, BarController, CategoryScale, ChartItem } from "chart.js"
+
+Chart.register(LinearScale, BarElement, BarController, CategoryScale);
 
 export function StatisticDoughnut({percentageData}:{percentageData: {filter: string, color: string, sum: string}[]}) {
     useEffect(() => {

@@ -24,6 +24,9 @@ export async function POST(request: NextRequest) {
                         gt: 0
                     }
                 }
+            },
+            orderBy:{
+                id: "asc"
             }
         })
         

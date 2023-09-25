@@ -13,19 +13,25 @@ export default function PrizeScratch({userprize}:{userprize:IUserPrize}) {
     const [opened, setOpened] = useState<boolean>(userprize.expires_at !== null)
     const [expires, setExpires] = useState<string>("")
     const [swiped, setSwiped] = useState<boolean>(userprize.used !== null)
+    const isWon = userprize.is_won
     const router = useRouter()    
 
     useEffect(() => {
         if(opened){
             PrizeClientService.setExpiredPrize(userprize.id, userprize.prize.expires_at)
                                 .then(data => setExpires(new Date(data.prize.expires_at!).toLocaleDateString(`en-US`, { year: '2-digit', month: 'long', day: 'numeric' })))
+
+            if(!isWon){
+                PrizeClientService.setUsedPrize(userprize.id)
+            }
+
         }
     }, [opened])
 
     
     useEffect(() => {
         if(swiped){
-            PrizeClientService.setUsedPrize(userprize.id)        
+            PrizeClientService.setUsedPrize(userprize.id)
         }
     }, [swiped])
 
@@ -68,19 +74,23 @@ export default function PrizeScratch({userprize}:{userprize:IUserPrize}) {
                 }
                 <div className="prize__scratchcard">
                     <PrizeCoupon opened={opened} setOpened={setOpened} width={300} height={300} cover={"/scratch.svg"}>
-                        <Image
-                            alt="coupon"
-                            height={200}
-                            width={200}
-                            priority
-                            src={userprize.prize.image}
-                        />
-                        <h3>{userprize.prize.text}</h3>
-                        <h4>Yay! You’ve won 🎉</h4>
-                        <Confetti active={ opened } config={confettiConfig}/>
+                        {isWon && <>
+                            <Image
+                                alt="coupon"
+                                height={200}
+                                width={200}
+                                priority
+                                src={userprize.prize.image}
+                            />
+                            <h3>{userprize.prize.text}</h3>
+                            <h4>Yay! You’ve won 🎉</h4>
+                            <Confetti active={ opened } config={confettiConfig}/>
+                            </>
+                        }
+                        {!isWon && <h4>Try next time :(</h4>}
                     </PrizeCoupon>
                 </div>
-                <h5 style={{opacity: opened ? "1" : "0"}} className="prize_expires">{`Expires ${expires}`}</h5>
+                {isWon && <h5 style={{opacity: opened ? "1" : "0"}} className="prize_expires">{`Expires ${expires}`}</h5>}
                 <hr />
                 <div className="prize__how">
                     <h3>How it work?</h3>
@@ -95,7 +105,7 @@ export default function PrizeScratch({userprize}:{userprize:IUserPrize}) {
                         </li>
                     </ol>
                 </div>
-                {opened && <PrizeUseSwipe swiped={swiped} setSwiped={setSwiped}/>}
+                {opened && isWon && <PrizeUseSwipe swiped={swiped} setSwiped={setSwiped}/>}
         </div>
         )
 }

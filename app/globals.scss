@@ -70,6 +70,7 @@ html{
 	main{
 		display: flex;
 		height: 100%;
+		width: 100%;
 		max-width: var(--max-width);
 		margin-inline: auto;
 	}
@@ -89,6 +90,8 @@ html{
 	--validation-color: #FF5A5F;
 	--prize-about-color: rgba(75, 55, 52, 0.80);
 	--active-prize-shadow-color: #FD867940;
+	--slot-bg-color: #FEFAEF;
+	--slot-border-color: #FA920E;
 
 	--swipeuse-bg: #12D18E;
 	--swipeuse-gradient-second: #C4FAE7;
@@ -112,6 +115,10 @@ html{
 
 	--loading-font-family: 'Urbanist', sans-serif;
 	--loading-color: #B79A81;
+
+	--prize-gradient: linear-gradient(147deg, #F9910D 57.32%, #FFDD75 90.3%);
+	--back-home-btn-gradient: linear-gradient(286deg, #B79A81 0%, #EBD3C1 100%);
+	--slot-reel-bg-gradient: linear-gradient(180deg, #D9D9D9 -0.06%, #FFF 29.84%, #FEFEFE 71.52%, #D9D9D9 100.06%);
 
 	--admin-text-color: #212121;
 	--admin-black-color: #1C1C1C;

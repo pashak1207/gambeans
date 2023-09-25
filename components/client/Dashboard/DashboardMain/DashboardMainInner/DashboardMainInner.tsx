@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from "react"
 import "./DashboardMainInner.scss"
 import Image from "next/image"
 import AuthClientService from "@/services/authClient.service"
+import PrizeClientService from "@/services/prizeClient.service"
 
 export default function DashboardMainInner({prizes, bgImages}:{prizes:IUserPrize[], bgImages:string[]}) {
     const [step, setStep] = useState<number>(prizes.filter(prize => prize.opened !== null).length)
@@ -68,7 +69,12 @@ export default function DashboardMainInner({prizes, bgImages}:{prizes:IUserPrize
 
     useEffect(() => {
         setStep(allPrizes.filter(prize => prize.opened !== null).length)
-    }, [allPrizes])
+
+        if(step%5 === 0 && step !== 0){
+            PrizeClientService.getRandomPrizes(5, allPrizes[0].user_id)
+        }
+
+    }, [step, allPrizes])
 
     useEffect(() => {
         for(let i = 0; i < stepsRef.current.length; i++) {
@@ -121,7 +127,7 @@ export default function DashboardMainInner({prizes, bgImages}:{prizes:IUserPrize
 
     return <div className={"dashboardmain"}>
         <h2>My journey</h2>
-        {allPrizes && allPrizes.length > 0 &&
+        {allPrizes?.length > 0 &&
             <div className={`pane`}>
                 {allPrizes.length &&
                     allPrizes.map((stepObj, index) => {

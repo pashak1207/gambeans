@@ -1,12 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/prisma/client'
-import UserUtils from '@/utils/userUtils';
  
 export async function GET(request: NextRequest) {
 
     try{
         
-        const SHOW_CAFES_ON_PAGE = 2
+        const SHOW_CAFES_ON_PAGE = 30
         let count = 0
         
         if(request.nextUrl.searchParams.has("count")){

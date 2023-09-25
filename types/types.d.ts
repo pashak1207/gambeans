@@ -9,7 +9,7 @@ interface IUser{
     phone: number
     role: Users_role
     status: User_status
-    DOB?: Date
+    DOB?: String
     daily_code?: string,
     cafe_id: number
     prizes: User_prize[]
@@ -32,7 +32,6 @@ interface IPrize{
     id: number
     cafe_id: number
     max_amount: number
-    discount: number
     text: string
     image: string
     step_image: string
@@ -51,6 +50,7 @@ interface IUserPrize{
     prize_id: number,
     used: null | Date,
     opened: null | Date,
+    is_won: boolean,
     user_id: number,
     created_at: string,
     updated_at: string,
@@ -106,14 +106,4 @@ interface ICookie {
     };
     [key: string]: any;
     [key: symbol]: any;
-}
-
-enum Prize_change_fields {
-    TEXT="TEXT",
-    IMAGE="IMAGE",
-    EXPIRES="EXPIRES",
-    COST="COST",
-    REVENUE="REVENUE",
-    PROBABILITY="PROBABILITY",
-    MAX_AMOUNT="MAX_AMOUNT",
 }

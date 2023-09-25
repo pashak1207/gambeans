@@ -67,8 +67,8 @@ export async function POST(request: NextRequest) {
                 data:{
                     user_id: user.id,
                     prize_id: welcome_prize.id,
+                    is_won: true,
                     opened: new Date(),
-                    expires_at: new Date(new Date().setDate(new Date().getDate() + welcome_prize.expires_at))
                 }
             })            
 
@@ -77,6 +77,7 @@ export async function POST(request: NextRequest) {
                     data:{
                         user_id: user.id,
                         prize_id: prize.id,
+                        is_won: (Math.floor(Math.random() * 100) + 1 <= prize.probability),
                     }
                 })
             }))

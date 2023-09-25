@@ -18,7 +18,8 @@ export async function POST(request: Request) {
 
         const isNumberValid = await client.lookups.v2.phoneNumbers(phone)
                  .fetch()
-                 .then(phone_number => phone_number.valid);
+                 .then(phone_number => phone_number.valid)
+                 .catch(err => console.log("Error fetching phone: ", err));
 
         if(!isNumberValid){
             return NextResponse.json({

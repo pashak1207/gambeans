@@ -1,4 +1,4 @@
-import { headers } from 'next/headers';
+import { cookies, headers } from 'next/headers';
 
 const UserServerService = {
     async getAllRegistratedUsers() {
@@ -75,6 +75,28 @@ const UserServerService = {
         
         return await response!.json()
     },
+
+    async getUserPrizes(userId?:number) {       
+        const accessToken = cookies().get('JWTAccessToken')?.value;
+
+        const hds = new Headers({
+            'Authorization': `${accessToken}`,
+        });
+        
+
+        const domain = headers().get('host')
+        let response;
+        
+        await fetch(`https://${domain}/api/prizes?userprizes=${userId}`, { method: 'HEAD', headers: hds })
+        .then(async data => {
+            response = await fetch(`https://${domain}/api/prizes?userprizes=${userId}`, { headers: hds })
+        })
+        .catch(async err => {
+            response = await fetch(`http://${domain}/api/prizes?userprizes=${userId}`, { headers: hds })
+        });
+        
+        return await response!.json()
+    }
 }
 
 export default UserServerService;

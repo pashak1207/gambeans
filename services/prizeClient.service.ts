@@ -33,6 +33,19 @@ const PrizeClientService = {
         return await response!.json()
     },
 
+    async setWonPrize(userprizeId: number): Promise<any> {
+               
+        const response = await fetch(`/api/prizes/setWon`, {
+            method: "POST",
+            body: JSON.stringify({
+                userprizeId,
+            })
+
+        })
+
+        return await response!.json()
+    },
+
     
     async updateChecked(prizeId: number, isActive: boolean): Promise<any> {
 
@@ -40,6 +53,18 @@ const PrizeClientService = {
             method: "PUT",
             body: JSON.stringify({
                 isActive
+            })
+        })
+
+        return await response!.json()
+    },
+
+    async updateImage(prizeId: number, url: string): Promise<any> {
+
+        const response = await fetch(`/api/prizes/${prizeId}?image`, {
+            method: "PUT",
+            body: JSON.stringify({
+                url
             })
         })
 
@@ -60,10 +85,22 @@ const PrizeClientService = {
 
     async createPrize(prizeObj: IPrize): Promise<any> {
 
-        const response = await fetch(`/api/prizes/${prizeObj.id}`, {
-            method: "PUT",
+        const response = await fetch(`/api/prizes`, {
+            method: "POST",
             body: JSON.stringify({
                 prizeObj
+            })
+        })
+
+        return await response!.json()
+    },
+
+    async getRandomPrizes(randNum: number, userId: number): Promise<any>{
+        const response = await fetch(`/api/prizes/getRandomPrizes`, {
+            method: "POST",
+            body: JSON.stringify({
+                randNum,
+                userId
             })
         })
 

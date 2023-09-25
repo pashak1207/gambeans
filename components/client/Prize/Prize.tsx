@@ -3,11 +3,15 @@ import "./Prize.scss"
 import AuthServerService from "@/services/authServer.service"
 import PrizeServerService from "@/services/prizeServer.service"
 import { notFound } from 'next/navigation'
+import PrizeSlot from "./PrizeSlot/PrizeSlot"
+import CafeServerService from "@/services/cafeServer.service"
 
 export default async function Prize({prizeId}:{prizeId:string}) {
     const userId = await AuthServerService.getMe().then(data => data.id)    
     const userprize:IUserPrize = await PrizeServerService.getUserPrize(userId, prizeId)
-                                        .then(data => data?.prize)    
+                                        .then(data => data?.prize)
+    const currentCafeFTW = await CafeServerService.getCafe().then(data => data?.cafe?.ftw)    
+
     if(!userprize){
         notFound()
     }
@@ -23,11 +27,11 @@ export default async function Prize({prizeId}:{prizeId:string}) {
                     </div>
         case "SLOT":
             return <div className="prize">
-                        <div>slot</div>
+                        <PrizeSlot ftw={currentCafeFTW} userprize={userprize} />
                     </div>
         case "FIRST":
             return <div className="prize">
-                        <div>first</div>
+                        <PrizeScratch userprize={userprize} />
                     </div>
     }
 }

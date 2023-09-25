@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/prisma/client'
+import PrizeUtils from '@/utils/prizeUtils';
  
 export async function POST(request: NextRequest) {
     try{
@@ -7,11 +8,11 @@ export async function POST(request: NextRequest) {
         const { randNum, userId }:{randNum:string, userId: string} = body
         const cafeId = +request.headers.get('x-cafe-id')!
 
-        const prizes = await prisma.prizes.findMany({
+        let prizes = await prisma.prizes.findMany({
             where:{
                 cafe_id: cafeId,
                 is_active: true,
-                user:{
+                users:{
                     none:{
                         user_id: +userId
                     }
@@ -23,15 +24,14 @@ export async function POST(request: NextRequest) {
                     not: 'FIRST'
                 }
             },
-            take: +randNum,
             orderBy: [
                 {
                     created_at: 'desc'
                 }
             ],
-            skip: Math.floor(Math.random() * (await prisma.prizes.count() - +randNum)),
-            }).catch(err => console.log("Out from array index: " + err));
-        
+        }).catch(err => console.log("Out from array index: " + err));
+
+        prizes = PrizeUtils.getRandomElements(prizes!, +randNum)
 
         if(!prizes){
             return NextResponse.json({ 
@@ -47,9 +47,10 @@ export async function POST(request: NextRequest) {
                 data:{
                     user_id: +userId,
                     prize_id: prize.id,
+                    is_won: Math.floor(Math.random() * 100) + 1 <= prisma.user_prize.fields.probability
                 }
             })
-        }))
+        }))        
 
         return NextResponse.json({ 
             prizes 
