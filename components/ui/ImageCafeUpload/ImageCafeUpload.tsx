@@ -13,7 +13,7 @@ export default function ImageCafeUpload({ url, editable, setCafe }:{ url:string,
     
     formData.set('image', file);
     
-    const url = await UploadClientService.prizeImage(formData).then(data => data.url);
+    const url = await UploadClientService.cafeImage(formData).then(data => data.url);
     setImageUrl(URL.createObjectURL(file));
     setCafe(prev => ({...prev, logo: url}))    
 

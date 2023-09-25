@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import PrizeCoupon from "./../PrizeSratch/PrizeCoupon/PrizeCoupon"
 import Image from "next/image"
 import Confetti from 'react-dom-confetti';
@@ -16,7 +16,7 @@ export default function PrizeSlot({userprize, ftw}:{userprize:IUserPrize, ftw:nu
     const [swiped, setSwiped] = useState<boolean>(userprize.used !== null)
     const [isSlot, setIsSlot] = useState<boolean>(userprize.opened !== null && userprize.expires_at === null)
     const [slotEnd, setSlotEnd] = useState<boolean>(false)
-    const isSlotWon = Math.floor(Math.random() * 100) + 1 <= ftw
+    const isSlotWon = useMemo(()=> Math.floor(Math.random() * 100) + 1 <= ftw, [ftw])
     const router = useRouter()
 
     useEffect(() => {
@@ -29,7 +29,7 @@ export default function PrizeSlot({userprize, ftw}:{userprize:IUserPrize, ftw:nu
             }
 
         }
-    }, [opened])
+    }, [opened, userprize.id, userprize.is_won, userprize.prize.expires_at])
 
     useEffect(() => {
         if(slotEnd){
@@ -38,15 +38,15 @@ export default function PrizeSlot({userprize, ftw}:{userprize:IUserPrize, ftw:nu
             }else{
                 PrizeClientService.setUsedPrize(userprize.id)
             }
-        }
-    }, [slotEnd])
+        }        
+    }, [slotEnd, isSlotWon, userprize.id])
 
     
     useEffect(() => {
         if(swiped){
             PrizeClientService.setUsedPrize(userprize.id)
         }
-    }, [swiped])
+    }, [swiped, userprize.id])
 
     function returnBack(){
         router.push("/dashboard")

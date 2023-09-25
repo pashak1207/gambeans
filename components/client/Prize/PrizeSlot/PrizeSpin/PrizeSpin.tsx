@@ -1,7 +1,7 @@
 'use client'
 
 import PrizeUtils from "@/utils/prizeUtils";
-import React, { ReactElement, useEffect } from "react"
+import React, { useEffect } from "react"
 
 export default function PrizeSpin({isWon, setSlotEnd}:{isWon:boolean, setSlotEnd:React.Dispatch<React.SetStateAction<boolean>>}) {
 

@@ -32,6 +32,7 @@ interface IPrize{
     id: number
     cafe_id: number
     max_amount: number
+    current_amount: number
     text: string
     image: string
     step_image: string

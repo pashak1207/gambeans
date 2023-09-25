@@ -32,7 +32,7 @@ export async function GET(request: NextRequest) {
         console.log(e)
 
         return NextResponse.json({ 
-            message: "Errer to update prizes"
+            message: "Error to update cafes"
         }, 
         {
             status: 400

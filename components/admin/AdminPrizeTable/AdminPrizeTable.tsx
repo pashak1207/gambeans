@@ -81,6 +81,7 @@ export default function AdminPrizeTable({prizesArr, type, cafeId}:{prizesArr: IP
             image: "",
             is_active: false,
             max_amount: 0,
+            current_amount: 0,
             created_at: new Date().toISOString(),
             expires_at: 1,
             probability: 0,

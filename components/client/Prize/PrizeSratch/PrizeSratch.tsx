@@ -26,14 +26,14 @@ export default function PrizeScratch({userprize}:{userprize:IUserPrize}) {
             }
 
         }
-    }, [opened])
+    }, [opened, isWon, userprize.id, userprize.prize.expires_at])
 
     
     useEffect(() => {
         if(swiped){
             PrizeClientService.setUsedPrize(userprize.id)
         }
-    }, [swiped])
+    }, [swiped, userprize.id])
 
     function returnBack(){
         router.push("/dashboard")

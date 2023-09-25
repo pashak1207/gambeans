@@ -15,7 +15,7 @@ export default function PrizeUseSwipe({swiped, setSwiped}:{swiped:boolean, setSw
         if(swiped){
             setTranslate((wrapper.current?.offsetWidth! - button.current?.offsetWidth! - (parseFloat(window.getComputedStyle(wrapper.current).paddingLeft) * 2)), button.current!);
         }
-    }, [])
+    }, [swiped])
 
     const dragStart = (e:any) => {
         e.type === "touchstart"

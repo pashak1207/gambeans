@@ -112,7 +112,7 @@ export async function GET(request: NextRequest) {
         console.log(e)
 
         return NextResponse.json({ 
-            message: "Errer to get user information"
+            message: "Error to get user information"
         }, 
         {
             status: 400

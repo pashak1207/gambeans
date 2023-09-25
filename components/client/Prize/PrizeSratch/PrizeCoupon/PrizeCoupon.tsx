@@ -127,6 +127,7 @@ function PrizeCoupon(props) {
 	
 	useEffect(() => {
 		main()
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [props.children])
 
 	return (

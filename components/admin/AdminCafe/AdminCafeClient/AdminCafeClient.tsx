@@ -26,13 +26,19 @@ enum Prize_Cafe_change_fields {
     ADDRESS="ADDRESS",
     NAME="NAME",
     CONTACT_PHONE="CONTACT_PHONE",
-    CONTACT_NAME="CONTACT_NAME"
+    CONTACT_NAME="CONTACT_NAME",
+    FTW="FTW",
+    DAILY_PHONE="DAILY_PHONE",
 }
 
-export default function AdminCafeClient({ cafeObj, proto }:{ cafeObj:ICafe, proto:string }) {
+export default function AdminCafeClient({ cafeObj, proto, isCreate }:{ cafeObj:ICafe, proto:string, isCreate?:boolean }) {
 
     const [ cafe, setCafe ] = useState<ICafe>(cafeObj)
-    const [ isEdit, setIsEdit ] = useState<boolean>(false)
+    const [ isEdit, setIsEdit ] = useState<boolean>(!!isCreate)
+
+
+
+
 
     const prevDayVisits = cafe.visits?.filter((visit:IVisit) => ( new Date(visit.visit_date).getTime() < new Date(UserUtils.getStartOfDay(new Date(new Date().setDate(new Date().getDate() - 1)))).getTime()) && (new Date(visit.visit_date).getTime() > new Date(UserUtils.getStartOfDay(new Date(new Date().setDate(new Date().getDate() - 2)))).getTime())).length
     const currDayVisits = cafe.visits?.filter((visit:IVisit) => ( new Date(visit.visit_date).getTime() < new Date(UserUtils.getStartOfDay(new Date())).getTime()) && (new Date(visit.visit_date).getTime() > new Date(UserUtils.getStartOfDay(new Date(new Date().setDate(new Date().getDate() - 1)))).getTime())).length
@@ -53,11 +59,19 @@ export default function AdminCafeClient({ cafeObj, proto }:{ cafeObj:ICafe, prot
     const freePrizes = cafe.prizes?.filter((prize:IPrize) => prize.type === "FREE")    
     const firstPrizes = cafe.prizes?.filter((prize:IPrize) => prize.type === "FIRST")
 
-    function editSaveBtn(){
+
+
+
+
+    async function editSaveBtn(){
         setIsEdit(prev => !prev)
 
-        if(isEdit){            
-            CafeClientService.updateCafe(cafe)
+        if(isEdit){  
+            if(isCreate){          
+                await CafeClientService.createCafe(cafe).then(data => window.location.href = "/superadmin/cafes")
+            }else{
+                CafeClientService.updateCafe(cafe)
+            }
         }
     }
 
@@ -87,6 +101,8 @@ export default function AdminCafeClient({ cafeObj, proto }:{ cafeObj:ICafe, prot
                             <li><span>Join on: </span>{new Date(cafe.created_at).toLocaleDateString('tr-TR', { day: '2-digit', month: '2-digit', year: '2-digit'})}</li>
                             <li><span>Contact name: </span>{isEdit ? <EditableText type={Prize_Cafe_change_fields.CONTACT_NAME} initialText={(cafe.contact_name || "-")} isPrize={false} setCafe={setCafe} /> :  (cafe.contact_name || "-")}</li>
                             <li><span>Contact phone: </span>{isEdit ? <EditableText type={Prize_Cafe_change_fields.CONTACT_PHONE} initialText={(cafe.contact_phone || "-")} isPrize={false} setCafe={setCafe} /> :  (cafe.contact_phone || "-")}</li>
+                            <li><span>FTW: </span>{isEdit ? <EditableText type={Prize_Cafe_change_fields.FTW} initialText={(cafe.ftw.toString() || "-")} isPrize={false} setCafe={setCafe} /> :  (cafe.ftw|| "-")}</li>
+                            <li><span>Daily phone: </span>{isEdit ? <EditableText type={Prize_Cafe_change_fields.DAILY_PHONE} initialText={(cafe.send_phone || "-")} isPrize={false} setCafe={setCafe} /> :  (cafe.send_phone|| "-")}</li>
                         </ul>
                     </div>
                 </div>
@@ -108,12 +124,13 @@ export default function AdminCafeClient({ cafeObj, proto }:{ cafeObj:ICafe, prot
                         <StatisticBlock title="Returned Users (30 days)" num={currReturnedUsers30!} progress={calculatePercentage(prevReturnedUsers30!, currReturnedUsers30!)} />
                     </div>
                 </div>
-
+                {!isCreate && <>
                 <AdminPrizeTable type={"SCRATCH"} cafeId={cafe.id} prizesArr={scrathPrizes!} />
                 <AdminPrizeTable type={"SLOT"} cafeId={cafe.id} prizesArr={slotPrizes!} />
                 <AdminPrizeTable type={"FREE"} cafeId={cafe.id} prizesArr={freePrizes!} />
                 <AdminPrizeTable type={"FIRST"} cafeId={cafe.id} prizesArr={firstPrizes!} />
 
                 <AdminUsersTable cafeId={cafe.id} usersArr={cafe.users!}/>
+                </>}
             </div>
 }

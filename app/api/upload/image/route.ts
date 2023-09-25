@@ -15,6 +15,7 @@ export async function POST(request: NextRequest){
     try{
         const currentCafeId:number = await CafeServerService.getCafeId().then(data => data.cafeId)
         const formData = await request.formData();
+        const fileName = request.nextUrl.searchParams.has("cafe") ? "logo" : request.nextUrl.searchParams.has("prize") ? request.nextUrl.searchParams.get("prize") : new Date().toString()
 
         const file:File | null  = formData.get('image') as unknown as File
         
@@ -30,6 +31,7 @@ export async function POST(request: NextRequest){
       
         const buffer = Buffer.from(await file.arrayBuffer());
         const filename = file.name.replaceAll(" ", "_")
+        const extension = path.extname(filename);        
       
         try {
 
@@ -40,12 +42,12 @@ export async function POST(request: NextRequest){
             }
 
             await writeFile(
-                path.join(dir, filename),
+                path.join(dir, (fileName + extension)),
                 buffer
             );
         
             return NextResponse.json({ 
-                url: `/uploads/${currentCafeId}/${filename}`
+                url: `/uploads/${currentCafeId}/${(fileName + extension)}`
             }, 
             {
                 status: 200
@@ -56,7 +58,7 @@ export async function POST(request: NextRequest){
             console.log("Error occured ", error);
         
             return NextResponse.json({ 
-                message: "Errer to create prize"
+                message: "Error to create prize"
             }, 
             {
                 status: 400

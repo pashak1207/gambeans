@@ -7,7 +7,7 @@ export default async function AdminPage() {
     return <main className={styles.adminMain}>
                 <AdminMenu superadmin={false} cafes={false} />
                 <AdminWrapper>
-                   <AdminCafe />
+                   <AdminCafe isCreate={false} />
                 </AdminWrapper>
             </main>
 }

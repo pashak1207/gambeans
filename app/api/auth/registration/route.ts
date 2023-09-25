@@ -33,7 +33,7 @@ export async function POST(request: NextRequest) {
                 where:{
                     cafe_id: cafe_id,
                     is_active: true,
-                    max_amount:{
+                    current_amount:{
                         gt: 0
                     },
                     type: {
@@ -41,13 +41,13 @@ export async function POST(request: NextRequest) {
                     }
                 },
             }).then(data => data.sort((a,b) => 0.5 - Math.random()).slice(0, 30))
-            .catch(err => console.log("Out from array index: " + err));            
+            .catch(err => console.log("Out from array index: " + err)); 
 
 
             const welcome_prize = await prisma.prizes.findMany({
                 where: {
                     type: 'FIRST',
-                    max_amount:{
+                    current_amount:{
                         gt: 0
                     },
                 },
@@ -61,7 +61,32 @@ export async function POST(request: NextRequest) {
                 {
                     status: 400
                 })
-            }            
+            }
+
+            await prisma.prizes.update({
+                where:{
+                    id: welcome_prize.id
+                },
+                data:{
+                    current_amount:{
+                        decrement: 1
+                    }
+                }
+            })
+            
+                        
+            Promise.all(prizes.map(async (prize) => {
+                await prisma.prizes.update({
+                    where:{
+                        id: prize.id
+                    },
+                    data:{
+                        current_amount:{
+                            decrement: 1
+                        }
+                    }
+                })
+            }))
             
             await prisma.user_prize.create({
                 data:{
