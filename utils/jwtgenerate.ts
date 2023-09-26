@@ -1,6 +1,7 @@
 import * as jose from 'jose'
 import CafeUtils from './cafeUtils';
 import { NextRequest } from 'next/server';
+import { Users_role } from '@/types/enums';
 
 const accessSecret = process.env.JWT_ACCESS_SECRET || "ACCESS_SECRET";
 const refreshSecret = process.env.JWT_REFRESH_SECRET || "REFRESH_SECRET";

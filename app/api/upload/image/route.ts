@@ -4,12 +4,6 @@ import { writeFile } from "fs/promises";
 import fs from "fs";
 import CafeServerService from "@/services/cafeServer.service";
 
-export const config = {
-    api: {
-      bodyParser: false,
-    },
-};
-
 export async function POST(request: NextRequest){
 
     try{

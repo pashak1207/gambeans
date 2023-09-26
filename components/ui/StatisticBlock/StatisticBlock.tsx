@@ -4,17 +4,18 @@ import { formatNumber } from "@/utils/formatNumber"
 interface IStatisticBlockProps{
     title: string,
     num: number | string,
-    progress: number
+    progress: number,
+    prefix?: string
 }
 
-export default function StatisticBlock({title, num, progress}:IStatisticBlockProps) {    
+export default function StatisticBlock({title, num, progress, prefix=""}:IStatisticBlockProps) {    
     return <div className={styles.item}>
         <h5>{title}</h5>
         <div className={styles.numbers}>
             {typeof num === 'number' ?
-            <h4>{formatNumber(num)}</h4>
+            <h4>{prefix}{formatNumber(num)}</h4>
             :
-            <h4>{num}</h4>}
+            <h4>{prefix}{num}</h4>}
             <p>
                 {progress !== 0 &&
                     <span>{progress > 0 ? ("+" + progress.toString()) : progress.toString()}%</span>

@@ -2,14 +2,21 @@ import 'reset-css';
 import type { Metadata } from 'next'
 import 'react-toastify/dist/ReactToastify.min.css';
 import { ToastContainer, Slide } from 'react-toastify';
+import { headers } from 'next/headers';
+import { getDictionary } from '@/dictionaries/dictionaries';
 
-export const metadata: Metadata = {
-    title: 'Welcome Admin',
-    description: 'Admin page',
-  }
+export let metadata: Metadata;
   
   
-function AdminLayout({children}: {children: React.ReactNode}) {
+async function AdminLayout({children}: {children: React.ReactNode}) {
+
+    const dict = await getDictionary(headers().get('x-language') || "en")
+
+    metadata = {
+        title: dict.meta.admin.title,
+        description: dict.meta.admin.desc,
+    }
+
     return (<>
             {children}
             <ToastContainer

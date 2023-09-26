@@ -2,8 +2,9 @@
 
 import React, { useEffect, useRef } from "react"
 import "./PrizeUseSwipe.scss"
+import { Swipe } from "@/dictionaries/type"
 
-export default function PrizeUseSwipe({swiped, setSwiped}:{swiped:boolean, setSwiped: React.Dispatch<React.SetStateAction<boolean>>}) {
+export default function PrizeUseSwipe({dictionary, swiped, setSwiped}:{dictionary:Swipe, swiped:boolean, setSwiped: React.Dispatch<React.SetStateAction<boolean>>}) {
     const button = useRef<HTMLButtonElement>(null)
     const wrapper = useRef<any>(null)
     let active = false;
@@ -58,8 +59,8 @@ export default function PrizeUseSwipe({swiped, setSwiped}:{swiped:boolean, setSw
         <div className="useswipe-container">
             <div ref={wrapper} onTouchStart={dragStart} onTouchEnd={dragEnd} onTouchMove={drag} onMouseDown={dragStart} onMouseUp={dragEnd} onMouseMove={drag} className="useswipe-wrapper">
                 <button ref={button}>
-                    <span style={{opacity: swiped ? "0" : "1"}} className="unredemed">Redeem-&gt;</span>
-                    <span style={{opacity: swiped ? "1" : "0"}} className="redemed">Redeemed</span>
+                    <span style={{opacity: swiped ? "0" : "1"}} className="unredemed">{dictionary.redeem}</span>
+                    <span style={{opacity: swiped ? "1" : "0"}} className="redemed">{dictionary.redeemed}</span>
                 </button>
             </div>
         </div>

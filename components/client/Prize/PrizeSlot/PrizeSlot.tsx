@@ -8,8 +8,9 @@ import PrizeClientService from "@/services/prizeClient.service";
 import { useRouter } from "next/navigation";
 import PrizeUseSwipe from "@/components/ui/PrizeUseSwipe/PrizeUseSwipe";
 import PrizeSpin from "./PrizeSpin/PrizeSpin";
+import { Prize } from "@/dictionaries/type";
 
-export default function PrizeSlot({userprize, ftw}:{userprize:IUserPrize, ftw:number}) {
+export default function PrizeSlot({dictionary, userprize, ftw}:{dictionary:Prize,userprize:IUserPrize, ftw:number}) {
     
     const [opened, setOpened] = useState<boolean>(userprize.expires_at !== null)
     const [expires, setExpires] = useState<string>("")
@@ -75,14 +76,14 @@ export default function PrizeSlot({userprize, ftw}:{userprize:IUserPrize, ftw:nu
                 </button>
                 {!opened &&
                 <>
-                    <h5>Scratch the card and</h5>
-                    <h3>Revel your prize 🎉</h3>
+                    <h5>{dictionary.scratch}</h5>
+                    <h3>{dictionary.revel}</h3>
                 </>
                 }
                 {opened &&
                 <>
-                    <h4>To redeem: </h4>
-                    <h2>Show to seller</h2>
+                    <h4>{dictionary.redeem}</h4>
+                    <h2>{dictionary.show}</h2>
                 </>
                 }
                 <div className={`prize__scratchcard prize__slot ${isSlot ? "" : "sketch"}`}>
@@ -90,7 +91,7 @@ export default function PrizeSlot({userprize, ftw}:{userprize:IUserPrize, ftw:nu
                         <PrizeSpin setSlotEnd={setSlotEnd} isWon={isSlotWon} /> 
                     }
                     {isSlot && slotEnd && !isSlotWon &&
-                        <h4>Try next time :(</h4>
+                        <h4>{dictionary.try}</h4>
                     }
                     {!isSlot &&
                         <PrizeCoupon opened={opened} setOpened={setOpened} width={300} height={300} cover={"/scratch.svg"}>
@@ -103,30 +104,30 @@ export default function PrizeSlot({userprize, ftw}:{userprize:IUserPrize, ftw:nu
                                     src={userprize.prize.image}
                                 />
                                 <h3>{userprize.prize.text}</h3>
-                                <h4>Yay! You’ve won 🎉</h4>
+                                <h4>{dictionary.won}</h4>
                                 <Confetti active={ opened } config={confettiConfig}/>
                                 </>
                             }
-                            {!userprize.is_won && <h4>Try next time :(</h4>}
+                            {!userprize.is_won && <h4>{dictionary.try}</h4>}
                         </PrizeCoupon>
                     }
                 </div>
                 {userprize.is_won && <h5 style={{opacity: opened ? "1" : "0"}} className="prize_expires">{`Expires ${expires}`}</h5>}
                 <hr />
                 <div className="prize__how">
-                    <h3>How it work?</h3>
+                    <h3>{dictionary.work}</h3>
                     <ol>
                         <li>
-                            <h6>Spin - </h6>
-                            <p>Press the "spin" button and watch the symbols whirl into place on your screen. The anticipation of a win is electrifying!</p>
+                            <h6>{dictionary.spin}</h6>
+                            <p>{dictionary.spinText}</p>
                         </li>
                         <li>
-                            <h6>Hit the jackpot?</h6>
-                            <p>Incredible! Show the prize page to the cashier, and claim your reward, from a free dessert to exclusive bonuses.</p>
+                            <h6>{dictionary.jackpot}</h6>
+                            <p>{dictionary.jackpotText}</p>
                         </li>
                     </ol>
                 </div>
-                {opened && userprize.is_won && <PrizeUseSwipe swiped={swiped} setSwiped={setSwiped}/>}
+                {opened && userprize.is_won && <PrizeUseSwipe dictionary={dictionary.swipe} swiped={swiped} setSwiped={setSwiped}/>}
         </div>
         )
 }

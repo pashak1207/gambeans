@@ -1,6 +1,6 @@
 import { userStepsToPersentage } from "@/utils/userStepsToPersentage"
 import styles from "./StatisticDoughnutChart.module.scss"
-import { StatisticDoughnut } from "./StatisticDoughnut/StatisticDoughnut"
+// import { StatisticDoughnut } from "./StatisticDoughnut/StatisticDoughnut"
 
 export default async function StatisticDoughnutChart() {
     const initData = [2, 1, 34, 32, 17, 12, 21, 44, 67, 43, 23, 43, 22, 43, 22, 43, 22, 43, 22, 43, 22,]

@@ -1,3 +1,4 @@
+import { Main } from "@/dictionaries/type";
 import DashboardMainInner from "./DashboardMainInner/DashboardMainInner";
 import AuthServerService from "@/services/authServer.service";
 
@@ -7,8 +8,8 @@ const bgImages = [
     "bg3.svg",
 ]
 
-export default async function DashboardMain() {
+export default async function DashboardMain({ dictionary }:{ dictionary:Main }) {
     const prizes = await AuthServerService.getMe("prizes").then(data => data.prizes)    
 
-    return <DashboardMainInner prizes={prizes} bgImages={bgImages}/>
+    return <DashboardMainInner dictionary={dictionary} prizes={prizes} bgImages={bgImages}/>
 }

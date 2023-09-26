@@ -3,6 +3,7 @@ import { notFound } from "next/navigation"
 import { headers } from "next/headers"
 import AdminCafeClient from "./AdminCafeClient/AdminCafeClient"
 import UserUtils from "@/utils/userUtils"
+import { Cafe } from "@/dictionaries/type"
 
 const cafeCreateObj:ICafe = {
     address: "Add address",
@@ -12,6 +13,7 @@ const cafeCreateObj:ICafe = {
     daily_code: UserUtils.generateVerificationCode(),
     email: "email@mail.com",
     ftw: 50,
+    env_version: "en",
     link_eng:"cafe-cafe.eng"    ,
     link_heb:"cafe-cafe.heb",
     logo: "/proto.svg",
@@ -21,11 +23,11 @@ const cafeCreateObj:ICafe = {
     created_at: new Date().toString()
 }
 
-export default async function AdminCafe({cafeId, isCreate}:{cafeId?:number, isCreate:boolean}) {
+export default async function AdminCafe({cafeId, isCreate, dictionary}:{cafeId?:number, isCreate:boolean, dictionary:Cafe}) {
     const proto = headers().has("x-forwarded-proto") ? "https://" : "http://";
 
     if(isCreate){
-        return <AdminCafeClient isCreate cafeObj={cafeCreateObj} proto={proto} />
+        return <AdminCafeClient dictionary={dictionary} isCreate cafeObj={cafeCreateObj} proto={proto} />
     }else{
         const cafe:ICafe = cafeId ? await CafeServerService.getCafe(cafeId).then(data => data.cafe) : await CafeServerService.getCafe().then(data => data.cafe)
     
@@ -33,6 +35,6 @@ export default async function AdminCafe({cafeId, isCreate}:{cafeId?:number, isCr
             notFound()
         }
 
-        return <AdminCafeClient cafeObj={cafe} proto={proto} />
+        return <AdminCafeClient dictionary={dictionary} cafeObj={cafe} proto={proto} />
     }
 }

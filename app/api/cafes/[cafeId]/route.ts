@@ -22,6 +22,7 @@ export async function PUT(request: NextRequest, {params: {cafeId}} : {params:{ca
                 contact_phone: cafeObj.contact_phone,
                 link_heb: cafeObj.link_heb,
                 link_eng: cafeObj.link_eng,
+                env_version: cafeObj.env_version,
                 ftw: cafeObj.ftw,
                 send_phone: cafeObj.send_phone
             }
@@ -74,6 +75,7 @@ export async function POST(request: NextRequest) {
                 contact_phone: cafeObj.contact_phone,
                 link_heb: cafeObj.link_heb,
                 link_eng: cafeObj.link_eng,
+                env_version: cafeObj.env_version,
                 daily_code: UserUtils.generateVerificationCode(),
                 ftw: cafeObj.ftw,
                 send_phone: cafeObj.send_phone,

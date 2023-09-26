@@ -1,0 +1,143 @@
+{
+    "meta":{
+        "welcome":{
+            "title": "Welcome",
+            "desc": "Cafe page"
+        },
+        "login":{
+            "title": "Login",
+            "desc": "Cafe page"
+        },
+        "dashboard":{
+            "title": "Dashboard",
+            "desc": "Cafe page"
+        },
+        "admin":{
+            "title": "Welcome Admin",
+            "desc": "Admin page"
+        }
+    },
+    "loading": {
+        "heading": "GamBeans",
+        "text": "Boosting Cafe Loyalty"
+    },
+    "welcome":{
+        "heading": "ברוכים הבאים",
+        "textStart": "זו כרטיסיית ",
+        "textEnd": "החדשה שלכם, רק טובה יותר.",
+        "rewards": "יותר פרסים,",
+        "fun": "יותר כיף.",
+        "rights": " על גבי הטלפון שלכם.",
+        "button": "הבא"
+    },
+    "login":{
+        "first":{
+            "title": "הצטרפות או התחברות",
+            "text": "מטעמי אבטחה ונוחות, הכנס.י את מספר הטלפון שלך. אנחנו נשלח לך קוד אימות.",
+            "small": "אנחנו נשלח לך קוד אימות",
+            "validation": "הזן את מספר הטלפון הנכון",
+            "button": "שלח קוד"
+        },
+        "second":{
+            "toast": "אתה חסום כרגע",
+            "toast_sent": "קוד חדש נשלח",
+            "title": "הכנס קוד אימות",
+            "text": "שלחנו לך קוד אימות באורך 4 תווים,הכנס אותו מטה.",
+            "resend": "שלח קוד נוסף",
+            "timer": " אתה יכול לבקש את הקוד שוב דרך",
+            "validation": "הקוד שגוי",
+            "button": "הבא",
+            "small": " לחיצה על כפתור ״הבא״, מהווה הסבמה",
+            "terms": "לתנאים ומדיניות"
+        },
+        "third":{
+            "nameValid": "הזן שם נכון",
+            "dateValid": "הזן תאריך לידה נכון",
+            "title": "נשמח להכיר אותך קצת יותר טוב :)",
+            "name": "שם מלא",
+            "age": "גיל",
+            "button": "הבא"
+        },
+        "fourth":{
+            "title": "איך זה עובד?",
+            "arrive": "מגיע וסורק",
+            "scan": "סריקת קוד הQR תביא אותך למסך הבית, הכנס.י את הקוד היומי והתקדמי בין השלבים ",
+            "unlock": "שחק וזכה",
+            "visit": "בין ביקור לביקור, תשחררו משחקי מזל והגרלות שונות. תחזיקו אצבעות, ותזכו בפרסים שווים, מקפה חינם ועד הנחות שוות במיוחד.",
+            "button": "הבא"
+        }
+    },
+    "dashboard": {
+        "heading":{
+            "prizes": "פרסים"
+        },
+        "main":{
+            "journey": "המסלול שלי"
+        },
+        "code":{
+            "daily": "הקוד היומי - "
+        },
+        "prizes":{
+            "titleStart": " זכית ב",
+            "titleEnd": "פרסים שטרם מומשו",
+            "won": "יש! זכית 🎉",
+            "noPrizes": "אין פרסים שעדיין לא מומשו",
+            "button": "חזרה למסך הבית"
+        },
+        "prize":{
+            "scratch": "גרדו",
+            "revel": "וגלו את הפרס 🎉",
+            "redeem": "למימוש:",
+            "show": "הצג מסך זה למוכר.ת",
+            "won": "יס! זכית בפרס 🎉",
+            "try": "תנסה בפעם הבאה :(",
+            "work": "איך זה עובד?",
+            "scr": "גרדו - ",
+            "firstText": "פשוט החליקו את האצבע שלכם על המסך וגרדו את הכרטיס הוירטואלי, כדי לחשוף את הפרס שלכם. שימו לב! לכל פרס תאריך תפוגה שונה.",
+            "scored": "זכיתם בפרס?",
+            "secondText": "מדהים! הציגו את מסך הפרס למוכר, וממשו את הפרס, מקפה חינם עד הנחות בלעדיות על מוצרי מזון.",
+            "spin": "סובבו -",
+            "spinText": "לחצו על כפתור ה״סיבוב״, ותראו את גלגלי המזל מסתובבים עד עצירתם במקום.",
+            "jackpot": "זכיתם?",
+            "jackpotText": "מדהים! הציגו את עמוד הפרס למוכר וממשו את הפרס שלכם.",
+            "swipe":{
+                "redeem": "למימוש ->",
+                "redeemed": "נפדה"
+            }
+        }
+    },
+    "admin":{
+        "menu":{
+            "dashboard": "לוּחַ מַחווָנִים",
+            "shops": "בתי קפה",
+            "logout":{
+                "text": "להתנתק"
+            }
+        },
+        "cafe":{
+            "hbrEnv": "כתובת אתר של סביבת HBR: ",
+            "engEnv": "כתובת אתר של סביבת ENG: ",
+            "logoColor": "צבע לוגו: ",
+            "envVersion": "גרסת סביבה בשימוש: ",
+            "mail": "דוֹאַר: ",
+            "address": "כתובת: ",
+            "join": "הצטרף ב: ",
+            "name": "שם איש קשר: ",
+            "phone": "טלפון ליצירת קשר: ",
+            "ftw": "FTW: ",
+            "daily": "טלפון יומי: ",
+            "blocks":{
+                "dailyPhone": "טלפון קוד יומי",
+                "dailyCode": "קוד יומי",
+                "registrated": "משתמשים רשומים",
+                "visits": "ביקורים יומיים",
+                "new7": "משתמשים חדשים (7 ימים)",
+                "return7": "משתמשים שהוחזרו (7 ימים)",
+                "revenue": "הכנסות דרכנו",
+                "revenue30": "הכנסה מאיתנו (30 ימים)",
+                "new30": "משתמשים חדשים (30 יום)",
+                "return30": "משתמשים שהוחזרו (30 ימים)"
+            }
+        }
+    }
+}

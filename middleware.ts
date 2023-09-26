@@ -4,6 +4,7 @@ import JWT from './utils/jwtgenerate'
 import Redirect from './utils/redirects'
 import CafeServerService from './services/cafeServer.service'
 import AuthServerService from './services/authServer.service'
+import { Users_role } from './types/enums'
 
 const privateRoutes = ["/dashboard", "/admin", "/superadmin"]
 
@@ -11,6 +12,9 @@ export async function middleware(request: NextRequest){
   const path:string = request.nextUrl.pathname
   const accessToken:string|boolean = request.cookies.get('JWTAccessToken')?.value || false
   const currentCafeId:number = await CafeServerService.getCafeId().then(data => data.cafeId)
+  const currentCafeLang:string = await CafeServerService.getCafeLang().then(data => data.cafeLang)
+  const requestHeaders = new Headers(request.headers)
+  requestHeaders.set('x-language', currentCafeLang)
 
   if(!currentCafeId){
     return Redirect.notFound(request)
@@ -18,16 +22,14 @@ export async function middleware(request: NextRequest){
 
 
   if(path.startsWith("/api")){
-    const requestHeaders = new Headers(request.headers)
     requestHeaders.set('x-cafe-id', currentCafeId.toString())
-        
+
     return NextResponse.next({
       request: {
         headers: requestHeaders,
       }
     })
-  }
-  
+  }  
   
   
   
@@ -47,6 +49,7 @@ export async function middleware(request: NextRequest){
 
           response.cookies.delete('JWTRefreshToken');
           response.cookies.delete('JWTAccessToken');
+          response.headers.set('x-language', currentCafeLang)
 
           return response;
         }
@@ -84,6 +87,7 @@ export async function middleware(request: NextRequest){
           const response = NextResponse.next()
           response.cookies.set(...await JWT.generateAccessToken(+payload?.id, payload?.role as Users_role, request, payload?.cafe_id as string) as any)
           response.cookies.set(...await JWT.generateRefreshToken(+payload?.id, payload?.role as Users_role, request, payload?.cafe_id as string) as any)
+          response.headers.set('x-language', currentCafeLang)
           return response;
         }
 
@@ -95,7 +99,11 @@ export async function middleware(request: NextRequest){
 
     }
 
-    return NextResponse.next()
+    return NextResponse.next({
+      request: {
+        headers: requestHeaders,
+      }
+    })
     
   }
   
@@ -119,7 +127,11 @@ export async function middleware(request: NextRequest){
       }
     }
     
-    return NextResponse.next()
+    return NextResponse.next({
+      request: {
+        headers: requestHeaders,
+      }
+    })
     
   }
 }

@@ -2,6 +2,11 @@
 @import "~app/mixins.scss";
 
 html{
+
+	&.rtl{
+		direction: rtl;
+	}
+
 	*{
 		box-sizing: border-box;
 		font-family: inherit;
@@ -81,6 +86,7 @@ html{
 	--gray-color: #eee;
 	--yellow-button: #EECE6D;
 	--black-color: #000;
+	--white-color: #fff;
 	--progress-color: #FD8679;
 	--redeem-color: #14BEA4;
 	--validation-color: #FF5A5F;
@@ -103,7 +109,6 @@ html{
 	--dashboard-code-input-bg-color: rgba(161, 147, 141, 0.80);
 
 	--steps-circles-bgcolour: #ebd3c1;
-	--white-color: #fff;
 
 	--max-width: 420px;
 

@@ -4,12 +4,13 @@ import React, { useEffect, useRef, useState } from "react"
 import "./DashboardCode.scss"
 import CafeClientService from "@/services/cafeClient.service"
 import PrizeClientService from "@/services/prizeClient.service"
+import { Code } from "@/dictionaries/type"
 
 const initialState = [
     "", "", "", ""
 ]
 
-export default function DashboardCode() {
+export default function DashboardCode({ dictionary }:{ dictionary:Code }) {
     const inputRefs = useRef<(HTMLInputElement | null)[]>([])
     const codeContainer = useRef<(HTMLDivElement | null)>(null)
     const [inputState, setInputState] = useState<(number | string)[]>(initialState)
@@ -57,7 +58,7 @@ export default function DashboardCode() {
 
     return (
         <div ref={codeContainer} className="dashboardCode">
-            <h5>Daily code - </h5>
+            <h5>{dictionary.daily}</h5>
             <div className="dashboardInputs">
                 {inputState.map((value, index) => {
                     return <input 

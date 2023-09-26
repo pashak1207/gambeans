@@ -11,6 +11,9 @@ import ColorPicker from "@/components/ui/ColorPicker/ColorPicker"
 import EditableText from "@/components/ui/EditableText/EditableText"
 import ImageCafeUpload from "@/components/ui/ImageCafeUpload/ImageCafeUpload"
 import AdminUsersTable from "../../AdminUsersTable/AdminUsersTable"
+import Dropdown from "@/components/ui/Dropdown/Dropdown"
+import { Env_version } from "@/types/enums"
+import { Cafe } from "@/dictionaries/type"
 
 enum Prize_Cafe_change_fields {
     TEXT="TEXT",
@@ -31,13 +34,10 @@ enum Prize_Cafe_change_fields {
     DAILY_PHONE="DAILY_PHONE",
 }
 
-export default function AdminCafeClient({ cafeObj, proto, isCreate }:{ cafeObj:ICafe, proto:string, isCreate?:boolean }) {
+export default function AdminCafeClient({ cafeObj, proto, isCreate, dictionary }:{ cafeObj:ICafe, proto:string, isCreate?:boolean, dictionary:Cafe }) {
 
     const [ cafe, setCafe ] = useState<ICafe>(cafeObj)
     const [ isEdit, setIsEdit ] = useState<boolean>(!!isCreate)
-
-
-
 
 
     const prevDayVisits = cafe.visits?.filter((visit:IVisit) => ( new Date(visit.visit_date).getTime() < new Date(UserUtils.getStartOfDay(new Date(new Date().setDate(new Date().getDate() - 1)))).getTime()) && (new Date(visit.visit_date).getTime() > new Date(UserUtils.getStartOfDay(new Date(new Date().setDate(new Date().getDate() - 2)))).getTime())).length
@@ -53,14 +53,6 @@ export default function AdminCafeClient({ cafeObj, proto, isCreate }:{ cafeObj:I
     const prevNewUsers30 = cafe.users?.filter((user:IUser) => (new Date(user.created_at).getTime() > new Date(UserUtils.getStartOfDay(new Date(new Date().setDate(new Date().getDate() - 60)))).getTime()) && ((new Date(user.created_at).getTime() < new Date(UserUtils.getStartOfDay(new Date(new Date().setDate(new Date().getDate() - 30)))).getTime()))).length
     const currReturnedUsers30 = cafe.users?.filter((user:IUser) => (new Date(user.created_at).getTime() < new Date(UserUtils.getStartOfDay(new Date(new Date().setDate(new Date().getDate() - 30)))).getTime()) && (new Date(user.updated_at).getTime() > new Date(UserUtils.getStartOfDay(new Date(new Date().setDate(new Date().getDate() - 30)))).getTime())).length
     const prevReturnedUsers30 = cafe.users?.filter((user:IUser) => (new Date(user.created_at).getTime() < new Date(UserUtils.getStartOfDay(new Date(new Date().setDate(new Date().getDate() - 60)))).getTime()) && (new Date(user.updated_at).getTime() > new Date(UserUtils.getStartOfDay(new Date(new Date().setDate(new Date().getDate() - 30)))).getTime())).length! - currReturnedUsers30!   
-
-    const scrathPrizes = cafe.prizes?.filter((prize:IPrize) => prize.type === "SCRATCH")    
-    const slotPrizes = cafe.prizes?.filter((prize:IPrize) => prize.type === "SLOT")    
-    const freePrizes = cafe.prizes?.filter((prize:IPrize) => prize.type === "FREE")    
-    const firstPrizes = cafe.prizes?.filter((prize:IPrize) => prize.type === "FIRST")
-
-
-
 
 
     async function editSaveBtn(){
@@ -84,51 +76,51 @@ export default function AdminCafeClient({ cafeObj, proto, isCreate }:{ cafeObj:I
                     <div className={styles.middle__left}>
                         <ImageCafeUpload setCafe={setCafe} editable={isEdit} url={cafe.logo} />
                         {(cafe.link_heb || isEdit) && <>
-                            <h5>HBR environment Url:</h5>
+                            <h5>{dictionary.hbrEnv}</h5>
                             <a onClick={e => {if(isEdit) e.preventDefault()}} href={proto + cafe.link_heb}>{isEdit ? <EditableText type={Prize_Cafe_change_fields.HEB_DOMAIN} initialText={(cafe.link_heb || "Enter HEB domain")} isPrize={false} setCafe={setCafe} /> : (cafe.link_heb || "Enter HEB domain")}</a>
                         </>}
                         {(cafe.link_eng || isEdit) && <>
-                            <h5>ENG environment Url:</h5>
+                            <h5>{dictionary.engEnv}</h5>
                             <a onClick={e => {if(isEdit) e.preventDefault()}} href={proto + cafe.link_eng}>{isEdit ? <EditableText type={Prize_Cafe_change_fields.ENG_DOMAIN} initialText={(cafe.link_eng || "Enter ENG domain")} isPrize={false} setCafe={setCafe} /> : (cafe.link_eng || "Enter ENG domain")}</a>
                         </>}
                     </div>
                     <div className={styles.middle__right}>
                         <ul>
-                            <li><span>Logo color: </span>{cafe.color} {isEdit ? <ColorPicker colorStr={cafe.color} setCafe={setCafe}/> : ""}</li>
-                            <li><span>Environment version used : </span>????</li>
-                            <li><span>Mail: </span>{isEdit ? <EditableText type={Prize_Cafe_change_fields.EMAIL} initialText={cafe.email} isPrize={false} setCafe={setCafe} /> : cafe.email} </li>
-                            <li><span>Address: </span>{isEdit ? <EditableText type={Prize_Cafe_change_fields.ADDRESS} initialText={(cafe.address || "-")} isPrize={false} setCafe={setCafe} /> : (cafe.address || "-") }</li>
-                            <li><span>Join on: </span>{new Date(cafe.created_at).toLocaleDateString('tr-TR', { day: '2-digit', month: '2-digit', year: '2-digit'})}</li>
-                            <li><span>Contact name: </span>{isEdit ? <EditableText type={Prize_Cafe_change_fields.CONTACT_NAME} initialText={(cafe.contact_name || "-")} isPrize={false} setCafe={setCafe} /> :  (cafe.contact_name || "-")}</li>
-                            <li><span>Contact phone: </span>{isEdit ? <EditableText type={Prize_Cafe_change_fields.CONTACT_PHONE} initialText={(cafe.contact_phone || "-")} isPrize={false} setCafe={setCafe} /> :  (cafe.contact_phone || "-")}</li>
-                            <li><span>FTW: </span>{isEdit ? <EditableText type={Prize_Cafe_change_fields.FTW} initialText={(cafe.ftw.toString() || "-")} isPrize={false} setCafe={setCafe} /> :  (cafe.ftw|| "-")}</li>
-                            <li><span>Daily phone: </span>{isEdit ? <EditableText type={Prize_Cafe_change_fields.DAILY_PHONE} initialText={(cafe.send_phone || "-")} isPrize={false} setCafe={setCafe} /> :  (cafe.send_phone|| "-")}</li>
+                            <li><span>{dictionary.logoColor}</span>{cafe.color} {isEdit ? <ColorPicker colorStr={cafe.color} setCafe={setCafe}/> : ""}</li>
+                            <li><span>{dictionary.envVersion}</span>{isEdit ? <Dropdown setState={setCafe} defaultValue={cafe.env_version} items={(Object.keys(Env_version) as Array<keyof typeof Env_version>)} /> : cafe.env_version}</li>
+                            <li><span>{dictionary.mail}</span>{isEdit ? <EditableText type={Prize_Cafe_change_fields.EMAIL} initialText={cafe.email} isPrize={false} setCafe={setCafe} /> : (cafe.email || "-")} </li>
+                            <li><span>{dictionary.address}</span>{isEdit ? <EditableText type={Prize_Cafe_change_fields.ADDRESS} initialText={(cafe.address || "-")} isPrize={false} setCafe={setCafe} /> : (cafe.address || "-") }</li>
+                            <li><span>{dictionary.join}</span>{new Date(cafe.created_at).toLocaleDateString('tr-TR', { day: '2-digit', month: '2-digit', year: '2-digit'})}</li>
+                            <li><span>{dictionary.name}</span>{isEdit ? <EditableText type={Prize_Cafe_change_fields.CONTACT_NAME} initialText={(cafe.contact_name || "-")} isPrize={false} setCafe={setCafe} /> :  (cafe.contact_name || "-")}</li>
+                            <li><span>{dictionary.phone}</span>{isEdit ? <EditableText type={Prize_Cafe_change_fields.CONTACT_PHONE} initialText={(cafe.contact_phone || "-")} isPrize={false} setCafe={setCafe} /> :  (cafe.contact_phone || "-")}</li>
+                            <li><span>{dictionary.ftw}</span>{isEdit ? <EditableText type={Prize_Cafe_change_fields.FTW} initialText={(cafe.ftw.toString() || "-")} isPrize={false} setCafe={setCafe} /> :  (cafe.ftw|| "-")}</li>
+                            <li><span>{dictionary.daily}</span>{isEdit ? <EditableText type={Prize_Cafe_change_fields.DAILY_PHONE} initialText={(cafe.send_phone || "-")} isPrize={false} setCafe={setCafe} /> :  (cafe.send_phone|| "-")}</li>
                         </ul>
                     </div>
                 </div>
                 <div className={styles.blocks}>
                     <div className={styles.blocks__top}>
                         <div></div>
-                        <StatisticBlock title="Daily code phone" num={cafe.send_phone} progress={0} />
-                        <StatisticBlock title="Daily code" num={cafe.daily_code.split('').join('-')} progress={0} />
+                        <StatisticBlock title={dictionary.blocks.dailyPhone} num={cafe.send_phone} progress={0} />
+                        <StatisticBlock title={dictionary.blocks.dailyCode} num={cafe.daily_code.split('').join('-')} progress={0} />
                         <div></div>
                     </div>
                     <div className={styles.blocks__bottom}>
-                        <StatisticBlock title="Registered users" num={cafe.users?.length!} progress={0} />
-                        <StatisticBlock title="Daily visits" num={currDayVisits!} progress={calculatePercentage(prevDayVisits!, currDayVisits!)} />
-                        <StatisticBlock title="New Users (7 day)" num={currNewUsers7!} progress={calculatePercentage(prevNewUsers7!, currNewUsers7!)} />
-                        <StatisticBlock title="Returned Users (7 days)" num={currReturnedUsers7!} progress={calculatePercentage(prevReturnedUsers7!, currReturnedUsers7!)} />
-                        <StatisticBlock title="Revenue trough us" num={revenue!} progress={0} />
-                        <StatisticBlock title="Revenue trough us (30 days)" num={revenue30!} progress={calculatePercentage(revenuePrev30!, revenue30!)} />
-                        <StatisticBlock title="New Users (30 day)" num={currNewUsers30!} progress={calculatePercentage(prevNewUsers30!, currNewUsers30!)} />
-                        <StatisticBlock title="Returned Users (30 days)" num={currReturnedUsers30!} progress={calculatePercentage(prevReturnedUsers30!, currReturnedUsers30!)} />
+                        <StatisticBlock title={dictionary.blocks.registrated} num={cafe.users?.length!} progress={0} />
+                        <StatisticBlock title={dictionary.blocks.visits} num={currDayVisits!} progress={calculatePercentage(prevDayVisits!, currDayVisits!)} />
+                        <StatisticBlock title={dictionary.blocks.new7} num={currNewUsers7!} progress={calculatePercentage(prevNewUsers7!, currNewUsers7!)} />
+                        <StatisticBlock title={dictionary.blocks.return7} num={currReturnedUsers7!} progress={calculatePercentage(prevReturnedUsers7!, currReturnedUsers7!)} />
+                        <StatisticBlock title={dictionary.blocks.revenue} prefix="$" num={revenue!} progress={0} />
+                        <StatisticBlock title={dictionary.blocks.revenue30} prefix="$" num={revenue30!} progress={calculatePercentage(revenuePrev30!, revenue30!)} />
+                        <StatisticBlock title={dictionary.blocks.new30} num={currNewUsers30!} progress={calculatePercentage(prevNewUsers30!, currNewUsers30!)} />
+                        <StatisticBlock title={dictionary.blocks.return30} num={currReturnedUsers30!} progress={calculatePercentage(prevReturnedUsers30!, currReturnedUsers30!)} />
                     </div>
                 </div>
                 {!isCreate && <>
-                <AdminPrizeTable type={"SCRATCH"} cafeId={cafe.id} prizesArr={scrathPrizes!} />
-                <AdminPrizeTable type={"SLOT"} cafeId={cafe.id} prizesArr={slotPrizes!} />
-                <AdminPrizeTable type={"FREE"} cafeId={cafe.id} prizesArr={freePrizes!} />
-                <AdminPrizeTable type={"FIRST"} cafeId={cafe.id} prizesArr={firstPrizes!} />
+                <AdminPrizeTable type={"SCRATCH"} cafeId={cafe.id} prizesArr={cafe.prizes?.filter((prize:IPrize) => prize.type === "SCRATCH")!} />
+                <AdminPrizeTable type={"SLOT"} cafeId={cafe.id} prizesArr={cafe.prizes?.filter((prize:IPrize) => prize.type === "SLOT") !} />
+                <AdminPrizeTable type={"FREE"} cafeId={cafe.id} prizesArr={cafe.prizes?.filter((prize:IPrize) => prize.type === "FREE")!} />
+                <AdminPrizeTable type={"FIRST"} cafeId={cafe.id} prizesArr={cafe.prizes?.filter((prize:IPrize) => prize.type === "FIRST")!} />
 
                 <AdminUsersTable cafeId={cafe.id} usersArr={cafe.users!}/>
                 </>}

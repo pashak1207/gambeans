@@ -1,6 +1,7 @@
 interface ILoginRegistrationState {
     phone?: string,
     step?: number,
+    path?: string
 }
 
 interface IUser{
@@ -70,6 +71,7 @@ interface ICafe {
     ftw: number,
     link_eng: string | null,
     link_heb: string | null,
+    env_version: Env_version,
     contact_phone: string | null,
     contact_name: string | null,
     daily_code: string,
@@ -77,24 +79,6 @@ interface ICafe {
     users?: IUser[]
     prizes?: IPrize[]
     visits?: IVisit[]
-}
-
-enum Users_role {
-    ADMIN = "ADMIN",
-    SUPERADMIN ="SUPERADMIN",
-    USER = "USER"
-}
-
-enum User_status {
-    ACTIVE = "ACTIVE",
-    BLOCKED = "BLOCKED",
-}
-
-enum Prize_type {
-    SCRATCH = "SCRATCH",
-    SLOT = "SLOT",
-    FREE = "FREE",
-    FIRST = "FIRST",
 }
 
 interface ICookie {

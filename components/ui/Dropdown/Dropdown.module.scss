@@ -1,0 +1,46 @@
+@import "~app/mixins.scss";
+
+.dropdown {
+    margin: 0 auto;
+    z-index: 100;
+    width: auto;
+    display: inline-block;
+    position: relative;
+    
+    button {
+        z-index: -1;
+        display: block;
+        width: auto;
+        margin: 0 auto;
+    }
+}
+.dropdown,
+.dropdown * {
+    z-index: 10;
+}
+.dropdown .dropdown_btn {
+    cursor: pointer;
+    background: var(--white-color);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: toRem(10);
+    border: 1px solid var(--gray-color);
+    border-radius: 5px;
+    color: var(--admin-second-heading-color);
+    font-weight: 500;
+}
+.dropdown_content {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    box-shadow: 0 0 10px 5px var(--gray-color);
+    background: var(--white-color);
+}
+.dropdown_content .item {
+    padding: toRem(10);
+    cursor: pointer;
+}
+.dropdown_content .item:hover {
+    background: var(--admin-statistic-block-odd);
+}

@@ -61,6 +61,21 @@ const CafeServerService = {
         return await response!.json()
     },
 
+    async getCafeLang(){
+        const domain = headers().get('host')
+        let response;
+        
+        await fetch(`https://${domain}/api/cafes/cafe?lang`, { method: 'HEAD' })
+        .then(async data => {
+            response = await fetch(`https://${domain}/api/cafes/cafe?lang`)
+        })
+        .catch(async err => {
+            response = await fetch(`http://${domain}/api/cafes/cafe?lang`)
+        });
+        
+        return await response!.json()
+    },
+
     async getDailyVisits(){
         const domain = headers().get('host')
         let response;

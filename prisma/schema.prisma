@@ -28,23 +28,24 @@ model Users {
 }
 
 model Cafes {
-  id            Int      @id @default(autoincrement()) @db.UnsignedInt
+  id            Int         @id @default(autoincrement()) @db.UnsignedInt
   name          String
-  email         String   @unique
+  email         String      @unique
   address       String?
   logo          String
   color         String
-  send_phone    String   @unique
-  ftw           Int      @db.UnsignedInt
-  link_eng      String?
-  link_heb      String?
+  send_phone    String      @unique
+  ftw           Int         @db.UnsignedInt
+  link_eng      String?     @unique
+  link_heb      String?     @unique
+  env_version   Env_version @default(en)
   contact_phone String?
   contact_name  String?
   prizes        Prizes[]
   visits        Visits[]
   users         Users[]
   daily_code    String
-  created_at    DateTime @default(now())
+  created_at    DateTime    @default(now())
 }
 
 model Visits {
@@ -105,4 +106,9 @@ enum Prize_type {
   SLOT
   FIRST
   FREE
+}
+
+enum Env_version {
+  he
+  en
 }

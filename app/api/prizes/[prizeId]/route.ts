@@ -21,6 +21,7 @@ export async function PUT(request: NextRequest, {params: {prizeId}} : {params:{p
                     is_active: isActive,
                 }
             })
+            
         }else if(request.nextUrl.searchParams.has("image")){
             const { url }:{url:string} = body
 
@@ -33,6 +34,7 @@ export async function PUT(request: NextRequest, {params: {prizeId}} : {params:{p
                     image: url
                 }
             })
+
         }else{
             const { prizeObj }:{prizeObj:IPrize} = body
 
@@ -48,7 +50,8 @@ export async function PUT(request: NextRequest, {params: {prizeId}} : {params:{p
                     cost: prizeObj.cost,
                     revenue: prizeObj.revenue,
                     probability: prizeObj.probability,
-                    max_amount: prizeObj.max_amount
+                    max_amount: prizeObj.max_amount,
+                    current_amount: prizeObj.max_amount,
                 }
             })
         }

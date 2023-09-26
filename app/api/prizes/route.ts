@@ -16,7 +16,7 @@ export async function GET(request: NextRequest) {
                                     .catch(err => console.log("Error to get userId from token: " + err.message))
         let prizes;
 
-        if(request.nextUrl.searchParams.has("userprizes")){
+        if(request.nextUrl.searchParams.has("userprizes")){            
             prizes = await prisma.user_prize.findMany({
                 where:{
                     user_id: +request.nextUrl.searchParams.get("userprizes")! || +user_id!,

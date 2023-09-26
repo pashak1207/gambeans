@@ -6,12 +6,13 @@ import AuthClientService from "@/services/authClient.service";
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation'
 import UserUtils from "@/utils/userUtils";
+import { Second } from "@/dictionaries/type";
 
 const initCodeValues: number[] | string[] = [
     "","","",""
 ]
 
-export default function StepFirst({state, setState}:{state:ILoginRegistrationState, setState : React.Dispatch<SetStateAction<ILoginRegistrationState>>}) {
+export default function StepFirst({state, setState, dictionary}:{state:ILoginRegistrationState, setState : React.Dispatch<SetStateAction<ILoginRegistrationState>>, dictionary:Second}) {
     const TIMER_DURATION_SECONDS = 60
     const [isValid, setIsValid] = useState<boolean>(true)
     const inputRefs = useRef<(HTMLInputElement | null)[]>([])
@@ -75,7 +76,7 @@ export default function StepFirst({state, setState}:{state:ILoginRegistrationSta
                                     .catch(e => console.log("Error during codes comparison: " + e.message))
 
         if(isBlocked){            
-            toast("You are currently blocked");
+            toast(dictionary.toast);
             return
         }
         
@@ -101,7 +102,7 @@ export default function StepFirst({state, setState}:{state:ILoginRegistrationSta
 
     const resendCode = async () => {
         setCode(initCodeValues)     
-        toast("New code has been sent");
+        toast(dictionary.toast_sent);
         setSeconds(TIMER_DURATION_SECONDS)
         setTimer(true)
         AuthClientService.generateVerificationCode(state.phone!)
@@ -116,8 +117,8 @@ export default function StepFirst({state, setState}:{state:ILoginRegistrationSta
                         <path d="M12.634 20.7286C12.9764 21.0696 12.9776 21.6236 12.6367 21.9661C12.3267 22.2774 11.8406 22.3067 11.4975 22.0532L11.3992 21.9687L4.34088 14.9407C4.02864 14.6298 4.00024 14.142 4.25568 13.7989L4.34083 13.7007L11.3992 6.67151C11.7416 6.33051 12.2956 6.33165 12.6366 6.67407C12.9466 6.98535 12.9738 7.47152 12.719 7.81354L12.634 7.9115L6.19867 14.321L12.634 20.7286Z" fill="#4B3734"/>
                     </svg>
                 </button>
-                <h4>Enter Verification Code</h4>
-                <p>We've sent a 4-digit code to your phone. Please enter it below to verify your identity.</p>
+                <h4>{dictionary.title}</h4>
+                <p>{dictionary.text}</p>
                 <div className="code-input">
                     {code.map((value, index) => {
                         return <input 
@@ -130,17 +131,17 @@ export default function StepFirst({state, setState}:{state:ILoginRegistrationSta
                     })}
                 </div>
                 {!timer &&
-                    <button disabled={timer} id="resendCode" onClick={resendCode}>Resend code</button>
+                    <button disabled={timer} id="resendCode" onClick={resendCode}>{dictionary.resend}</button>
                 }
                 {timer &&
                     <div className="timer">
-                        <p>You can request the code again through {minutes.toString().padStart(2, '0')}:{remainingSeconds.toString().padStart(2, '0')}</p>
+                        <p>{dictionary.timer}{minutes.toString().padStart(2, '0')}:{remainingSeconds.toString().padStart(2, '0')}</p>
                     </div>
                 }
-                <Validation isValid={isValid} text="The code is incorrect" />
+                <Validation isValid={isValid} text={dictionary.validation} />
             </div>
-            <Button title="NEXT" isLink={false} onClickHandler={nextPageClickHandler}/>
-            <small>By clicking “NEXT”, you agree to our <Link href="#">Terms & Policies</Link></small>
+            <Button title={dictionary.button} isLink={false} onClickHandler={nextPageClickHandler}/>
+            <small>{dictionary.small}<Link href="#">{dictionary.terms}</Link></small>
         </div>
     )
 }

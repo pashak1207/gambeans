@@ -9,6 +9,16 @@
     }
 }
 
+.rtl{
+    .pane{
+        direction: ltr;
+
+        h4{
+            direction: rtl;
+        }
+    }
+}
+
 .pane{
     display: flex;
     justify-content: center;
