@@ -15,7 +15,7 @@ export default function ImagePrizeUpload({ title, prizeId }:{ title:string, priz
 
       formData.set('image', file);
 
-      const tempUrl = await UploadClientService.prizeImage(formData).then(data => data.url)
+      const tempUrl = await UploadClientService.prizeImage(formData, prizeId).then(data => data.url)
       setUrl(tempUrl);
       PrizeClientService.updateImage(prizeId, tempUrl)
 

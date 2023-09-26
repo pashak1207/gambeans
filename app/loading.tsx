@@ -1,6 +1,11 @@
+import { getDictionary } from "@/dictionaries/dictionaries"
+import { headers } from "next/headers"
 import Image from "next/image"
 
-export default function Loading() {
+export default async function Loading() {
+
+    const dict = await getDictionary(headers().get('x-language') || "en") 
+
     return (
         <div className="loadingPane">
             <Image
@@ -10,8 +15,8 @@ export default function Loading() {
                 priority
                 height={224}
             />
-            <h2>GamBeans</h2>
-            <p>Boosting Cafe Loyalty</p>
+            <h2>{dict.loading.heading}</h2>
+            <p>{dict.loading.text}</p>
         </div>
     )
 }

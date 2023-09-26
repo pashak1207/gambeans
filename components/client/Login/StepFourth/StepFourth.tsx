@@ -2,8 +2,9 @@ import Button from "@/components/ui/Button/Button"
 import React, { SetStateAction } from "react"
 import { useRouter } from "next/navigation"
 import Image from "next/image"
+import { Fourth } from "@/dictionaries/type"
 
-export default function StepFourth({setState}:{ setState : React.Dispatch<SetStateAction<ILoginRegistrationState>>}) {
+export default function StepFourth({state, setState, dictionary}:{ state:ILoginRegistrationState,  setState : React.Dispatch<SetStateAction<ILoginRegistrationState>>, dictionary:Fourth}) {
     const router = useRouter()
 
     const prevPage = () => {
@@ -16,7 +17,7 @@ export default function StepFourth({setState}:{ setState : React.Dispatch<SetSta
     }
 
     const nextPageClickHandler = () => {        
-        router.push('/dashboard')
+        router.push(state.path || "/dashboard")
     }
 
     return (
@@ -28,7 +29,7 @@ export default function StepFourth({setState}:{ setState : React.Dispatch<SetSta
                         <path d="M12.634 20.7286C12.9764 21.0696 12.9776 21.6236 12.6367 21.9661C12.3267 22.2774 11.8406 22.3067 11.4975 22.0532L11.3992 21.9687L4.34088 14.9407C4.02864 14.6298 4.00024 14.142 4.25568 13.7989L4.34083 13.7007L11.3992 6.67151C11.7416 6.33051 12.2956 6.33165 12.6366 6.67407C12.9466 6.98535 12.9738 7.47152 12.719 7.81354L12.634 7.9115L6.19867 14.321L12.634 20.7286Z" fill="#4B3734"/>
                     </svg>
                 </button>
-                <h2>HOW IT WORK?</h2>
+                <h2>{dictionary.title}</h2>
                 <div className="stepfourth__blocks">
                     <div className="stepfourth__item">
                         <Image
@@ -39,8 +40,8 @@ export default function StepFourth({setState}:{ setState : React.Dispatch<SetSta
                             height={61}
                         />
                         <div className="stepfourth__text">
-                            <h3>Arrive & Scan</h3>
-                            <p>Scan our QR code and pop the Daily Code into the app.It's your key to jump from one fun stage to another.</p>
+                            <h3>{dictionary.arrive}</h3>
+                            <p>{dictionary.scan}</p>
                         </div>
                     </div>
                     <div className="stepfourth__item">
@@ -52,13 +53,13 @@ export default function StepFourth({setState}:{ setState : React.Dispatch<SetSta
                             height={68}
                         />
                         <div className="stepfourth__text">
-                            <h3>Unlock & Win</h3>
-                            <p>Every visit or two unlocks a new activity! Grab your chance to score rewards, from free coffee to exclusive discounts.</p>
+                            <h3>{dictionary.unlock}</h3>
+                            <p>{dictionary.visit}</p>
                         </div>
                     </div>
                 </div>
             </div>
-            <Button title="NEXT" isLink={false} onClickHandler={nextPageClickHandler}/>
+            <Button title={dictionary.button} isLink={true} onClickHandler={nextPageClickHandler}/>
         </div>
     )
 }

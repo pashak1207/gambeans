@@ -1,11 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;700;800&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@400;800&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
 @import "~app/mixins.scss";
 
 html{
+
+	&.rtl{
+		direction: rtl;
+	}
+
 	*{
 		box-sizing: border-box;
 		font-family: inherit;
@@ -85,6 +86,7 @@ html{
 	--gray-color: #eee;
 	--yellow-button: #EECE6D;
 	--black-color: #000;
+	--white-color: #fff;
 	--progress-color: #FD8679;
 	--redeem-color: #14BEA4;
 	--validation-color: #FF5A5F;
@@ -107,13 +109,12 @@ html{
 	--dashboard-code-input-bg-color: rgba(161, 147, 141, 0.80);
 
 	--steps-circles-bgcolour: #ebd3c1;
-	--white-color: #fff;
 
 	--max-width: 420px;
 
-	--client-font-family: "Nunito", serif;
+	--client-font-family: var(--font-nunito);
 
-	--loading-font-family: 'Urbanist', sans-serif;
+	--loading-font-family: var(--font-urbanist);
 	--loading-color: #B79A81;
 
 	--prize-gradient: linear-gradient(147deg, #F9910D 57.32%, #FFDD75 90.3%);
@@ -122,18 +123,18 @@ html{
 
 	--admin-text-color: #212121;
 	--admin-black-color: #1C1C1C;
-	--admin-heading-font-family: 'Urbanist', sans-serif;
+	--admin-heading-font-family: var(--font-urbanist);
 	--admin-menu-shadow: rgba(0, 0, 0, 0.05);
 	--admin-icon-blure: rgb(84, 84, 84);
 	--admin-menu-text-color: #545454;
-	--admin-text-font-family: 'Inter', sans-serif;
+	--admin-text-font-family: var(--font-inter);
 	--admin-statistic-block-odd: #E3F5FF;
 	--admin-statistic-block-even: #E5ECF6;
 	--admin-chart-bg: #F7F9FB;
-	--admin-second-font-family: 'Poppins', sans-serif;
+	--admin-second-font-family: var(--font-poppins);
 	--admin-btn-bg: #D9D9D9;
 	--admin-checkbox-border-color: #6C757D;
-	--admin-table-heading-font-family: 'Roboto', sans-serif;
+	--admin-table-heading-font-family: var(--font-roboto);
 	--admin-border-silver: #DFDFDF;
 	--admin-th-color: #343A40;
 	--admin-border-light-silver: #EAEAEA;

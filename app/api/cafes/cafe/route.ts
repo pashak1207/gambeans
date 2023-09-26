@@ -25,6 +25,25 @@ export async function GET(request: NextRequest) {
         }
         
         let cafe;
+
+        
+        if(request.nextUrl.searchParams.has("lang")){
+            cafe = await prisma.cafes.findUnique({
+                where:{
+                    id: +cafeId
+                },
+                select:{
+                    env_version: true
+                }
+            })
+            
+            return NextResponse.json({ 
+                cafeLang: cafe?.env_version
+            }, 
+            {
+                status: 200
+            })
+        }
         
 
         if(request.nextUrl.searchParams.has("cafeId")){
@@ -119,7 +138,7 @@ export async function GET(request: NextRequest) {
         console.log(e)
 
         return NextResponse.json({ 
-            message: "Errer to get cafe information"
+            message: "Error to get cafe information"
         }, 
         {
             status: 400

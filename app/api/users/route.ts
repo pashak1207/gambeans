@@ -173,7 +173,7 @@ export async function GET(request: NextRequest) {
         console.log(e)
 
         return NextResponse.json({ 
-            message: "Errer to get all users"
+            message: "Error to get all users"
         }, 
         {
             status: 400

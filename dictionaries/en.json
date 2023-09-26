@@ -1,0 +1,143 @@
+{
+    "meta":{
+        "welcome":{
+            "title": "Welcome",
+            "desc": "Cafe page"
+        },
+        "login":{
+            "title": "Login",
+            "desc": "Cafe page"
+        },
+        "dashboard":{
+            "title": "Dashboard",
+            "desc": "Cafe page"
+        },
+        "admin":{
+            "title": "Welcome Admin",
+            "desc": "Admin page"
+        }
+    },
+    "loading": {
+        "heading": "GamBeans",
+        "text": "Boosting Cafe Loyalty"
+    },
+    "welcome":{
+        "heading": "Welcome to",
+        "textStart": "This is your ",
+        "textEnd": "'s loyalty card, but cooler.",
+        "rewards": "More rewards.",
+        "fun": "More fun.",
+        "rights": "All right on your phone.",
+        "button": "NEXT"
+    },
+    "login":{
+        "first":{
+            "title": "Login or Sign In",
+            "text": "For added security, please enter your phone number. We'll send you a verification code to ensure it's really you.",
+            "small": "We will send a text with a verification code",
+            "validation": "Enter the correct phone number",
+            "button": "Send Verification Code"
+        },
+        "second":{
+            "toast": "You are currently blocked",
+            "toast_sent": "New code has been sent",
+            "title": "Enter Verification Code",
+            "text": "We've sent a 4-digit code to your phone. Please enter it below to verify your identity.",
+            "resend": "Resend code",
+            "timer": "You can request the code again through ",
+            "validation": "The code is incorrect",
+            "button": "NEXT",
+            "small": "By clicking “NEXT”, you agree to our ",
+            "terms": "Terms & Policies"
+        },
+        "third":{
+            "nameValid": "Enter correct name",
+            "dateValid": "Enter correct date of birth",
+            "title": "We'd love to get to know you better",
+            "name": "FULL NAME",
+            "age": "AGE",
+            "button": "NEXT"
+        },
+        "fourth":{
+            "title": "HOW IT WORK?",
+            "arrive": "Arrive & Scan",
+            "scan": "Scan our QR code and pop the Daily Code into the app.It's your key to jump from one fun stage to another.",
+            "unlock": "Unlock & Win",
+            "visit": "Every visit or two unlocks a new activity! Grab your chance to score rewards, from free coffee to exclusive discounts.",
+            "button": "NEXT"
+        }
+    },
+    "dashboard": {
+        "heading":{
+            "prizes": "Prizes"
+        },
+        "main":{
+            "journey": "My journey"
+        },
+        "code":{
+            "daily": "Daily code - "
+        },
+        "prizes":{
+            "titleStart": "You won ",
+            "titleEnd": " prizes that have not yet been redeemed",
+            "won": "Yay! You’ve won 🎉",
+            "noPrizes": "There are no prizes that have not been redeemed yet",
+            "button": "Back to the home"
+        },
+        "prize":{
+            "scratch": "Scratch the card and",
+            "revel": "Revel your prize 🎉",
+            "redeem": "To redeem: ",
+            "show": "Show to seller",
+            "won": "Yay! You’ve won 🎉",
+            "try": "Try next time :(",
+            "work": "How it work?",
+            "scr": "Scratch - ",
+            "firstText": "Just swipe your finger over the virtual card on your screen to reveal the surprise underneath. Trust us, the suspense is worth it!",
+            "scored": "Scored a reward?",
+            "secondText": "Awesome! Show this page to the cashier, and redeem your prize, from a free cup of coffee to exclusive discounts.",
+            "spin": "Spin - ",
+            "spinText": "Press the \"spin\" button and watch the symbols whirl into place on your screen. The anticipation of a win is electrifying!",
+            "jackpot": "Hit the jackpot?",
+            "jackpotText": "Incredible! Show the prize page to the cashier, and claim your reward, from a free dessert to exclusive bonuses.",
+            "swipe":{
+                "redeem": "Redeem-&gt;",
+                "redeemed": "Redeemed"
+            }
+        }
+    },
+    "admin":{
+        "menu":{
+            "dashboard": "dashboard",
+            "shops": "Coffee Shops",
+            "logout":{
+                "text": "Log Out"
+            }
+        },
+        "cafe":{
+            "hbrEnv": "HBR environment Url:",
+            "engEnv": "ENG environment Url:",
+            "logoColor": "Logo color: ",
+            "envVersion": "Environment version used : ",
+            "mail": "Mail: ",
+            "address": "Address: ",
+            "join": "Join on: ",
+            "name": "Contact name: ",
+            "phone": "Contact phone: ",
+            "ftw": "FTW: ",
+            "daily": "Daily phone: ",
+            "blocks":{
+                "dailyPhone": "Daily code phone",
+                "dailyCode": "Daily code",
+                "registrated": "Registered users",
+                "visits": "Daily visits",
+                "new7": "New Users (7 day)",
+                "return7": "Returned Users (7 days)",
+                "revenue": "Revenue trough us",
+                "revenue30": "Revenue trough us (30 days)",
+                "new30": "New Users (30 day)",
+                "return30": "Returned Users (30 days)"
+            }
+        }
+    }
+}

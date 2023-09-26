@@ -5,11 +5,7 @@ import styles from "./AdminUsersTable.module.scss"
 import ReactHTMLTableToExcel from "react-html-table-to-excel";
 import UserClientService from "@/services/userClient.service";
 import UserUtils from "@/utils/userUtils";
-
-enum User_status {
-    ACTIVE = "ACTIVE",
-    BLOCKED = "BLOCKED",
-}
+import { User_status } from "@/types/enums";
 
 
 export default function AdminUsersTable({usersArr, cafeId}:{usersArr: IUser[], cafeId:number}) {    

@@ -16,7 +16,7 @@ export async function GET(request: NextRequest) {
                                     .catch(err => console.log("Error to get userId from token: " + err.message))
         let prizes;
 
-        if(request.nextUrl.searchParams.has("userprizes")){
+        if(request.nextUrl.searchParams.has("userprizes")){            
             prizes = await prisma.user_prize.findMany({
                 where:{
                     user_id: +request.nextUrl.searchParams.get("userprizes")! || +user_id!,
@@ -75,7 +75,7 @@ export async function GET(request: NextRequest) {
         console.log(e)
 
         return NextResponse.json({ 
-            message: "Errer to get all prizes"
+            message: "Error to get all prizes"
         }, 
         {
             status: 400
@@ -93,6 +93,7 @@ export async function POST(request: NextRequest) {
             data:{
                 cafe_id: prizeObj.cafe_id,
                 max_amount: prizeObj.max_amount,
+                current_amount: prizeObj.max_amount,
                 text: prizeObj.text,
                 image: prizeObj.image,
                 step_image: prizeObj.step_image,
@@ -125,7 +126,7 @@ export async function POST(request: NextRequest) {
         console.log(e)
 
         return NextResponse.json({ 
-            message: "Errer to create prize"
+            message: "Error to create prize"
         }, 
         {
             status: 400

@@ -17,18 +17,13 @@ export async function POST(request: NextRequest) {
                         user_id: +userId
                     }
                 },
-                max_amount:{
+                current_amount:{
                     gt: 0
                 },
                 type: {
                     not: 'FIRST'
                 }
-            },
-            orderBy: [
-                {
-                    created_at: 'desc'
-                }
-            ],
+            }
         }).catch(err => console.log("Out from array index: " + err));
 
         prizes = PrizeUtils.getRandomElements(prizes!, +randNum)
@@ -41,13 +36,26 @@ export async function POST(request: NextRequest) {
                 status: 400
             })
         }
+
+        Promise.all(prizes.map(async (prize) => {
+            await prisma.prizes.update({
+                where:{
+                    id: prize.id
+                },
+                data:{
+                    current_amount:{
+                        decrement: 1
+                    }
+                }
+            })
+        }))
         
         await Promise.all(prizes.map(async (prize) => {
             await prisma.user_prize.create({
                 data:{
                     user_id: +userId,
                     prize_id: prize.id,
-                    is_won: Math.floor(Math.random() * 100) + 1 <= prisma.user_prize.fields.probability
+                    is_won: Math.floor(Math.random() * 100) + 1 <= prize.probability
                 }
             })
         }))        
@@ -65,7 +73,7 @@ export async function POST(request: NextRequest) {
         console.log(e)
 
         return NextResponse.json({ 
-            message: "Errer to get random prizes"
+            message: "Error to get random prizes"
         }, 
         {
             status: 400

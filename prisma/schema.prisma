@@ -8,7 +8,7 @@ datasource db {
 }
 
 model Users {
-  id                Int          @default(autoincrement()) @db.UnsignedInt @unique
+  id                Int          @unique @default(autoincrement()) @db.UnsignedInt
   name              String?
   phone             String
   role              Users_role   @default(USER)
@@ -17,7 +17,7 @@ model Users {
   avatar            String
   daily_code        String?
   prizes            User_prize[]
-  visits            Visits[]  
+  visits            Visits[]
   cafe              Cafes        @relation(fields: [cafe_id], references: [id])
   cafe_id           Int          @db.UnsignedInt
   verification_code String
@@ -28,23 +28,24 @@ model Users {
 }
 
 model Cafes {
-  id            Int           @id @default(autoincrement()) @db.UnsignedInt
+  id            Int         @id @default(autoincrement()) @db.UnsignedInt
   name          String
-  email         String        @unique
+  email         String      @unique
   address       String?
   logo          String
   color         String
-  send_phone    String        @unique
-  ftw           Int           @db.UnsignedInt
-  link_eng      String?
-  link_heb      String?
+  send_phone    String      @unique
+  ftw           Int         @db.UnsignedInt
+  link_eng      String?     @unique
+  link_heb      String?     @unique
+  env_version   Env_version @default(en)
   contact_phone String?
   contact_name  String?
   prizes        Prizes[]
   visits        Visits[]
   users         Users[]
   daily_code    String
-  created_at    DateTime      @default(now())
+  created_at    DateTime    @default(now())
 }
 
 model Visits {
@@ -57,35 +58,36 @@ model Visits {
 }
 
 model User_prize {
-  id         Int      @id @default(autoincrement()) @db.UnsignedInt
-  prize      Prizes   @relation(fields: [prize_id], references: [id])
-  prize_id   Int      @db.UnsignedInt
+  id         Int       @id @default(autoincrement()) @db.UnsignedInt
+  prize      Prizes    @relation(fields: [prize_id], references: [id])
+  prize_id   Int       @db.UnsignedInt
   used       DateTime?
   opened     DateTime?
-  is_won     Boolean  @default(false)
-  user       Users    @relation(fields: [user_id], references: [id])
-  user_id    Int      @db.UnsignedInt
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  is_won     Boolean   @default(false)
+  user       Users     @relation(fields: [user_id], references: [id])
+  user_id    Int       @db.UnsignedInt
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
   expires_at DateTime?
 }
 
 model Prizes {
-  id          Int          @id @default(autoincrement())  @db.UnsignedInt
-  cafe        Cafes        @relation(fields: [cafe_id], references: [id])
-  cafe_id     Int          @db.UnsignedInt
-  max_amount  Int          @db.UnsignedInt
-  text        String
-  image       String
-  step_image  String
-  type        Prize_type
-  cost        Float
-  revenue     Float       
-  probability Float
-  users       User_prize[]
-  is_active   Boolean      @default(false)
-  expires_at  Int          @default(1)
-  created_at  DateTime     @default(now())
+  id             Int          @id @default(autoincrement()) @db.UnsignedInt
+  cafe           Cafes        @relation(fields: [cafe_id], references: [id])
+  cafe_id        Int          @db.UnsignedInt
+  max_amount     Int          @db.UnsignedInt
+  current_amount Int          @db.UnsignedInt
+  text           String
+  image          String
+  step_image     String
+  type           Prize_type
+  cost           Float
+  revenue        Float
+  probability    Float
+  users          User_prize[]
+  is_active      Boolean      @default(false)
+  expires_at     Int          @default(1)
+  created_at     DateTime     @default(now())
 }
 
 enum Users_role {
@@ -104,4 +106,9 @@ enum Prize_type {
   SLOT
   FIRST
   FREE
+}
+
+enum Env_version {
+  he
+  en
 }

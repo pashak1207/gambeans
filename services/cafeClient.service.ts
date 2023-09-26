@@ -23,6 +23,18 @@ const CafeClientService = {
 
         return await response!.json()
     },
+
+    async createCafe(cafeObj: ICafe): Promise<any> {
+
+        const response = await fetch(`/api/cafes/${cafeObj.id}`, {
+            method: "POST",
+            body: JSON.stringify({
+                cafeObj
+            })
+        })
+
+        return await response!.json()
+    },
 }
 
 export default CafeClientService;

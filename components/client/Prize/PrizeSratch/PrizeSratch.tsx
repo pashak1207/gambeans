@@ -7,8 +7,9 @@ import Confetti from 'react-dom-confetti';
 import PrizeClientService from "@/services/prizeClient.service";
 import { useRouter } from "next/navigation";
 import PrizeUseSwipe from "@/components/ui/PrizeUseSwipe/PrizeUseSwipe";
+import { Prize } from "@/dictionaries/type";
 
-export default function PrizeScratch({userprize}:{userprize:IUserPrize}) {
+export default function PrizeScratch({userprize, dictionary}:{userprize:IUserPrize, dictionary:Prize}) {
     
     const [opened, setOpened] = useState<boolean>(userprize.expires_at !== null)
     const [expires, setExpires] = useState<string>("")
@@ -26,14 +27,14 @@ export default function PrizeScratch({userprize}:{userprize:IUserPrize}) {
             }
 
         }
-    }, [opened])
+    }, [opened, isWon, userprize.id, userprize.prize.expires_at])
 
     
     useEffect(() => {
         if(swiped){
             PrizeClientService.setUsedPrize(userprize.id)
         }
-    }, [swiped])
+    }, [swiped, userprize.id])
 
     function returnBack(){
         router.push("/dashboard")
@@ -62,14 +63,14 @@ export default function PrizeScratch({userprize}:{userprize:IUserPrize}) {
                 </button>
                 {!opened &&
                 <>
-                    <h5>Scratch the card and</h5>
-                    <h3>Revel your prize 🎉</h3>
+                    <h5>{dictionary.scratch}</h5>
+                    <h3>{dictionary.revel}</h3>
                 </>
                 }
                 {opened &&
                 <>
-                    <h4>To redeem: </h4>
-                    <h2>Show to seller</h2>
+                    <h4>{dictionary.redeem}</h4>
+                    <h2>{dictionary.show}</h2>
                 </>
                 }
                 <div className="prize__scratchcard">
@@ -83,29 +84,29 @@ export default function PrizeScratch({userprize}:{userprize:IUserPrize}) {
                                 src={userprize.prize.image}
                             />
                             <h3>{userprize.prize.text}</h3>
-                            <h4>Yay! You’ve won 🎉</h4>
+                            <h4>{dictionary.won}</h4>
                             <Confetti active={ opened } config={confettiConfig}/>
                             </>
                         }
-                        {!isWon && <h4>Try next time :(</h4>}
+                        {!isWon && <h4>{dictionary.try}</h4>}
                     </PrizeCoupon>
                 </div>
                 {isWon && <h5 style={{opacity: opened ? "1" : "0"}} className="prize_expires">{`Expires ${expires}`}</h5>}
                 <hr />
                 <div className="prize__how">
-                    <h3>How it work?</h3>
+                    <h3>{dictionary.work}</h3>
                     <ol>
                         <li>
-                            <h6>Scratch - </h6>
-                            <p>Just swipe your finger over the virtual card on your screen to reveal the surprise underneath. Trust us, the suspense is worth it!</p>
+                            <h6>{dictionary.scr}</h6>
+                            <p>{dictionary.firstText}</p>
                         </li>
                         <li>
-                            <h6>Scored a reward?</h6>
-                            <p>Awesome! Show this page to the cashier, and redeem your prize, from a free cup of coffee to exclusive discounts.</p>
+                            <h6>{dictionary.scored}</h6>
+                            <p>{dictionary.secondText}</p>
                         </li>
                     </ol>
                 </div>
-                {opened && isWon && <PrizeUseSwipe swiped={swiped} setSwiped={setSwiped}/>}
+                {opened && isWon && <PrizeUseSwipe dictionary={dictionary.swipe} swiped={swiped} setSwiped={setSwiped}/>}
         </div>
         )
 }

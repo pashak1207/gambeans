@@ -1,9 +1,4 @@
-enum Prize_type {
-    SCRATCH = "SCRATCH",
-    SLOT = "SLOT",
-    FREE = "FREE",
-    FIRST = "FIRST",
-}
+import { Prize_type } from "@/types/enums"
 
 const PrizeUtils = {
     generatePrizeStepImage(type: Prize_type){

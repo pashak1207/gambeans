@@ -38,7 +38,7 @@ export async function GET(request: NextRequest) {
         console.log(e)
 
         return NextResponse.json({ 
-            message: "Errer to get cafe visits"
+            message: "Error to get cafe visits"
         }, 
         {
             status: 400

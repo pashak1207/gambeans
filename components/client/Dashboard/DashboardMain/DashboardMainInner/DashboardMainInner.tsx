@@ -5,8 +5,9 @@ import "./DashboardMainInner.scss"
 import Image from "next/image"
 import AuthClientService from "@/services/authClient.service"
 import PrizeClientService from "@/services/prizeClient.service"
+import { Main } from "@/dictionaries/type"
 
-export default function DashboardMainInner({prizes, bgImages}:{prizes:IUserPrize[], bgImages:string[]}) {
+export default function DashboardMainInner({dictionary, prizes, bgImages}:{dictionary:Main, prizes:IUserPrize[], bgImages:string[]}) {
     const [step, setStep] = useState<number>(prizes.filter(prize => prize.opened !== null).length)
     const [allPrizes, setAllPrizes] = useState<IUserPrize[]>(prizes)   
     const stepsRef = useRef([]) as any;
@@ -126,7 +127,7 @@ export default function DashboardMainInner({prizes, bgImages}:{prizes:IUserPrize
     }    
 
     return <div className={"dashboardmain"}>
-        <h2>My journey</h2>
+        <h2>{dictionary.journey}</h2>
         {allPrizes?.length > 0 &&
             <div className={`pane`}>
                 {allPrizes.length &&

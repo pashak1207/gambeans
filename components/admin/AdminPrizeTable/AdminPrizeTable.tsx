@@ -5,6 +5,7 @@ import PrizeClientService from "@/services/prizeClient.service"
 import EditableText from "@/components/ui/EditableText/EditableText"
 import ImagePrizeUpload from "@/components/ui/ImagePrizeUpload/ImagePrizeUpload"
 import PrizeUtils from "@/utils/prizeUtils"
+import { Prize_type } from "@/types/enums"
 
 enum Prize_Cafe_change_fields {
     TEXT="TEXT",
@@ -21,13 +22,6 @@ enum Prize_Cafe_change_fields {
     NAME="NAME",
     CONTACT_PHONE="CONTACT_PHONE",
     CONTACT_NAME="CONTACT_NAME"
-}
-
-enum Prize_type {
-    SCRATCH = "SCRATCH",
-    SLOT = "SLOT",
-    FREE = "FREE",
-    FIRST = "FIRST",
 }
 
 export default function AdminPrizeTable({prizesArr, type, cafeId}:{prizesArr: IPrize[], type:string, cafeId:number}) {    
@@ -73,7 +67,7 @@ export default function AdminPrizeTable({prizesArr, type, cafeId}:{prizesArr: IP
     }
     
 
-    function addNewPrize(){        
+    async function addNewPrize(){        
         const newPrize:IPrize = {
             id: prizes[0]?.id ? (prizes[0]?.id + 1) : 0,
             cafe_id: cafeId,
@@ -81,6 +75,7 @@ export default function AdminPrizeTable({prizesArr, type, cafeId}:{prizesArr: IP
             image: "",
             is_active: false,
             max_amount: 0,
+            current_amount: 0,
             created_at: new Date().toISOString(),
             expires_at: 1,
             probability: 0,
@@ -92,7 +87,15 @@ export default function AdminPrizeTable({prizesArr, type, cafeId}:{prizesArr: IP
 
         setPrizes((prev:IPrize[]) => [ newPrize, ...prev ]);
         
-        PrizeClientService.createPrize(newPrize)
+        const createdPrize = await PrizeClientService.createPrize(newPrize).then(data => data.prize)
+
+        setPrizes((prev:IPrize[]) => prev.map((prize:IPrize) => {
+            if(prize.id === 0){
+                return {...prize, ...createdPrize}
+            }
+            return {...prize}
+        }));
+        
     }
 
     return <div className={styles.prize}>

@@ -16,7 +16,9 @@ enum Prize_Cafe_change_fields {
   ADDRESS="ADDRESS",
   NAME="NAME",
   CONTACT_PHONE="CONTACT_PHONE",
-  CONTACT_NAME="CONTACT_NAME"
+  CONTACT_NAME="CONTACT_NAME",
+  FTW="FTW",
+  DAILY_PHONE="DAILY_PHONE",
 }
 
 const EditableText = ({ initialText, prizeId, type, setPrizes, setCafe, isPrize = true } : 
@@ -58,6 +60,10 @@ const EditableText = ({ initialText, prizeId, type, setPrizes, setCafe, isPrize 
             setText("Enter ENG domain")
           }else if(type === Prize_Cafe_change_fields.NAME){
             setText("Enter cafe name")
+          }else if(type === Prize_Cafe_change_fields.FTW){
+            setText("50")
+          }else if(type === Prize_Cafe_change_fields.DAILY_PHONE){
+            setText("Enter daily phone number")
           }else{
             setText("1")
           }
@@ -119,6 +125,12 @@ const EditableText = ({ initialText, prizeId, type, setPrizes, setCafe, isPrize 
               return
             case Prize_Cafe_change_fields.NAME:
               setCafe(prev => ({...prev, name: text}))
+              return
+            case Prize_Cafe_change_fields.FTW:
+              setCafe(prev => ({...prev, ftw: +text}))
+              return
+            case Prize_Cafe_change_fields.DAILY_PHONE:
+              setCafe(prev => ({...prev, send_phone: text}))
               return
           }
         }
