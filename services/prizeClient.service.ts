@@ -1,5 +1,5 @@
 const PrizeClientService = {
-    async setExpiredPrize(userprizeId: number, expiresAt:number): Promise<any> {
+    async setExpiredPrize(userprizeId: number, expiresAt:number): Promise<{message?:string, prize?:IPrize}> {
                
         const response = await fetch(`/api/prizes/setExpired`, {
             method: "POST",
@@ -12,7 +12,7 @@ const PrizeClientService = {
         return await response!.json()
     },
 
-    async setUsedPrize(userprizeId: number): Promise<any> {
+    async setUsedPrize(userprizeId: number): Promise<{message?:string, prize?:IPrize}> {
                
         const response = await fetch(`/api/prizes/setUsed`, {
             method: "POST",
@@ -24,7 +24,7 @@ const PrizeClientService = {
         return await response!.json()
     },
 
-    async setOpenedPrize(): Promise<any> {
+    async setOpenedPrize(): Promise<{message?:string, prize?:IPrize}> {
                
         const response = await fetch(`/api/prizes/setOpened`, {
             method: "POST"
@@ -32,22 +32,8 @@ const PrizeClientService = {
 
         return await response!.json()
     },
-
-    async setWonPrize(userprizeId: number): Promise<any> {
-               
-        const response = await fetch(`/api/prizes/setWon`, {
-            method: "POST",
-            body: JSON.stringify({
-                userprizeId,
-            })
-
-        })
-
-        return await response!.json()
-    },
-
     
-    async updateChecked(prizeId: number, isActive: boolean): Promise<any> {
+    async updateChecked(prizeId: number, isActive: boolean): Promise<{message?:string, prize?:IPrize}>{
 
         const response = await fetch(`/api/prizes/${prizeId}?check`, {
             method: "PUT",
@@ -59,7 +45,7 @@ const PrizeClientService = {
         return await response!.json()
     },
 
-    async updateImage(prizeId: number, url: string): Promise<any> {
+    async updateImage(prizeId: number, url: string): Promise<{message?:string, prize?:IPrize}> {
 
         const response = await fetch(`/api/prizes/${prizeId}?image`, {
             method: "PUT",
@@ -71,7 +57,7 @@ const PrizeClientService = {
         return await response!.json()
     },
 
-    async updatePrize(prizeObj: IPrize): Promise<any> {
+    async updatePrize(prizeObj: IPrize): Promise<{message?:string, prize?:IPrize}> {
 
         const response = await fetch(`/api/prizes/${prizeObj.id}`, {
             method: "PUT",
@@ -83,7 +69,7 @@ const PrizeClientService = {
         return await response!.json()
     },
 
-    async createPrize(prizeObj: IPrize): Promise<any> {
+    async createPrize(prizeObj: IPrize): Promise<{message?:string, prize?:IPrize}> {
 
         const response = await fetch(`/api/prizes`, {
             method: "POST",
@@ -95,7 +81,7 @@ const PrizeClientService = {
         return await response!.json()
     },
 
-    async getRandomPrizes(randNum: number, userId: number): Promise<any>{
+    async getRandomPrizes(randNum: number, userId: number): Promise<{message?:string, prizes?:IPrize[]}>{
         const response = await fetch(`/api/prizes/getRandomPrizes`, {
             method: "POST",
             body: JSON.stringify({

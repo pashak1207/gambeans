@@ -4,6 +4,7 @@ import Button from "@/components/ui/Button/Button"
 import CafeServerService from "@/services/cafeServer.service"
 import { getDictionary } from "@/dictionaries/dictionaries"
 import { headers } from "next/headers"
+import Loading from "@/components/ui/Loading/Loading"
 
 export default async function WelcomePage() {
     const {cafe:{logo, name}} = await CafeServerService.getCafe()
@@ -12,12 +13,12 @@ export default async function WelcomePage() {
     
     return (
         <main className={styles.main}>
+            <Loading delay={4000} />
             <h5>{dict.welcome.heading}</h5>
             <Image 
                 src={logo}
                 priority
                 alt="logo"
-                id={"welcomeLogo"}
                 width={313}
                 height={182}
             />

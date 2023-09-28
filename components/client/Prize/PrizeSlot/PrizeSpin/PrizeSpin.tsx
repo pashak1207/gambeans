@@ -1,9 +1,10 @@
 'use client'
 
+import { Slot } from "@/dictionaries/type";
 import PrizeUtils from "@/utils/prizeUtils";
 import React, { useEffect } from "react"
 
-export default function PrizeSpin({isWon, setSlotEnd}:{isWon:boolean, setSlotEnd:React.Dispatch<React.SetStateAction<boolean>>}) {
+export default function PrizeSpin({isWon, setSlotEnd, dictionary}:{isWon:boolean, setSlotEnd:React.Dispatch<React.SetStateAction<boolean>>, dictionary:Slot}) {
 
     useEffect(() => {
             let reading = PrizeUtils.generateWinNumber()
@@ -90,7 +91,7 @@ export default function PrizeSpin({isWon, setSlotEnd}:{isWon:boolean, setSlotEnd
      
 
     return <div className="prize__spin">
-                <h3>Lucky Slot</h3>
+                <h3>{dictionary.title}</h3>
                 <div className="slot-machine">
                     <div className="group">
                         <div className="reel"></div>
@@ -98,7 +99,7 @@ export default function PrizeSpin({isWon, setSlotEnd}:{isWon:boolean, setSlotEnd
                         <div className="reel"></div>
                     </div>
                     <div className="btnWrap">
-                        <button className="lever button">Spin</button>
+                        <button className="lever button">{dictionary.button}</button>
                     </div>
                 </div>
             </div>

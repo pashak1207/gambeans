@@ -6,7 +6,7 @@ const client = new Twilio(process.env.TWILIO_SID, process.env.TWILIO_TOKEN);
 export async function POST(request: Request) {
     try{
         const body = await request.json()
-        const { phone } = body
+        const { phone }:{phone:string} = body        
 
         if(!phone){
             return NextResponse.json({

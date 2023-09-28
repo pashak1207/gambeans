@@ -10,7 +10,7 @@ export async function POST(request: NextRequest) {
         const code:string = UserUtils.generateVerificationCode()
         const cafe_id:number = +request.headers.get('x-cafe-id')!
 
-        console.log(code);     
+        console.log(code);
 
         if(!phone || !UserUtils.validatePhone(phone)){
             return NextResponse.json({ 

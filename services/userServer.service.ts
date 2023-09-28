@@ -1,7 +1,7 @@
 import { cookies, headers } from 'next/headers';
 
 const UserServerService = {
-    async getAllRegistratedUsers() {
+    async getAllRegistratedUsers(): Promise<{message?:string, users?:IUser[]}> {
         const domain = headers().get('host')
         let response;
         
@@ -16,7 +16,7 @@ const UserServerService = {
         return await response!.json()
     },
 
-    async getAllRegistratedUsersCount() {
+    async getAllRegistratedUsersCount(): Promise<{message?:string, users:number}> {
         const domain = headers().get('host')
         let response;
         
@@ -31,7 +31,7 @@ const UserServerService = {
         return await response!.json()
     },
 
-    async getNewUsersCount(days = 7) {
+    async getNewUsersCount(days = 7): Promise<{message?:string, count:number, progress: number}> {
         const domain = headers().get('host')
         let response;
         
@@ -46,7 +46,7 @@ const UserServerService = {
         return await response!.json()
     },
 
-    async getActiveUsersCount(days = 7) {
+    async getActiveUsersCount(days = 7): Promise<{message?:string, count:number, progress: number}> {
         const domain = headers().get('host')
         let response;
         
@@ -61,7 +61,7 @@ const UserServerService = {
         return await response!.json()
     },
 
-    async getActiveYearUsersCount() {
+    async getActiveYearUsersCount(): Promise<{message?:string, counts:number[]}> {
         const domain = headers().get('host')
         let response;
         
@@ -76,7 +76,7 @@ const UserServerService = {
         return await response!.json()
     },
 
-    async getUserPrizes(userId?:number) {       
+    async getUserPrizes(userId?:number): Promise<{message?:string, prizes:IUserPrize[]}> {       
         const accessToken = cookies().get('JWTAccessToken')?.value;
 
         const hds = new Headers({

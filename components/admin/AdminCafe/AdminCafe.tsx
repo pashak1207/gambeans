@@ -23,11 +23,11 @@ const cafeCreateObj:ICafe = {
     created_at: new Date().toString()
 }
 
-export default async function AdminCafe({cafeId, isCreate, dictionary}:{cafeId?:number, isCreate:boolean, dictionary:Cafe}) {
+export default async function AdminCafe({cafeId, isCreate, dictionary, lang}:{cafeId?:number, isCreate:boolean, dictionary:Cafe, lang:string}) {
     const proto = headers().has("x-forwarded-proto") ? "https://" : "http://";
 
     if(isCreate){
-        return <AdminCafeClient dictionary={dictionary} isCreate cafeObj={cafeCreateObj} proto={proto} />
+        return <AdminCafeClient lang={lang} dictionary={dictionary} isCreate cafeObj={cafeCreateObj} proto={proto} />
     }else{
         const cafe:ICafe = cafeId ? await CafeServerService.getCafe(cafeId).then(data => data.cafe) : await CafeServerService.getCafe().then(data => data.cafe)
     
@@ -35,6 +35,6 @@ export default async function AdminCafe({cafeId, isCreate, dictionary}:{cafeId?:
             notFound()
         }
 
-        return <AdminCafeClient dictionary={dictionary} cafeObj={cafe} proto={proto} />
+        return <AdminCafeClient lang={lang} dictionary={dictionary} cafeObj={cafe} proto={proto} />
     }
 }

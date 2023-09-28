@@ -11,6 +11,7 @@ model Users {
   id                Int          @unique @default(autoincrement()) @db.UnsignedInt
   name              String?
   phone             String
+  email             String?
   role              Users_role   @default(USER)
   status            User_status  @default(ACTIVE)
   DOB               DateTime?
@@ -41,10 +42,10 @@ model Cafes {
   env_version   Env_version @default(en)
   contact_phone String?
   contact_name  String?
+  daily_code    String
   prizes        Prizes[]
   visits        Visits[]
   users         Users[]
-  daily_code    String
   created_at    DateTime    @default(now())
 }
 
@@ -58,17 +59,17 @@ model Visits {
 }
 
 model User_prize {
-  id         Int       @id @default(autoincrement()) @db.UnsignedInt
-  prize      Prizes    @relation(fields: [prize_id], references: [id])
-  prize_id   Int       @db.UnsignedInt
-  used       DateTime?
-  opened     DateTime?
-  is_won     Boolean   @default(false)
-  user       Users     @relation(fields: [user_id], references: [id])
-  user_id    Int       @db.UnsignedInt
-  created_at DateTime  @default(now())
-  updated_at DateTime  @updatedAt
-  expires_at DateTime?
+  id          Int       @id @default(autoincrement()) @db.UnsignedInt
+  prize       Prizes    @relation(fields: [prize_id], references: [id])
+  prize_id    Int       @db.UnsignedInt
+  used        DateTime?
+  opened      DateTime?
+  is_won      Boolean   @default(false)
+  is_slot_won Boolean   @default(true)
+  user        Users     @relation(fields: [user_id], references: [id])
+  user_id     Int       @db.UnsignedInt
+  created_at  DateTime  @default(now())
+  expires_at  DateTime?
 }
 
 model Prizes {

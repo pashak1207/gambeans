@@ -1,25 +1,21 @@
 {
     "meta":{
         "welcome":{
-            "title": "Welcome",
-            "desc": "Cafe page"
+            "title": "ברוך הבא",
+            "desc": "עמוד בית קפה"
         },
         "login":{
-            "title": "Login",
-            "desc": "Cafe page"
+            "title": "התחברות",
+            "desc": "עמוד בית קפה"
         },
         "dashboard":{
-            "title": "Dashboard",
-            "desc": "Cafe page"
+            "title": "לוּחַ מַחווָנִים",
+            "desc": "עמוד בית קפה"
         },
         "admin":{
-            "title": "Welcome Admin",
+            "title": "ברוך הבא מנהל",
             "desc": "Admin page"
         }
-    },
-    "loading": {
-        "heading": "GamBeans",
-        "text": "Boosting Cafe Loyalty"
     },
     "welcome":{
         "heading": "ברוכים הבאים",
@@ -51,6 +47,13 @@
             "terms": "לתנאים ומדיניות"
         },
         "third":{
+            "title": "הזן את כתובת הדוא\"ל שלך:",
+            "confirm": "אני מעוניין לקבל עדכונים, מבצעים ומבצעים בלעדיים.",
+            "button": "הבא",
+            "validEmail": "נא להזין כתובת אימייל נכונה",
+            "validCheck": "אנא סמן את תיבת הסימון"
+        },
+        "fourth":{
             "nameValid": "הזן שם נכון",
             "dateValid": "הזן תאריך לידה נכון",
             "title": "נשמח להכיר אותך קצת יותר טוב :)",
@@ -58,7 +61,7 @@
             "age": "גיל",
             "button": "הבא"
         },
-        "fourth":{
+        "fifth":{
             "title": "איך זה עובד?",
             "arrive": "מגיע וסורק",
             "scan": "סריקת קוד הQR תביא אותך למסך הבית, הכנס.י את הקוד היומי והתקדמי בין השלבים ",
@@ -78,7 +81,7 @@
             "daily": "הקוד היומי - "
         },
         "prizes":{
-            "titleStart": " זכית ב",
+            "titleStart": "זכית ב",
             "titleEnd": "פרסים שטרם מומשו",
             "won": "יש! זכית 🎉",
             "noPrizes": "אין פרסים שעדיין לא מומשו",
@@ -91,7 +94,9 @@
             "show": "הצג מסך זה למוכר.ת",
             "won": "יס! זכית בפרס 🎉",
             "try": "תנסה בפעם הבאה :(",
+            "tomorrow": "נסה שוב מחר",
             "work": "איך זה עובד?",
+            "expires": "למימוש עד - ",
             "scr": "גרדו - ",
             "firstText": "פשוט החליקו את האצבע שלכם על המסך וגרדו את הכרטיס הוירטואלי, כדי לחשוף את הפרס שלכם. שימו לב! לכל פרס תאריך תפוגה שונה.",
             "scored": "זכיתם בפרס?",
@@ -103,6 +108,10 @@
             "swipe":{
                 "redeem": "למימוש ->",
                 "redeemed": "נפדה"
+            },
+            "slot":{
+                "title": "מכונת מזל",
+                "button": "סיבוב"
             }
         }
     },

@@ -17,10 +17,6 @@
             "desc": "Admin page"
         }
     },
-    "loading": {
-        "heading": "GamBeans",
-        "text": "Boosting Cafe Loyalty"
-    },
     "welcome":{
         "heading": "Welcome to",
         "textStart": "This is your ",
@@ -51,6 +47,13 @@
             "terms": "Terms & Policies"
         },
         "third":{
+            "title": "Enter your email address:",
+            "confirm": "I'd like to receive exclusive updates, promotions, and offers.",
+            "button": "NEXT",
+            "validEmail": "Please enter correct email address",
+            "validCheck": "Please check the checkbox"
+        },
+        "fourth":{
             "nameValid": "Enter correct name",
             "dateValid": "Enter correct date of birth",
             "title": "We'd love to get to know you better",
@@ -58,7 +61,7 @@
             "age": "AGE",
             "button": "NEXT"
         },
-        "fourth":{
+        "fifth":{
             "title": "HOW IT WORK?",
             "arrive": "Arrive & Scan",
             "scan": "Scan our QR code and pop the Daily Code into the app.It's your key to jump from one fun stage to another.",
@@ -91,7 +94,9 @@
             "show": "Show to seller",
             "won": "Yay! You’ve won 🎉",
             "try": "Try next time :(",
+            "tomorrow": "Try again tomorrow",
             "work": "How it work?",
+            "expires": "Expires ",
             "scr": "Scratch - ",
             "firstText": "Just swipe your finger over the virtual card on your screen to reveal the surprise underneath. Trust us, the suspense is worth it!",
             "scored": "Scored a reward?",
@@ -101,8 +106,12 @@
             "jackpot": "Hit the jackpot?",
             "jackpotText": "Incredible! Show the prize page to the cashier, and claim your reward, from a free dessert to exclusive bonuses.",
             "swipe":{
-                "redeem": "Redeem-&gt;",
+                "redeem": "Redeem->",
                 "redeemed": "Redeemed"
+            },
+            "slot":{
+                "title": "Lucky Slot",
+                "button": "Spin"
             }
         }
     },

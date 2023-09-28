@@ -8,12 +8,13 @@ import { headers } from "next/headers";
 
 export default async function SuperdminCreatePage() {      
   
-        const dict = await getDictionary(headers().get('x-language') || "en")
+        const lang = headers().get('x-language') || "en"
+        const dict = await getDictionary(lang)
 
         return <main className={styles.adminMain}>
-                    <AdminMenu dictionary={dict.admin.menu}  superadmin={true} cafes={true} />
+                    <AdminMenu lang={lang} dictionary={dict.admin.menu}  superadmin={true} cafes={true} />
                     <AdminWrapper>
-                        <AdminCafe dictionary={dict.admin.cafe} isCreate={true}/>
+                        <AdminCafe lang={lang} dictionary={dict.admin.cafe} isCreate={true}/>
                     </AdminWrapper>
                 </main>
 }

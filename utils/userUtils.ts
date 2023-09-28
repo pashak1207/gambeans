@@ -38,6 +38,11 @@ const UserUtils = {
         return moment(`${day}/${month}/${year}`, 'DD/MM/YYYY').isValid()
     },
 
+    validateEmail(email:string) {
+        const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(String(email).toLowerCase());
+    },
+
     generateVerificationCode() : string {
         const randomNumber = Math.floor(Math.random() * 10000);
         const paddedNumber = randomNumber.toString().padStart(4, '0');

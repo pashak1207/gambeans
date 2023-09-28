@@ -1,15 +1,13 @@
 "use client"
 
-import React, { useEffect, useRef, useState } from "react"
+import React, { useEffect, useMemo, useRef } from "react"
 import "./DashboardMainInner.scss"
 import Image from "next/image"
-import AuthClientService from "@/services/authClient.service"
 import PrizeClientService from "@/services/prizeClient.service"
 import { Main } from "@/dictionaries/type"
 
 export default function DashboardMainInner({dictionary, prizes, bgImages}:{dictionary:Main, prizes:IUserPrize[], bgImages:string[]}) {
-    const [step, setStep] = useState<number>(prizes.filter(prize => prize.opened !== null).length)
-    const [allPrizes, setAllPrizes] = useState<IUserPrize[]>(prizes)   
+    const step = prizes.filter(prize => prize.opened !== null).length
     const stepsRef = useRef([]) as any;
     const itemsRef = useRef([]) as any;
 
@@ -41,7 +39,7 @@ export default function DashboardMainInner({dictionary, prizes, bgImages}:{dicti
 
     const pathBlocks = []
     let bgIndex = -1;
-    for(let i = 0; i < calculatePathBlocks(allPrizes.length); i++) {
+    for(let i = 0; i < calculatePathBlocks(prizes.length); i++) {
 
         if(bgIndex > bgImages.length-1){
             bgIndex = 0;
@@ -61,21 +59,13 @@ export default function DashboardMainInner({dictionary, prizes, bgImages}:{dicti
     }
 
     useEffect(() => {
-        AuthClientService.getMe("prizes")
-            .then(data => data.prizes)
-            .then(data => setAllPrizes(data))
-        filterStepsRefs()
-        filterItemsRefs()
-    }, [])
-
-    useEffect(() => {
-        setStep(allPrizes.filter(prize => prize.opened !== null).length)
-
         if(step%5 === 0 && step !== 0){
-            PrizeClientService.getRandomPrizes(5, allPrizes[0].user_id)
+            PrizeClientService.getRandomPrizes(5, prizes[0].user_id)
         }
 
-    }, [step, allPrizes])
+        filterStepsRefs()
+        filterItemsRefs()
+    }, [prizes, step])
 
     useEffect(() => {
         for(let i = 0; i < stepsRef.current.length; i++) {
@@ -128,10 +118,10 @@ export default function DashboardMainInner({dictionary, prizes, bgImages}:{dicti
 
     return <div className={"dashboardmain"}>
         <h2>{dictionary.journey}</h2>
-        {allPrizes?.length > 0 &&
+        {prizes?.length > 0 &&
             <div className={`pane`}>
-                {allPrizes.length &&
-                    allPrizes.map((stepObj, index) => {
+                {prizes.length &&
+                    prizes.map((stepObj, index) => {
                         return (
                             <div key={index} className={"item"}>
                                 <a href={`/dashboard/${stepObj.id}`} ref={(el) => itemsRef.current.push(el as never)} onClick={(event) => goToTheUserPrize(stepObj, event)} className={setItemClass(index, step, stepObj)}>
@@ -149,7 +139,7 @@ export default function DashboardMainInner({dictionary, prizes, bgImages}:{dicti
                     })
                 }
                 <div className={"path"}>
-                    {allPrizes.length && 
+                    {prizes.length && 
                         pathBlocks
                     }
                 </div>

@@ -34,7 +34,7 @@ enum Prize_Cafe_change_fields {
     DAILY_PHONE="DAILY_PHONE",
 }
 
-export default function AdminCafeClient({ cafeObj, proto, isCreate, dictionary }:{ cafeObj:ICafe, proto:string, isCreate?:boolean, dictionary:Cafe }) {
+export default function AdminCafeClient({ cafeObj, proto, isCreate, dictionary, lang }:{ cafeObj:ICafe, proto:string, isCreate?:boolean, dictionary:Cafe, lang:string }) {
 
     const [ cafe, setCafe ] = useState<ICafe>(cafeObj)
     const [ isEdit, setIsEdit ] = useState<boolean>(!!isCreate)
@@ -72,7 +72,7 @@ export default function AdminCafeClient({ cafeObj, proto, isCreate, dictionary }
                     <h1>{isEdit ? <EditableText type={Prize_Cafe_change_fields.NAME} initialText={cafe.name} isPrize={false} setCafe={setCafe} /> : cafe.name}</h1>
                     <button onClick={editSaveBtn}>{ isEdit ? "Save" : "Edit" }</button>
                 </div>
-                <div className={styles.middle}>
+                <div className={`${styles.middle} ${lang==="he" ? styles.rtl : ""}`}>
                     <div className={styles.middle__left}>
                         <ImageCafeUpload setCafe={setCafe} editable={isEdit} url={cafe.logo} />
                         {(cafe.link_heb || isEdit) && <>

@@ -5,12 +5,13 @@ import { getDictionary } from "@/dictionaries/dictionaries";
 
 export default async function LoginPage() {
 
-    const dict = await getDictionary(headers().get('x-language') || "en") 
+    const lang = headers().get('x-language') || "en"
+    const dict = await getDictionary(lang) 
     
     return (
         <main>
             <section className={styles.login}>
-                <Login dictionary={dict.login} />
+                <Login lang={lang} dictionary={dict.login} />
             </section>
         </main>
     )

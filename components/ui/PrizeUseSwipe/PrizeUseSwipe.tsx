@@ -4,7 +4,7 @@ import React, { useEffect, useRef } from "react"
 import "./PrizeUseSwipe.scss"
 import { Swipe } from "@/dictionaries/type"
 
-export default function PrizeUseSwipe({dictionary, swiped, setSwiped}:{dictionary:Swipe, swiped:boolean, setSwiped: React.Dispatch<React.SetStateAction<boolean>>}) {
+export default function PrizeUseSwipe({dictionary, swiped, setSwiped, lang}:{dictionary:Swipe, swiped:boolean, setSwiped: React.Dispatch<React.SetStateAction<boolean>>, lang:string}) {
     const button = useRef<HTMLButtonElement>(null)
     const wrapper = useRef<any>(null)
     let active = false;
@@ -52,7 +52,7 @@ export default function PrizeUseSwipe({dictionary, swiped, setSwiped}:{dictionar
     };
 
     const setTranslate = (xPos:number, el:HTMLButtonElement) => {
-        el.style.transform = "translateX(" + xPos + "px)";
+        el.style.transform = `translateX(${lang==="he" ? -xPos : xPos}px)`;
     };
 
     return (

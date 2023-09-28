@@ -18,4 +18,11 @@
     @include breakpoint("sm"){
         justify-content: center;
     }
+
+    &.rtl{
+        svg{
+            margin-left: toRem(4);
+            margin-right: 0;
+        }
+    }
 }

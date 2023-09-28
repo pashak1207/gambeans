@@ -43,3 +43,17 @@
         line-height: 1.6;
     }
 }
+
+.rtl{
+    .left{
+        img{
+            margin-right: 0;
+            margin-left: toRem(8);
+        }
+    }
+
+    .right{
+        margin-left: 0;
+        margin-right: toRem(10);
+    }    
+}

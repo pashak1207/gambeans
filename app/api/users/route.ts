@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/prisma/client'
 import UserUtils from '@/utils/userUtils';
 import { calculatePercentage } from '@/utils/calculatePercentage';
+import CafeServerService from '@/services/cafeServer.service';
  
 export async function GET(request: NextRequest) {
     try{
@@ -144,6 +145,34 @@ export async function GET(request: NextRequest) {
                 status: 200
             })
 
+        }else if(request.nextUrl.searchParams.has("stage")){
+            const cafeId = await CafeServerService.getCafeId().then(data => data.cafeId)
+            
+            users = await prisma.users.findMany({
+                where:{
+                    cafe_id: cafeId,
+                    DOB: {
+                        not: null
+                    },
+                    name: {
+                        not: null
+                    }
+                },
+                select:{
+                    _count:{
+                        select:{
+                            prizes:{
+                                where:{
+                                    opened:{
+                                        not: null
+                                    }
+                                }
+                            },
+                        }
+                    }
+                }
+            })            
+            
         }else{
             users = await prisma.users.findMany({
                 where:{

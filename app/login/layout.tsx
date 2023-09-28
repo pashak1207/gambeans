@@ -4,21 +4,21 @@ import type { Metadata } from 'next'
 import { headers } from "next/headers";
 
 
-export let metadata:Metadata;
+export async function generateMetadata(): Promise<Metadata> {
+  const language = headers().get('x-language') || "en"
+  const dict = await getDictionary(language)
+
+  return {
+    title: dict.meta.login.title,
+    description: dict.meta.login.desc
+  }
+}
 
 export default async function RootLayout({
     children,
   }: {
     children: React.ReactNode
   }) {
-
-    const dict = await getDictionary(headers().get('x-language') || "en")
-
-    metadata = {
-      title: dict.meta.login.title,
-      description: dict.meta.login.desc,
-    }
-
     return (
       <>
         <Header/>

@@ -35,6 +35,16 @@
         }
     }
 
+    .confetti{
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        left: 0;
+        top: 0;
+        z-index: 10;
+    }
+
     hr{
         margin: toRem(25) 0 toRem(15);
         border: 1px solid var(--button-background)
@@ -73,9 +83,21 @@
                 }
             }
         }
+
+        &.rtl{
+            h3{
+                text-align: right;
+            }
+        }
     }
 
     .prize__scratch{
+        position: relative;
+
+        .back.rtl{
+            transform: rotate(180deg);
+        }
+
         .prize__scratchcard{
             height:0;
             width:100%;
@@ -153,12 +175,17 @@
     }
 
     .prize__scratchcard.prize__slot{
+        position: relative;
         padding-bottom: 0;
         height: auto;
 
         &.sketch{
             padding-bottom: 100%;
             height: 0;
+        }
+
+        .tryNext{
+            margin-top: toRem(15);
         }
  
 

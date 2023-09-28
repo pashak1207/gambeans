@@ -14,15 +14,16 @@ export default async function SuperdminPage({searchParams}: {searchParams: { [ke
         let cafes:ICafe[] = [];
         let onPage:number = 0;
         
-        const dict = await getDictionary(headers().get('x-language') || "en")
+        const lang = headers().get('x-language') || "en"
+        const dict = await getDictionary(lang)
         
         await CafeServerService.getAllCafes(paginationParams).then(data => {
-            cafes = data.cafes
-            onPage = data.onPage
+            cafes = data.cafes!
+            onPage = data.onPage!
         });
 
         return <main className={styles.adminMain}>
-                    <AdminMenu dictionary={dict.admin.menu} superadmin={true} cafes={true} />
+                    <AdminMenu lang={lang} dictionary={dict.admin.menu} superadmin={true} cafes={true} />
                     <AdminWrapper>
                         <SuperAdminCafes cafes={cafes} />
                         <CafesPagination current={paginationParams} onPage={onPage} />
