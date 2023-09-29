@@ -39,6 +39,3 @@ next-env.d.ts
 
 # yarn lock
 yarn.lock
-
-# uploads
-/public/uploads

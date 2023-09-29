@@ -141,7 +141,7 @@ export default function StepFirst({state, setState, dictionary}:{state:ILoginReg
                 <Validation isValid={isValid} text={dictionary.validation} />
             </div>
             <Button title={dictionary.button} isLink={false} onClickHandler={nextPageClickHandler}/>
-            <small>{dictionary.small}<Link href="#">{dictionary.terms}</Link></small>
+            <small>{dictionary.small}<Link href="/dashboard" as="/dashboard">{dictionary.terms}</Link></small>
         </div>
     )
 }

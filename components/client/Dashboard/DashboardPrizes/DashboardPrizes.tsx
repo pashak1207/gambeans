@@ -14,7 +14,7 @@ export default async function DashboardPrizes({ dictionary, lang }:{ dictionary:
                 <div className={styles.inner}>
                     {prizes?.length && prizes?.map((prize:IUserPrize) => {
                         return <div key={prize.id} className={styles.item}>
-                            <Link href={`/dashboard/${prize.id}`} >
+                            <Link href={`/dashboard/${prize.id}`} as="/dashboard/0" >
                             <div className={styles.item__inner}>
                                 <Image 
                                     width={166}
@@ -32,6 +32,6 @@ export default async function DashboardPrizes({ dictionary, lang }:{ dictionary:
                 </div>
                 </>}
                 {!prizes.length && <h2>{dictionary.noPrizes}</h2>}
-                <Link href={"/dashboard"}>{dictionary.button}</Link>
+                <Link href={"/dashboard"} as="/dashboard">{dictionary.button}</Link>
             </div>
 }

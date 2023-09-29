@@ -10,8 +10,6 @@ export async function POST(request: NextRequest) {
         const code:string = UserUtils.generateVerificationCode()
         const cafe_id:number = +request.headers.get('x-cafe-id')!
 
-        console.log(code);
-
         if(!phone || !UserUtils.validatePhone(phone)){
             return NextResponse.json({ 
                 message: "Phone number is wrong"
@@ -65,7 +63,7 @@ export async function POST(request: NextRequest) {
         }).then(data => data?.send_phone)        
 
         if(dailyPhone){
-            // await sendTwilioNumber(code, phone, dailyPhone)
+            await sendTwilioNumber(code, phone, dailyPhone)
         }else{
             console.log("This cafe does not have daily phone number");
         }

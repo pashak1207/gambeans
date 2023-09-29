@@ -8,7 +8,7 @@ import Logo from '@/public/logo.svg'
 export default function AdminMenu({lang, dictionary, superadmin, cafes}:{lang:string, dictionary:Menu, superadmin:boolean, cafes: boolean}) { 
     return <section className={`${styles.adminMenu} ${lang==="he" ? styles.rtl : ""}`}>
         <div className={styles.logo}>
-            <Link href={"/dashboard"} >
+            <Link href={"/dashboard"} as="/dashboard" >
                 <Image 
                     alt="logo"
                     priority
