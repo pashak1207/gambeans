@@ -61,10 +61,15 @@ export default function DashboardMainInner({dictionary, prizes, bgImages}:{dicti
     useEffect(() => {
         if(step%5 === 0 && step !== 0){
             PrizeClientService.getRandomPrizes(5, prizes[0].user_id)
+                .then(data => {
+                    filterStepsRefs()
+                    filterItemsRefs()
+                })
         }
 
         filterStepsRefs()
         filterItemsRefs()
+        
     }, [prizes, step])
 
     useEffect(() => {

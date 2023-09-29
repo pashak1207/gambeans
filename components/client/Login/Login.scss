@@ -9,6 +9,11 @@ main{
         padding: toRem(10);
         flex: 1 1 auto;
 
+        input,
+        input:focus{
+            border-radius: 0;
+        }
+
         .wrapper{
             flex: 1 1 auto;
             display: flex;

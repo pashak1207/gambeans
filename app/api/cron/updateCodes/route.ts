@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/prisma/client'
 import UserUtils from '@/utils/userUtils';
- 
+
+export const revalidate = 0
+
 export async function GET(request: NextRequest) {
     try{
         
