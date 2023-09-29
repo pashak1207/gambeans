@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/prisma/client'
 import JWT from '@/utils/jwtgenerate';
 import UserUtils from '@/utils/userUtils';
-import { Users_role } from '@/types/enums';
+import { Prize_type, Users_role } from '@/types/enums';
 import CafeUtils from '@/utils/cafeUtils';
  
 export async function POST(request: NextRequest) {
@@ -122,7 +122,7 @@ export async function POST(request: NextRequest) {
                     data:{
                         user_id: user.id,
                         prize_id: prize.id,
-                        is_won: (Math.floor(Math.random() * 100) + 1 <= prize.probability),
+                        is_won: prize.type===Prize_type.FREE ? true :(Math.floor(Math.random() * 100) + 1 <= prize.probability),
                         is_slot_won: (Math.floor(Math.random() * 100) + 1 <= cafe_ftw)
                     }
                 })
