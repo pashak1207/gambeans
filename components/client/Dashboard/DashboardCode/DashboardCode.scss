@@ -34,7 +34,8 @@
     display: flex;
     justify-content: space-between;
 
-    input{
+    input,
+    input:focus{
         max-width: 74px;
         width: 100%;
         height: 63px;

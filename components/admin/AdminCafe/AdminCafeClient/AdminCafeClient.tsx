@@ -58,33 +58,35 @@ export default function AdminCafeClient({ cafeObj, proto, isCreate, dictionary, 
 
     async function editSaveBtn(){
         
-        if(!UserUtils.validateEmail(cafe.email)){                        
-            setValid("Please enter valid email address")
-            toast(valid, {
-                position: "top-center",
-            })          
-            return
-        }
-        if(!(UserUtils.validatePhoneWithPlus(cafe.contact_phone!) && UserUtils.validatePhoneWithPlus(cafe.send_phone))){
-            setValid("Please enter valid phone number")
-            toast(valid, {
-                position: "top-center",
-            })
-            return
-        }
-        if(!UserUtils.validateName(cafe.contact_name!)){
-            setValid("Please enter valid contact name")
-            toast(valid, {
-                position: "top-center",
-            })
-            return
-        }
-        if(!UserUtils.validateNumber(cafe.ftw.toString())){
-            setValid("Please enter valid FTW number (0 - 100)")
-            toast(valid, {
-                position: "top-center",
-            })
-            return
+        if(!isEdit){
+            if(!UserUtils.validateEmail(cafe.email)){                        
+                setValid("Please enter valid email address")
+                toast(valid, {
+                    position: "top-center",
+                })          
+                return
+            }
+            if(!(UserUtils.validatePhoneWithPlus(cafe.contact_phone!) && UserUtils.validatePhoneWithPlus(cafe.send_phone))){
+                setValid("Please enter valid phone number")
+                toast(valid, {
+                    position: "top-center",
+                })
+                return
+            }
+            if(!UserUtils.validateName(cafe.contact_name!)){
+                setValid("Please enter valid contact name")
+                toast(valid, {
+                    position: "top-center",
+                })
+                return
+            }
+            if(!UserUtils.validateNumber(cafe.ftw.toString())){
+                setValid("Please enter valid FTW number (0 - 100)")
+                toast(valid, {
+                    position: "top-center",
+                })
+                return
+            }
         }
 
         setValid("")

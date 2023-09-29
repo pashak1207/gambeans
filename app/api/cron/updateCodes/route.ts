@@ -5,13 +5,9 @@ import UserUtils from '@/utils/userUtils';
 export async function GET(request: NextRequest) {
     try{
         
-        const cafes = await prisma.cafes.updateMany({
-            data:{
-                daily_code: UserUtils.generateVerificationCode()
-            }
-        })
+        const cafes = await prisma.cafes.findMany()
 
-        if(!cafes){
+        if(!cafes.length){
             return NextResponse.json({ 
                 message: "There are no cafes available"
             }, 
@@ -19,6 +15,17 @@ export async function GET(request: NextRequest) {
                 status: 400
             })
         }
+
+        Promise.all(cafes.map(async (cafe) => {
+            await prisma.cafes.update({
+                where: {
+                    id: cafe.id
+                },
+                data:{
+                    daily_code: UserUtils.generateVerificationCode()
+                }
+            })
+        }))
 
         return NextResponse.json({ ok: true });
         

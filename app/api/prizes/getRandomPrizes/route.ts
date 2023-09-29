@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/prisma/client'
 import PrizeUtils from '@/utils/prizeUtils';
 import CafeUtils from '@/utils/cafeUtils';
+import { Prize_type } from '@/types/enums';
  
 export async function POST(request: NextRequest) {
     try{
@@ -57,7 +58,7 @@ export async function POST(request: NextRequest) {
                 data:{
                     user_id: +userId,
                     prize_id: prize.id,
-                    is_won: Math.floor(Math.random() * 100) + 1 <= prize.probability,
+                    is_won: prize.type===Prize_type.FREE ? true : Math.floor(Math.random() * 100) + 1 <= prize.probability,
                     is_slot_won: Math.floor(Math.random() * 100) + 1 <= cafe_ftw
                 }
             })
