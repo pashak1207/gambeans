@@ -27,7 +27,15 @@ export async function GET(request: NextRequest) {
         }
         
         const cafes = await prisma.cafes.findMany({
-            include:{
+            select:{
+                name: true,
+                send_phone: true,
+                daily_code: true,
+                link_eng: true,
+                link_heb: true,
+                created_at: true,
+                contact_name: true,
+                contact_phone: true,
                 prizes: true,
                 users:{
                     where:{
@@ -45,11 +53,21 @@ export async function GET(request: NextRequest) {
                                     not: null
                                 }
                             },
-                            include:{
-                                prize: true
+                            select:{
+                                used: true,
+                                is_won: true,
+                                prize: {
+                                    select:{
+                                        revenue: true
+                                    }
+                                }
                             }
                         },
-                        visits: true
+                        visits: {
+                            select:{
+                                visit_date: true
+                            }
+                        }
                     }
                 }
             },

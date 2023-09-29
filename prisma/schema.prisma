@@ -19,7 +19,7 @@ model Users {
   daily_code        String?
   prizes            User_prize[]
   visits            Visits[]
-  cafe              Cafes        @relation(fields: [cafe_id], references: [id])
+  cafe              Cafes?       @relation(fields: [cafe_id], references: [id])
   cafe_id           Int          @db.UnsignedInt
   verification_code String
   updated_at        DateTime     @updatedAt

@@ -30,7 +30,7 @@ export default async function AdminCafe({cafeId, isCreate, dictionary, lang}:{ca
         return <AdminCafeClient lang={lang} dictionary={dictionary} isCreate cafeObj={cafeCreateObj} proto={proto} />
     }else{
         const cafe:ICafe = cafeId ? await CafeServerService.getCafe(cafeId).then(data => data.cafe) : await CafeServerService.getCafe().then(data => data.cafe)
-    
+        
         if(!cafe){
             notFound()
         }

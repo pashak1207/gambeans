@@ -3,6 +3,7 @@ import styles from "./AdminMenu.module.scss"
 import Image from "next/image"
 import LogOutBtn from "@/components/ui/LogOutBtn/LogOutBtn"
 import { Menu } from "@/dictionaries/type"
+import Logo from '@/public/logo.svg' 
 
 export default function AdminMenu({lang, dictionary, superadmin, cafes}:{lang:string, dictionary:Menu, superadmin:boolean, cafes: boolean}) { 
     return <section className={`${styles.adminMenu} ${lang==="he" ? styles.rtl : ""}`}>
@@ -11,9 +12,7 @@ export default function AdminMenu({lang, dictionary, superadmin, cafes}:{lang:st
                 <Image 
                     alt="logo"
                     priority
-                    src={"/logo.svg"}
-                    width={50}
-                    height={30}
+                    src={Logo}
                 />
             </Link>
         </div>

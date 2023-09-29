@@ -92,6 +92,15 @@ const PrizeClientService = {
 
         return await response!.json()
     },
+
+    
+    async getSortedPrizes(orderBy:string, method:string, type:string):Promise<{message?:string, prizes?:IPrize[]}> {
+
+        const response = await fetch(`/api/prizes?orderBy=${orderBy}&method=${method}&type=${type}`)
+       
+        
+        return await response!.json()
+    },
 }
 
 export default PrizeClientService;

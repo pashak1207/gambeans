@@ -145,6 +145,33 @@ export async function GET(request: NextRequest) {
                 status: 200
             })
 
+        }else if(request.nextUrl.searchParams.has("orderBy") 
+            && request.nextUrl.searchParams.has("method")){
+
+            const cafeId = await CafeServerService.getCafeId().then(data => data.cafeId)
+            const param:string = request.nextUrl.searchParams.get("orderBy") as string
+            const method:string = request.nextUrl.searchParams.get("method") as string
+
+            users = await prisma.users.findMany({
+                where: {
+                    cafe_id: cafeId,
+                },
+                include:{
+                    prizes: true,
+                    visits: true
+                },
+                orderBy:{
+                    [param]: method,
+                }
+            })
+            
+            return NextResponse.json({ 
+                users
+            }, 
+            {
+                status: 200
+            })
+            
         }else if(request.nextUrl.searchParams.has("stage")){
             const cafeId = await CafeServerService.getCafeId().then(data => data.cafeId)
             

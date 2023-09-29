@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/prisma/client'
 import { cookies } from 'next/headers';
 import JWT from '@/utils/jwtgenerate';
+import { Prize_type } from '@prisma/client';
  
 export async function GET(request: NextRequest) {
     try{
@@ -40,6 +41,23 @@ export async function GET(request: NextRequest) {
                 }
             })
 
+        }else if(request.nextUrl.searchParams.has("orderBy") 
+            && request.nextUrl.searchParams.has("method") 
+            && request.nextUrl.searchParams.has("type")){
+
+            const param:string = request.nextUrl.searchParams.get("orderBy") as string
+            const method:string = request.nextUrl.searchParams.get("method") as string
+            const type:string = request.nextUrl.searchParams.get("type") as string         
+
+            prizes = await prisma.prizes.findMany({
+                where: {
+                    cafe_id: cafeId,
+                    type: type as Prize_type
+                },
+                orderBy:{
+                    [param]: method
+                }
+            })            
         }else{
             prizes = await prisma.prizes.findMany({
                 where: {

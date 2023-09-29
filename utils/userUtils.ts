@@ -26,12 +26,26 @@ const UserUtils = {
         return /^\d{9,}$/.test(phone);
     },
 
+    validatePhoneWithPlus(phone:string){
+        return /^(\+)?(\()?(\d{1,4}(\))?)?[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/.test(phone)
+    },
+
     validateCode(code:string) : boolean {
         return /^\d{4}$/.test(code);
     },
 
     validateName(name:string) : boolean {
         return !!name.trim()
+    },
+
+    validateNumber(text:string) : boolean {
+        const number = Number(text);
+        
+        if (!isNaN(number) && number >= 0 && number <= 100) {            
+            return true;
+        }
+        
+        return false;
     },
 
     validateDate(day:string, month:string, year:string) : boolean {

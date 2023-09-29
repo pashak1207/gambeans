@@ -7,7 +7,6 @@ Chart.register(LinearScale, BarElement, BarController, CategoryScale);
 
 const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 const colors = ["#95A4FC", "#BAEDBD", "#1C1C1C", "#B1E3FF", "#A8C5DA", "#A1E3CB"]
-let chart:any;
 
 export function StatisticLine({dataCounts}:{dataCounts:number[]}) {
     const data = {
@@ -22,9 +21,8 @@ export function StatisticLine({dataCounts}:{dataCounts:number[]}) {
     };
 
     useEffect(() => {
-        if (chart) chart.destroy();
 
-        chart = new Chart(document.getElementById('chartLine') as ChartItem, {
+        const chart = new Chart(document.getElementById('chartLine') as ChartItem, {
             type: 'bar',
             data: data,
             options: {
@@ -70,6 +68,10 @@ export function StatisticLine({dataCounts}:{dataCounts:number[]}) {
                 
             }
           });
+
+        return () => {
+            chart.destroy();
+        }
     })
 
   return <canvas id="chartLine"></canvas>

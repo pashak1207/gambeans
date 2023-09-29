@@ -10,6 +10,14 @@ const UserClientService = {
 
         return await response!.json()
     },
+
+    async getSortedUsers(orderBy:string, method:string):Promise<{message?:string, users?:IUser[]}> {
+
+        const response = await fetch(`/api/users?orderBy=${orderBy}&method=${method}`)
+       
+        
+        return await response!.json()
+    },
 }
 
 export default UserClientService;

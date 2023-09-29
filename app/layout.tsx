@@ -51,7 +51,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
     return {
       title: dict.meta.welcome.title,
-      description: dict.meta.welcome.desc
+      description: dict.meta.welcome.desc,
     }
 }
   

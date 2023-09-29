@@ -2,6 +2,7 @@ import { NextRequest } from "next/server";
 import { prisma } from '@/prisma/client'
 import { cookies } from 'next/headers'
 import JWT from '@/utils/jwtgenerate';
+import UserUtils from "./userUtils";
 
 const CafeUtils = {
     async getCurrentCafe (request: NextRequest){
@@ -94,7 +95,6 @@ const CafeUtils = {
         
         return +cafe_ftw!
     },
-
 }
 
 export default CafeUtils

@@ -1,11 +1,11 @@
 "use client"
-import React, { useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import styles from "./AdminPrizeTable.module.scss"
 import PrizeClientService from "@/services/prizeClient.service"
 import EditableText from "@/components/ui/EditableText/EditableText"
 import ImagePrizeUpload from "@/components/ui/ImagePrizeUpload/ImagePrizeUpload"
 import PrizeUtils from "@/utils/prizeUtils"
-import { Prize_type } from "@/types/enums"
+import { Prize_type, Sort_method } from "@/types/enums"
 
 enum Prize_Cafe_change_fields {
     TEXT="TEXT",
@@ -25,8 +25,14 @@ enum Prize_Cafe_change_fields {
 }
 
 export default function AdminPrizeTable({prizesArr, type, cafeId}:{prizesArr: IPrize[], type:string, cafeId:number}) {    
-    const [ prizes, setPrizes ] = useState<IPrize[]>(prizesArr)    
-    const headings = [
+    const [ prizes, setPrizes ] = useState<IPrize[]>(prizesArr)
+    const [ ascSort, setAscSort ] = useState<boolean>(false)
+    const headingsRef = useRef<any[]>([]);
+    const sortParams = ["is_active", "text", "image", "id", "expires_at", "cost", "revenue", "max_amount", "current_amount"]
+
+
+
+    const headings = (type === "SCRATCH" || type === "SLOT") ? [
         "active",
         "benefit name", 
         "photo", 
@@ -37,9 +43,7 @@ export default function AdminPrizeTable({prizesArr, type, cafeId}:{prizesArr: IP
         type === "SLOT" ? "probability out ot FTW" : "probability", 
         "number get", 
         "number used"
-    ]
-
-    const freeHeadings = [
+    ] :[
         "active",
         "benefit name", 
         "photo", 
@@ -61,15 +65,25 @@ export default function AdminPrizeTable({prizesArr, type, cafeId}:{prizesArr: IP
               }
               return prize;
             });
-        });
+        });        
 
         PrizeClientService.updateChecked(id, value)
+    }
+
+    async function sortByParams(index: number){
+        setAscSort(prev => !prev)
+
+        await PrizeClientService.getSortedPrizes(sortParams[index], (ascSort ? Sort_method.ASC : Sort_method.DESC), type)
+                                .then(data => setPrizes(data.prizes!))
+
+        headingsRef.current.forEach(el => el.classList.remove(styles.asc, styles.desc))
+        headingsRef.current[index].classList.add(ascSort ? styles.asc : styles.desc)
     }
     
 
     async function addNewPrize(){        
         const newPrize:IPrize = {
-            id: prizes[0]?.id ? (prizes[0]?.id + 1) : 0,
+            id: prizes[0]?.id ? (prizes.sort((a:IPrize,b:IPrize) => b.id - a.id)[0]?.id + 1) : 0,
             cafe_id: cafeId,
             cost: 0,
             image: "",
@@ -107,10 +121,7 @@ export default function AdminPrizeTable({prizesArr, type, cafeId}:{prizesArr: IP
             <table className={styles.table}>
                 <thead>
                     <tr>
-                        { (type === "SCRATCH" || type === "SLOT") ? 
-                            headings.map((item, index) => <th key={index}>{item}</th>) :
-                            freeHeadings.map((item, index) => <th key={index}>{item}</th>)
-                        }
+                        { headings.map((item, index) => <th ref={el => headingsRef.current[index] = el} role="button" onClick={() => sortByParams(index)} key={index}>{item}</th>) }
                     </tr>
                 </thead>
                 <tbody>

@@ -8,7 +8,7 @@ const dictionaries: Record<string, () => Promise<any>>  = {
 
 const cache: Record<string, IDictionary> = {};
 
-export const getDictionary = async (locale = "en"): Promise<IDictionary> => {
+export const getDictionary = async (locale = "en"): Promise<IDictionary> => {  
   try{
     if (!cache[locale]) {
       cache[locale] = await dictionaries[locale]();

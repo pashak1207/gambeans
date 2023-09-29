@@ -100,9 +100,50 @@
                     overflow: hidden;
                     color: var(--admin-th-color);
                     text-transform: capitalize;
+                    cursor: pointer;
+                    position: relative;
+
+                    &::before{
+                        content: "";
+                        position: absolute;
+                        right: 0;
+                        top: 45%;
+                        width: 0;
+                        height: 0;
+                        transform: translate(0, -100%);
+                        border-left: 5px solid transparent;
+                        border-right: 5px solid transparent;
+                        border-bottom: 5px solid var(--admin-border-light-silver);
+                        transition: border 0.2s;
+                    }
+
+                    &::after{
+                        content: "";
+                        position: absolute;
+                        right: 0;
+                        top: 55%;
+                        width: 0;
+                        height: 0;
+                        border-left: 5px solid transparent;
+                        border-right: 5px solid transparent;
+                        border-top: 5px solid var(--admin-border-light-silver);
+                        transition: border 0.2s;
+                    }
     
                     &:first-child{
                         min-width: 58px;
+                    }
+
+                    &.asc{
+                        &::before{
+                            border-bottom: 5px solid var(--admin-text-color);
+                        }
+                    }
+
+                    &.desc{
+                        &::after{
+                            border-top: 5px solid var(--admin-text-color);
+                        }
                     }
                 }
             }

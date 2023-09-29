@@ -12,6 +12,10 @@ const Redirect = {
 
     notFound(request: NextRequest){
         return NextResponse.rewrite(new URL('/404', request.url))
+    },
+
+    superadmin(request: NextRequest){
+        return NextResponse.rewrite(new URL('/superadmin', request.url))
     }
 }
 
