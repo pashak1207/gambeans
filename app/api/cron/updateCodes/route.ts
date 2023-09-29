@@ -20,12 +20,7 @@ export async function GET(request: NextRequest) {
             })
         }
 
-        return NextResponse.json({ 
-            cafes
-        }, 
-        {
-            status: 200
-        })
+        return NextResponse.json({ ok: true });
         
 
     }catch(e){
