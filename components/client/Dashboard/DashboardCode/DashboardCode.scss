@@ -39,7 +39,7 @@
         max-width: 74px;
         width: 100%;
         height: 63px;
-        border-radius: 16px;
+        border-radius: 16px !important;
         border: 1px solid var(--dashboard-code-input-border-color);
         background: var(--dashboard-code-input-bg-color);
         margin-right: toRem(5);
