@@ -4,11 +4,11 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = env("POSTGRES_PRISMA_URL")
 }
 
 model Users {
-  id                Int          @unique @default(autoincrement()) @db.Integer
+  id                Int          @unique @default(autoincrement())
   name              String?
   phone             String
   email             String?
@@ -17,67 +17,66 @@ model Users {
   DOB               DateTime?
   avatar            String
   daily_code        String?
-  prizes            User_prize[]
-  visits            Visits[]
-  cafe              Cafes?       @relation(fields: [cafe_id], references: [id])
-  cafe_id           Int          @db.Integer
+  cafe_id           Int
   verification_code String
   updated_at        DateTime     @updatedAt
   created_at        DateTime     @default(now())
+  prizes            User_prize[]
+  cafe              Cafes        @relation(fields: [cafe_id], references: [id])
+  visits            Visits[]
 
   @@id([phone, cafe_id])
 }
 
 model Cafes {
-  id            Int         @id @default(autoincrement()) @db.Integer
+  id            Int         @id @default(autoincrement())
   name          String
   email         String      @unique
   address       String?
   logo          String
   color         String
   send_phone    String      @unique
-  ftw           Int         @db.Integer
+  ftw           Int
   link_eng      String?     @unique
   link_heb      String?     @unique
   env_version   Env_version @default(en)
   contact_phone String?
   contact_name  String?
   daily_code    String
-  prizes        Prizes[]
-  visits        Visits[]
-  users         Users[]
   created_at    DateTime    @default(now())
+  prizes        Prizes[]
+  users         Users[]
+  visits        Visits[]
 }
 
 model Visits {
-  id         Int      @id @default(autoincrement()) @db.Integer
-  user       Users    @relation(fields: [user_id], references: [id])
-  user_id    Int      @db.Integer
-  cafe       Cafes    @relation(fields: [cafe_id], references: [id])
-  cafe_id    Int      @db.Integer
+  id         Int      @id @default(autoincrement())
+  user_id    Int
+  cafe_id    Int
   visit_date DateTime @default(now())
+  cafe       Cafes    @relation(fields: [cafe_id], references: [id])
+  user       Users    @relation(fields: [user_id], references: [id])
 }
 
 model User_prize {
-  id          Int       @id @default(autoincrement()) @db.Integer
-  prize       Prizes    @relation(fields: [prize_id], references: [id])
-  prize_id    Int       @db.Integer
+  id          Int       @id @default(autoincrement())
+  prize_id    Int
   used        DateTime?
   opened      DateTime?
   is_won      Boolean   @default(false)
   is_slot_won Boolean   @default(true)
-  user        Users     @relation(fields: [user_id], references: [id])
-  user_id     Int       @db.Integer
+  user_id     Int
   created_at  DateTime  @default(now())
   expires_at  DateTime?
+  prize       Prizes    @relation(fields: [prize_id], references: [id])
+  user        Users     @relation(fields: [user_id], references: [id])
 }
 
 model Prizes {
-  id             Int          @id @default(autoincrement()) @db.Integer
-  cafe           Cafes        @relation(fields: [cafe_id], references: [id])
-  cafe_id        Int          @db.Integer
-  max_amount     Int          @db.Integer
-  current_amount Int          @db.Integer
+  id             Int          @id @default(autoincrement())
+  cafe_id        Int
+  max_amount     Int
+  current_amount Int
   text           String
   image          String
   step_image     String
@@ -85,10 +84,11 @@ model Prizes {
   cost           Float
   revenue        Float
   probability    Float
-  users          User_prize[]
   is_active      Boolean      @default(false)
   expires_at     Int          @default(1)
   created_at     DateTime     @default(now())
+  cafe           Cafes        @relation(fields: [cafe_id], references: [id])
+  users          User_prize[]
 }
 
 enum Users_role {
