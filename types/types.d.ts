@@ -1,18 +1,21 @@
 interface ILoginRegistrationState {
-    phone?: string,
-    step?: number,
-    path?: string
+    phone: string,
+    step: number,
+    path: string,
+    email: string,
 }
 
 interface IUser{
     id: number
     name?: string
     phone: number
+    email: String
     role: Users_role
     status: User_status
     DOB?: String
     daily_code?: string,
     cafe_id: number
+    avatar: string
     prizes: User_prize[]
     visits: IVisit[]
     verification_code: String
@@ -53,9 +56,9 @@ interface IUserPrize{
     used: null | Date,
     opened: null | Date,
     is_won: boolean,
+    is_slot_won: boolean,
     user_id: number,
     created_at: string,
-    updated_at: string,
     expires_at: null | string,
     prize: IPrize
 }

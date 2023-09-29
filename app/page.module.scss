@@ -9,25 +9,29 @@
     text-align: center;
     padding: toRem(50) toRem(25) toRem(36);
 
-    h5{
+    &>h5{
         font-size: toRem(20);
         margin-bottom: toRem(40);
         text-transform: uppercase;
     }
 
-    img{
+    &>img{
         margin-bottom: toRem(63);
+        object-fit: contain;
+        object-position: center;
+        width: 100%;
     }
 
-    p{
+    &>p{
         font-size: toRem(24);
         font-weight: 700;
         line-height: 1.6;
         margin-bottom: toRem(20);
     }
 
-    a{
+    &>a{
         margin-top: toRem(25);
         margin-top: auto;
+        width: 100%;
     }
 }

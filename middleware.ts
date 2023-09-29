@@ -10,18 +10,27 @@ const privateRoutes = ["/dashboard", "/admin", "/superadmin"]
 
 export async function middleware(request: NextRequest){
   const path:string = request.nextUrl.pathname
-  const accessToken:string|boolean = request.cookies.get('JWTAccessToken')?.value || false
-  const currentCafeId:number = await CafeServerService.getCafeId().then(data => data.cafeId)
-  const currentCafeLang:string = await CafeServerService.getCafeLang().then(data => data.cafeLang)
+  const currentCafeId:number = await CafeServerService.getCafeId().then(data => data.cafeId) as number
+  const currentCafeLang:string = await CafeServerService.getCafeLang().then(data => data.cafeLang) as string
   const requestHeaders = new Headers(request.headers)
   requestHeaders.set('x-language', currentCafeLang)
 
   if(!currentCafeId){
+    const accessToken:string|boolean = request.cookies.get('JWTAccessToken')?.value || false
+
+    if(accessToken){
+      const {payload:{role}} = await JWT.verfiyAccessToken(accessToken) 
+
+      if(role === Users_role.SUPERADMIN){
+        return Redirect.superadmin(request)
+      }
+    }
+
     return Redirect.notFound(request)
   }
 
 
-  if(path.startsWith("/api")){
+  if(path.startsWith("/api") && currentCafeId){
     requestHeaders.set('x-cafe-id', currentCafeId.toString())
 
     return NextResponse.next({
@@ -29,14 +38,11 @@ export async function middleware(request: NextRequest){
         headers: requestHeaders,
       }
     })
-  }  
-  
-  
-  
-  
-  else if(privateRoutes.some(route => path.startsWith(route))){
+  }else if(privateRoutes.some(route => path.startsWith(route))){
 
     let accessVerified = null
+
+    const accessToken:string|boolean = request.cookies.get('JWTAccessToken')?.value || false
 
     if(accessToken){
       try{  
@@ -54,7 +60,9 @@ export async function middleware(request: NextRequest){
           return response;
         }
 
-        await AuthServerService.getMe("visit")
+        if(path.startsWith("/dashboard")){
+          await AuthServerService.getMe("visit")
+        }
 
         if(path.startsWith("/admin") && user.role === "USER"){
           return Redirect.notFound(request)
@@ -112,6 +120,7 @@ export async function middleware(request: NextRequest){
   
   
   else if(path.startsWith("/login")){
+    const accessToken:string|boolean = request.cookies.get('JWTAccessToken')?.value || false
 
     if(accessToken){
       let accessVerified = null;

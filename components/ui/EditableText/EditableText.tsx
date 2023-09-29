@@ -21,12 +21,13 @@ enum Prize_Cafe_change_fields {
   DAILY_PHONE="DAILY_PHONE",
 }
 
-const EditableText = ({ initialText, prizeId, type, setPrizes, setCafe, isPrize = true } : 
+const EditableText = ({ initialText, prizeId, type, setPrizes, setCafe, setValid, isPrize = true } : 
   { initialText:string, 
     prizeId?:number, 
     type?:Prize_Cafe_change_fields, 
     setPrizes?:Dispatch<SetStateAction<IPrize[]>>, 
-    setCafe?:Dispatch<SetStateAction<ICafe>>, 
+    setCafe?:Dispatch<SetStateAction<ICafe>>,
+    setValid?:Dispatch<SetStateAction<string>>
     isPrize:boolean }) => {
       
     const [isEditing, setIsEditing] = useState(false);
@@ -44,28 +45,39 @@ const EditableText = ({ initialText, prizeId, type, setPrizes, setCafe, isPrize 
         setIsEditing(false);
 
         if(text.trim() === ""){
-          if(type === Prize_Cafe_change_fields.TEXT){
-            setText("Add prize name")
-          }else if(type === Prize_Cafe_change_fields.EMAIL){
-            setText("Add cafe email")
-          }else if(type === Prize_Cafe_change_fields.ADDRESS){
-            setText("Add cafe address")
-          }else if(type === Prize_Cafe_change_fields.CONTACT_NAME){
-            setText("Add cafe contact name")
-          }else if(type === Prize_Cafe_change_fields.CONTACT_PHONE){
-            setText("Add cafe contact phone")
-          }else if(type === Prize_Cafe_change_fields.HEB_DOMAIN){
-            setText("Enter HEB domain")
-          }else if(type === Prize_Cafe_change_fields.ENG_DOMAIN){
-            setText("Enter ENG domain")
-          }else if(type === Prize_Cafe_change_fields.NAME){
-            setText("Enter cafe name")
-          }else if(type === Prize_Cafe_change_fields.FTW){
-            setText("50")
-          }else if(type === Prize_Cafe_change_fields.DAILY_PHONE){
-            setText("Enter daily phone number")
-          }else{
-            setText("1")
+          switch(type){
+            case Prize_Cafe_change_fields.TEXT:
+              setText("Add prize name")
+              return
+            case Prize_Cafe_change_fields.EMAIL:
+              setText("Add cafe email")
+              return
+            case Prize_Cafe_change_fields.ADDRESS:
+              setText("Add cafe address")
+              return
+            case Prize_Cafe_change_fields.CONTACT_NAME:
+              setText("Add cafe contact name")
+              return
+            case Prize_Cafe_change_fields.CONTACT_PHONE:
+              setText("Add cafe contact phone")
+              return
+            case Prize_Cafe_change_fields.HEB_DOMAIN:
+              setText("Enter HEB domain")
+              return
+            case Prize_Cafe_change_fields.ENG_DOMAIN:
+              setText("Enter ENG domain")
+              return
+            case Prize_Cafe_change_fields.NAME:
+              setText("Enter cafe name")
+              return
+            case Prize_Cafe_change_fields.FTW:
+              setText("50")
+              return
+            case Prize_Cafe_change_fields.DAILY_PHONE:
+              setText("Enter daily phone number")
+              return
+            default:
+              setText("1")
           }
         }
         

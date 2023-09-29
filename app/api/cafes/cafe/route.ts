@@ -43,7 +43,7 @@ export async function GET(request: NextRequest) {
             {
                 status: 200
             })
-        }
+        }        
         
 
         if(request.nextUrl.searchParams.has("cafeId")){
@@ -92,7 +92,7 @@ export async function GET(request: NextRequest) {
                             users: true
                         },
                         orderBy:{
-                            id: "desc"
+                            ["id"]: "asc"
                         }
                     },
                     visits: true,
@@ -114,7 +114,7 @@ export async function GET(request: NextRequest) {
                             visits: true
                         }
                     }
-                }
+                },
             })
         }
 

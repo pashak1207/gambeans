@@ -1,7 +1,7 @@
 import { headers } from 'next/headers';
 
 const PrizeServerService = {
-    async getAllPrizes(): Promise<any> {
+    async getAllPrizes(): Promise<{message?:string, prizes?:IPrize[]}> {
         const domain = headers().get('host')
         let response;
         
@@ -16,7 +16,7 @@ const PrizeServerService = {
         return await response!.json()
     },
 
-    async getPrize(id:number|string): Promise<any> {
+    async getPrize(id:number|string): Promise<{message?:string, prize?:IPrize}> {
         const domain = headers().get('host')
         let response;
         
@@ -31,7 +31,7 @@ const PrizeServerService = {
         return await response!.json()
     },
 
-    async getUserPrize(userId : number, prizeId: string): Promise<any> {
+    async getUserPrize(userId : number, prizeId: string): Promise<{message?:string, prize?:IUserPrize}> {
         const domain = headers().get('host')
         let response;        
         

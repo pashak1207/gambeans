@@ -3,21 +3,24 @@ import { prisma } from '@/prisma/client'
 import JWT from '@/utils/jwtgenerate';
 import UserUtils from '@/utils/userUtils';
 import { Users_role } from '@/types/enums';
+import CafeUtils from '@/utils/cafeUtils';
  
 export async function POST(request: NextRequest) {
     try{
         const body = await request.json()
-        const { phone, name, dob } = body
+        const { phone, name, dob, email } = body
         const cafe_id:number = +request.headers.get('x-cafe-id')!
 
         const isPhoneValid = UserUtils.validatePhone(phone)
         const isNameValid = UserUtils.validateName(name)
+        const isEmailValid = UserUtils.validateEmail(email)
         const date = new Date(dob)
         let isAdmin = false
         const isDateValid = UserUtils.validateDate(`${date.getUTCDate()}`, `${(date.getUTCMonth() + 1)}`, `${date.getUTCFullYear()}`)
+        const cafe_ftw = await CafeUtils.getCurrentCafeFTW(cafe_id)
 
 
-        if(isPhoneValid && isNameValid && isDateValid){
+        if(isPhoneValid && isNameValid && isDateValid && isEmailValid){
             const prizes = await prisma.prizes.findMany({
                 where:{
                     cafe_id: cafe_id,
@@ -59,6 +62,7 @@ export async function POST(request: NextRequest) {
                 data: {
                     DOB: dob,
                     name,
+                    email,
                     role: isAdmin ? Users_role.ADMIN : Users_role.USER
                 }
             })
@@ -110,7 +114,6 @@ export async function POST(request: NextRequest) {
                     user_id: user.id,
                     prize_id: welcome_prize!.id,
                     is_won: true,
-                    opened: new Date(),
                 }
             })            
 
@@ -120,6 +123,7 @@ export async function POST(request: NextRequest) {
                         user_id: user.id,
                         prize_id: prize.id,
                         is_won: (Math.floor(Math.random() * 100) + 1 <= prize.probability),
+                        is_slot_won: (Math.floor(Math.random() * 100) + 1 <= cafe_ftw)
                     }
                 })
             }))

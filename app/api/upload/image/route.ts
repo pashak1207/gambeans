@@ -7,7 +7,7 @@ import CafeServerService from "@/services/cafeServer.service";
 export async function POST(request: NextRequest){
 
     try{
-        const currentCafeId:number = await CafeServerService.getCafeId().then(data => data.cafeId)
+        const currentCafeId:number = await CafeServerService.getCafeId().then(data => +data.cafeId!)
         const formData = await request.formData();
         const fileName = request.nextUrl.searchParams.has("cafe") ? "logo" : request.nextUrl.searchParams.has("prize") ? request.nextUrl.searchParams.get("prize") : new Date().toString()
 

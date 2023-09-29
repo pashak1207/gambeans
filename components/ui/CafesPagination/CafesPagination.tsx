@@ -4,9 +4,8 @@ import styles from "./CafesPagination.module.scss"
 
 export default async function CafesPagination({current, onPage}:{current:number, onPage: number}) { 
     
-    const cafesCount = await CafeServerService.getAllCafesCount().then(data => data.cafes);
+    const cafesCount = await CafeServerService.getAllCafesCount().then(data => data.cafes) as number
     const paginationPagesCount = Math.ceil(cafesCount / onPage)
-    const currentPage = Math.floor(cafesCount / onPage)
     const paginationLinks:React.ReactNode[] = []    
 
     if(paginationPagesCount > 1){

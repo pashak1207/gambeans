@@ -1,9 +1,10 @@
 import { userStepsToPersentage } from "@/utils/userStepsToPersentage"
 import styles from "./StatisticDoughnutChart.module.scss"
-// import { StatisticDoughnut } from "./StatisticDoughnut/StatisticDoughnut"
+import CafeServerService from "@/services/cafeServer.service"
+import { StatisticDoughnut } from "./StatisticDoughnut/StatisticDoughnut"
 
 export default async function StatisticDoughnutChart() {
-    const initData = [2, 1, 34, 32, 17, 12, 21, 44, 67, 43, 23, 43, 22, 43, 22, 43, 22, 43, 22, 43, 22,]
+    const initData = await CafeServerService.getUsersStages().then(data => data.users?.map(item => item._count.prizes)) as number[]   
 
     const percentageData = userStepsToPersentage(initData)
 
@@ -11,7 +12,7 @@ export default async function StatisticDoughnutChart() {
             <h4>User by stage</h4>
             <div className={styles.chartWrapper}>
                 <div className={styles.chart}>
-                    {/* <StatisticDoughnut percentageData={percentageData}/> */}
+                    <StatisticDoughnut percentageData={percentageData}/>
                 </div>
                 <table className={styles.data}>
                     <tbody>

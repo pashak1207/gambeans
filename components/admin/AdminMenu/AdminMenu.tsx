@@ -3,19 +3,17 @@ import styles from "./AdminMenu.module.scss"
 import Image from "next/image"
 import LogOutBtn from "@/components/ui/LogOutBtn/LogOutBtn"
 import { Menu } from "@/dictionaries/type"
+import Logo from '@/public/logo.svg' 
 
-export default function AdminMenu({dictionary, superadmin, cafes}:{dictionary:Menu, superadmin:boolean, cafes: boolean}) { 
-    return <section className={styles.adminMenu}>
+export default function AdminMenu({lang, dictionary, superadmin, cafes}:{lang:string, dictionary:Menu, superadmin:boolean, cafes: boolean}) { 
+    return <section className={`${styles.adminMenu} ${lang==="he" ? styles.rtl : ""}`}>
         <div className={styles.logo}>
             <Link href={"/dashboard"} >
                 <Image 
                     alt="logo"
                     priority
-                    src={"/logo.svg"}
-                    width={50}
-                    height={30}
+                    src={Logo}
                 />
-                <h1>Gambeans</h1>
             </Link>
         </div>
         <ul>
@@ -47,6 +45,6 @@ export default function AdminMenu({dictionary, superadmin, cafes}:{dictionary:Me
             </li>
             }
         </ul>
-        <LogOutBtn dictionary={dictionary.logout} />
+        <LogOutBtn lang={lang} dictionary={dictionary.logout} />
     </section>
 }

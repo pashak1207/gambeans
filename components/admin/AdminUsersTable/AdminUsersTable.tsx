@@ -1,20 +1,36 @@
 "use client"
-import React, { useState } from "react"
+import React, { useRef, useState } from "react"
 import styles from "./AdminUsersTable.module.scss"
 //@ts-ignore
 import ReactHTMLTableToExcel from "react-html-table-to-excel";
 import UserClientService from "@/services/userClient.service";
 import UserUtils from "@/utils/userUtils";
-import { User_status } from "@/types/enums";
+import { Sort_method, User_status } from "@/types/enums";
 
 
 export default function AdminUsersTable({usersArr, cafeId}:{usersArr: IUser[], cafeId:number}) {    
-    const [ users, setUsers ] = useState<IUser[]>(usersArr)    
+    const [ users, setUsers ] = useState<IUser[]>(usersArr)
+    const [ ascSort, setAscSort ] = useState<boolean>(false)
+    const headingsRef = useRef<any[]>([]);
+    const sortParams = ["status", "name", "phone", "email", "DOB", "created_at", "created_at", "created_at", "created_at", "created_at", "created_at", "created_at"]
+
+    async function sortByParams(index: number){
+        setAscSort(prev => !prev)
+        
+        await UserClientService.getSortedUsers(sortParams[index], (ascSort ? Sort_method.ASC : Sort_method.DESC))
+                                .then(data => setUsers(data.users!))
+
+        headingsRef.current.forEach(el => el.classList.remove(styles.asc, styles.desc))
+        headingsRef.current[index].classList.add(ascSort ? styles.asc : styles.desc)
+    }
+
+
     const headings = [
         "active",
         "name", 
-        "Phone Number", 
-        "Birthday", 
+        "Phone Number",
+        "Email", 
+        "Birthday",
         "Join Date", 
         "level / step", 
         "Benefits won", 
@@ -34,7 +50,7 @@ export default function AdminUsersTable({usersArr, cafeId}:{usersArr: IUser[], c
                 }
                 return user;
             });
-        });
+        });        
 
         UserClientService.updateChecked(id, value)
     }
@@ -56,7 +72,7 @@ export default function AdminUsersTable({usersArr, cafeId}:{usersArr: IUser[], c
             <table id="table-to-xls" className={styles.table}>
                 <thead>
                     <tr>
-                        { headings.map((item, index) => <th key={index}>{item}</th>) }
+                        { headings.map((item, index) => <th ref={el => headingsRef.current[index] = el} role="button" onClick={() => sortByParams(index)} key={index}>{item}</th>) }
                     </tr>
                 </thead>
                 <tbody>
@@ -65,6 +81,7 @@ export default function AdminUsersTable({usersArr, cafeId}:{usersArr: IUser[], c
                                         <td><input id={`check${user.id}`} onChange={(e) => activeUserChange(e, user.id)} checked={user.status === User_status.ACTIVE} type="checkbox" /><label htmlFor={`check${user.id}`}></label></td>
                                         <td>{user.name}</td>
                                         <td>+{user.phone}</td>
+                                        <td>{user.email}</td>
                                         <td>{new Date(user.DOB!.toString()).toLocaleDateString("en-US", { year: 'numeric', month: 'long', day: 'numeric' })}</td>
                                         <td>{new Date(user.created_at!.toString()).toLocaleDateString("en-US", { year: 'numeric', month: 'long', day: 'numeric' })}</td>
                                         <td>{user.prizes.reduce((total:number, prize:IUserPrize) => total + (prize.expires_at !== null ? 1 : 0), 0)}</td>

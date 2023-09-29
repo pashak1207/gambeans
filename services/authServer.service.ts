@@ -2,7 +2,7 @@ import { headers } from 'next/headers';
 import { cookies } from 'next/headers'
 
 const AuthServerService = {   
-    async getMe(param = ""){
+    async getMe(param = ""):Promise<{message?:string} | IVisit | IUser | any>{
         const accessToken = cookies().get('JWTAccessToken')?.value;
         
         const hds = new Headers({

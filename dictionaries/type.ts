@@ -1,6 +1,5 @@
 export interface IDictionary {
     meta: Meta
-    loading: Loading
     welcome: Welcome2
     login: Login2
     dashboard: Dashboard2
@@ -34,11 +33,6 @@ export interface Admin {
     desc: string
 }
 
-export interface Loading {
-    heading: string
-    text: string
-}
-
 export interface Welcome2 {
     heading: string
     textStart: string
@@ -54,6 +48,7 @@ export interface Login2 {
     second: Second
     third: Third
     fourth: Fourth
+    fifth: Fifth
 }
 
 export interface First {
@@ -78,6 +73,14 @@ export interface Second {
 }
 
 export interface Third {
+    title: string,
+    confirm: string,
+    button: string,
+    validEmail: string,
+    validCheck: string
+}
+
+export interface Fourth {
     nameValid: string
     dateValid: string
     title: string
@@ -86,7 +89,7 @@ export interface Third {
     button: string
 }
 
-export interface Fourth {
+export interface Fifth{
     title: string
     arrive: string
     scan: string
@@ -130,7 +133,9 @@ export interface Prize {
     show: string
     won: string
     try: string
+    tomorrow: string
     work: string
+    expires: string
     scr: string
     firstText: string
     scored: string
@@ -140,6 +145,12 @@ export interface Prize {
     jackpot: string
     jackpotText: string
     swipe: Swipe
+    slot: Slot
+}
+
+export interface Slot{
+    title: string
+    button: string
 }
 
 export interface Swipe {

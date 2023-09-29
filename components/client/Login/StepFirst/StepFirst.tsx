@@ -40,7 +40,7 @@ export default function StepFirst({setState, dictionary}:{setState : React.Dispa
         if(isValidated){
             isValidated = await AuthClientService.validatePhone(telCode+phone)
             .then(data => data?.phoneValid)
-            .catch(e => console.log("Phone validation failed. Error: " + e.message))
+            .catch(e => console.log("Phone validation failed. Error: " + e.message)) as boolean
         }
         
         if(isValidated){

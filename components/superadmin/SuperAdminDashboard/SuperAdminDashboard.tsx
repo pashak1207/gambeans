@@ -20,8 +20,8 @@ export default async function SuperAdminDashboard() {
     
     await CafeServerService.getDailyVisits()
                     .then(data => {
-                        initData[1].num = data.count
-                        initData[1].progress = data.progress
+                        initData[1].num = data.count as number
+                        initData[1].progress = data.progress as number
                     })
 
     await UserServerService.getNewUsersCount(7)
@@ -37,7 +37,7 @@ export default async function SuperAdminDashboard() {
                     })
 
     await CafeServerService.getAllCafesCount()
-                    .then(data => initData[4].num = data.cafes)
+                    .then(data => initData[4].num = data.cafes as number)
                     
     
     return <section className={styles.superDashboard}>

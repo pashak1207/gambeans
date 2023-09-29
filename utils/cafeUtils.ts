@@ -2,6 +2,7 @@ import { NextRequest } from "next/server";
 import { prisma } from '@/prisma/client'
 import { cookies } from 'next/headers'
 import JWT from '@/utils/jwtgenerate';
+import UserUtils from "./userUtils";
 
 const CafeUtils = {
     async getCurrentCafe (request: NextRequest){
@@ -81,6 +82,19 @@ const CafeUtils = {
         return cafe_id
     },
 
+    async getCurrentCafeFTW (cafe_id: number): Promise<number>{
+
+        const cafe_ftw = await prisma.cafes.findUnique({
+            where:{
+                id: cafe_id
+            },
+            select:{
+                ftw: true
+            }
+        }).then(data => data?.ftw)
+        
+        return +cafe_ftw!
+    },
 }
 
 export default CafeUtils

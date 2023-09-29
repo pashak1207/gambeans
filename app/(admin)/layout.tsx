@@ -5,18 +5,18 @@ import { ToastContainer, Slide } from 'react-toastify';
 import { headers } from 'next/headers';
 import { getDictionary } from '@/dictionaries/dictionaries';
 
-export let metadata: Metadata;
+export async function generateMetadata(): Promise<Metadata> {
+    const language = headers().get('x-language') || "en"
+    const dict = await getDictionary(language)
+  
+    return {
+      title: dict.meta.admin.title,
+      description: dict.meta.admin.desc
+    }
+  }
   
   
 async function AdminLayout({children}: {children: React.ReactNode}) {
-
-    const dict = await getDictionary(headers().get('x-language') || "en")
-
-    metadata = {
-        title: dict.meta.admin.title,
-        description: dict.meta.admin.desc,
-    }
-
     return (<>
             {children}
             <ToastContainer

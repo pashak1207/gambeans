@@ -5,6 +5,10 @@ html{
 
 	&.rtl{
 		direction: rtl;
+
+		*{
+			font-family: var(--he-font-family);
+		}
 	}
 
 	*{
@@ -109,6 +113,7 @@ html{
 	--dashboard-code-input-bg-color: rgba(161, 147, 141, 0.80);
 
 	--steps-circles-bgcolour: #ebd3c1;
+	--simple-btn-bg: rgba(138, 70, 51, 0.25);
 
 	--max-width: 420px;
 
@@ -140,31 +145,8 @@ html{
 	--admin-border-light-silver: #EAEAEA;
 	--admin-second-heading-color: #666;
 	--admin_links-color: #0038FF;
-}
 
-.loadingPane{
-	max-width: var(--max-width);
-	margin-inline: auto;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	height: 100%;
-	font-weight: 800;
-	text-align: center;
-	line-height: 1.1;
-	font-family: var(--loading-font-family);
-	color: var(--loading-color);
-
-	h2{
-		font-size: toRem(48);
-		text-transform: uppercase;
-		margin: 30px 0 0;
-	}
-	
-	p{
-		font-size: toRem(24);
-	}
+	--he-font-family: var(--font-rubik);
 }
 
 #welcomeLogo{

@@ -1,6 +1,6 @@
 const CafeClientService = {
 
-    async compareCodes(code: string) {
+    async compareCodes(code: string):Promise<{message?:string, isEqual?:boolean}> {
         const response = await fetch(`/api/cafes/compareCodes`, 
         {
             method: "POST", 
@@ -12,7 +12,7 @@ const CafeClientService = {
         return await response.json()
     },
 
-    async updateCafe(cafeObj: ICafe): Promise<any> {
+    async updateCafe(cafeObj: ICafe):Promise<{message?:string, cafe?:ICafe}> {
 
         const response = await fetch(`/api/cafes/${cafeObj.id}`, {
             method: "PUT",
@@ -24,7 +24,7 @@ const CafeClientService = {
         return await response!.json()
     },
 
-    async createCafe(cafeObj: ICafe): Promise<any> {
+    async createCafe(cafeObj: ICafe):Promise<{message?:string, cafe?:ICafe}> {
 
         const response = await fetch(`/api/cafes/${cafeObj.id}`, {
             method: "POST",

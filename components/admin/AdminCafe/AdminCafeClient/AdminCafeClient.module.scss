@@ -92,6 +92,13 @@
                 }
             }
         }
+
+        &.rtl{
+            .middle__left{
+                margin-left: toRem(35);
+                margin-right: 0;
+            }
+        }
     }
 
     .blocks{

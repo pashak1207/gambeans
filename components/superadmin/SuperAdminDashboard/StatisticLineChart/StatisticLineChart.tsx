@@ -4,7 +4,7 @@ import styles from "./StatisticLineChart.module.scss"
 
 export default async function StatisticLineChart() {
 
-    const dataCounts = await UserServerService.getActiveYearUsersCount().then(data => data.counts);
+    const dataCounts = await UserServerService.getActiveYearUsersCount().then(data => data.counts) as number[]
 
     return <div className={styles.statisticLineChart}>
                 <h4>Active user by time</h4>

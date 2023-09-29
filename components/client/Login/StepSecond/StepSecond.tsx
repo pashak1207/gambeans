@@ -73,7 +73,7 @@ export default function StepFirst({state, setState, dictionary}:{state:ILoginReg
         }
 
         const {isCorrect, isRegistrated, isBlocked} = await AuthClientService.login(state.phone!, codeFull)
-                                    .catch(e => console.log("Error during codes comparison: " + e.message))
+                                    .catch(e => console.log("Error during codes comparison: " + e.message)) as {isCorrect:boolean, isRegistrated:boolean, isBlocked:boolean}
 
         if(isBlocked){            
             toast(dictionary.toast);

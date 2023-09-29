@@ -1,6 +1,6 @@
 const UploadClientService = {
     
-    async prizeImage(formData:FormData, prizeId: number): Promise<any> {
+    async prizeImage(formData:FormData, prizeId: number): Promise<{message?:string, url?:string}>{
                
         const response = await fetch(`/api/upload/image?prize=${prizeId}`, {
             method: "POST",
@@ -10,7 +10,7 @@ const UploadClientService = {
         return await response!.json()
     },
 
-    async cafeImage(formData:FormData): Promise<any> {
+    async cafeImage(formData:FormData): Promise<{message?:string, url?:string}>{
                
         const response = await fetch(`/api/upload/image?cafe`, {
             method: "POST",

@@ -1,12 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/prisma/client'
 import PrizeUtils from '@/utils/prizeUtils';
+import CafeUtils from '@/utils/cafeUtils';
  
 export async function POST(request: NextRequest) {
     try{
         const body = await request.json()        
         const { randNum, userId }:{randNum:string, userId: string} = body
         const cafeId = +request.headers.get('x-cafe-id')!
+        const cafe_ftw = await CafeUtils.getCurrentCafeFTW(cafeId)
 
         let prizes = await prisma.prizes.findMany({
             where:{
@@ -55,11 +57,12 @@ export async function POST(request: NextRequest) {
                 data:{
                     user_id: +userId,
                     prize_id: prize.id,
-                    is_won: Math.floor(Math.random() * 100) + 1 <= prize.probability
+                    is_won: Math.floor(Math.random() * 100) + 1 <= prize.probability,
+                    is_slot_won: Math.floor(Math.random() * 100) + 1 <= cafe_ftw
                 }
             })
         }))        
-
+        
         return NextResponse.json({ 
             prizes 
         }, 

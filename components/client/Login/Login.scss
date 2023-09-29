@@ -60,6 +60,7 @@ main{
             display: flex;
             align-items: center;
             width: 100%;
+            direction: ltr;
         }
 
         input{
@@ -144,12 +145,87 @@ main{
     }
 
     .stepthird{
+        &>button{
+            margin-bottom: toRem(30);
+        }
+
+        input[type="mail"]{
+            background: transparent;
+            border-bottom: 1px solid var(--text-color);
+            padding: toRem(5) toRem(10);
+            width: 100%;
+
+            color: var(--text-color);
+            font-family: var(--client-font-family);
+            font-size: toRem(20);
+            line-height: 1.6;
+            margin-bottom: toRem(20);
+        }
+
+        label{
+            width: 100%;
+            display: flex;
+            align-items: center;
+            margin-bottom: toRem(15);
+
+            span{
+                color: var(--text-color);
+                font-family: var(--client-font-family);
+                font-size: toRem(15);
+                line-height: 1.6;
+                text-align: left;
+                display: inline-block;
+                margin-left: toRem(10);
+            }
+
+            input[type="checkbox"]{
+                appearance: none;
+                position: relative;
+
+                &::before{
+                    content: "";
+                    display: inline-block;
+                    width: 25px;
+                    height: 25px;
+                    background: var(--white-color);
+                    border-radius: 4px;
+                    cursor: pointer;
+                    border: 1px solid var(--gray-color);
+                }
+
+                &::after{
+                    content: '';
+                    display: block;
+                    position: absolute;
+                    top: 3px;
+                    left: 10px;
+                    width: 6px;
+                    height: 14px;
+                    border: solid var(--admin-black-color);
+                    border-width: 0 2px 2px 0;
+                    transform: rotate(45deg);
+                    opacity: 0;
+                    transition: opacity 0.3s;
+                }
+
+                &:checked::after{
+                    opacity: 1;
+                }
+            }
+        }
+    }
+
+    .stepfourth{
         .wrapper{
             &>h4{
                 bottom: 22px;
                 max-width: 230px;
                 width: 100%;
             }
+        }
+
+        &>button{
+            margin-bottom: toRem(30);
         }
 
         &>a{
@@ -172,7 +248,6 @@ main{
         }
 
         h4{
-            -bottom: 10px;
             bottom: 0;
         }
 
@@ -192,14 +267,15 @@ main{
             }
         }
 
-        .stepthird__age{
+        .stepfourth__age{
             width: 100%;
             text-align: left;
 
-            .stepthird__age-inputs{
+            .stepfourth__age-inputs{
                 display: flex;
                 width: 100%;
                 justify-content: space-between;
+                direction: ltr;
 
                 input{
                     max-width: 80px;
@@ -208,12 +284,26 @@ main{
             }
         }
 
+        &.rtl{
+            label{
+                h4{
+                    text-align: right;
+                }
+            }
+
+            .stepfourth__age{
+                h4{
+                    text-align: right;
+                }
+            }
+        }
+
     }
 
-    .stepfourth{
+    .stepfifth{
 
         &>button{
-            margin-bottom: toRem(35);
+            margin-bottom: toRem(30);
         }
 
         h2{
@@ -221,8 +311,8 @@ main{
             margin-bottom: toRem(60);
         }
 
-        .stepfourth__blocks{
-            .stepfourth__item{
+        .stepfifth__blocks{
+            .stepfifth__item{
                 display: flex;
                 max-width: 290px;
                 width: 100%;
@@ -248,6 +338,19 @@ main{
                     font-weight: 500;
                     line-height: 1.4;
                     letter-spacing: 0.2px;
+                }
+            }
+        }
+
+        &.rtl{
+            .stepfifth__blocks{
+                .stepfifth__item{
+                    text-align: right;
+
+                    img{
+                        margin-left: toRem(24);
+                        margin-right: 0;
+                    }
                 }
             }
         }

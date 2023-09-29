@@ -21,7 +21,8 @@ export function StatisticLine({dataCounts}:{dataCounts:number[]}) {
     };
 
     useEffect(() => {
-        new Chart(document.getElementById('chartLine') as ChartItem, {
+
+        const chart = new Chart(document.getElementById('chartLine') as ChartItem, {
             type: 'bar',
             data: data,
             options: {
@@ -67,6 +68,10 @@ export function StatisticLine({dataCounts}:{dataCounts:number[]}) {
                 
             }
           });
+
+        return () => {
+            chart.destroy();
+        }
     })
 
   return <canvas id="chartLine"></canvas>

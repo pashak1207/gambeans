@@ -1,6 +1,6 @@
 @import "~/app/mixins.scss";
 
-.validation p{
+html body .validation p{
     font-size: toRem(16);
     line-height: 1.6;
     color: var(--validation-color);
@@ -8,4 +8,5 @@
     margin: 0;
     padding: 0;
     position: static;
+    margin-bottom: 0;
 }

@@ -1,14 +1,16 @@
+@import "~app/mixins.scss";
+
 .simpleButton{
     box-shadow: 4px 8px 24px 0px var(--simple-btn-bg);
     background: var(--button-background);
     color: var(--button-color);
-    min-width: 342px;
-    padding: 18px 5px;
+    min-width: 320px;
+    padding: toRem(18) toRem(5);
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 100px;
-    font-size: 18px;
+    font-size: toRem(18);
     font-style: normal;
     font-weight: 700;
     line-height: 1.6;

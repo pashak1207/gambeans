@@ -20,3 +20,8 @@ export enum Env_version {
     he = "he",
     en = "en",
 }
+
+export enum Sort_method{
+    ASC="asc",
+    DESC="desc"
+}
