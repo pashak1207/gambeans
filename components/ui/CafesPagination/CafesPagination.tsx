@@ -10,7 +10,7 @@ export default async function CafesPagination({current, onPage}:{current:number,
 
     if(paginationPagesCount > 1){
         for(let i = 1; i <= paginationPagesCount; i++){                
-            paginationLinks.push(<Link className={i===current ? styles.active : ""} key={i-1} href={`/superadmin/cafes?q=${i}`}>{i}</Link>)
+            paginationLinks.push(<Link className={i===current ? styles.active : ""} key={i-1} href={`/superadmin/cafes?q=${i}`} as="/superadmin/cafes?q=1">{i}</Link>)
         }
 
         return (<div className={styles.pagination}>

@@ -10,17 +10,9 @@ const AuthServerService = {
         });
 
         const domain = headers().get('host')
+        const proto = headers().get("x-forwarded-proto") ? "https://" : "http://";
 
-        let response;        
-
-        
-        await fetch(`https://${domain}/api/auth/me?${param}`, { method: 'HEAD', headers: hds })
-        .then(async data => {
-            response = await fetch(`https://${domain}/api/auth/me?${param}`, { headers: hds })
-        })
-        .catch(async err => {            
-            response = await fetch(`http://${domain}/api/auth/me?${param}`, { headers: hds })
-        });
+        const response = await fetch(`${proto}${domain}/api/auth/me?${param}`, { headers: hds })
     
         return await response!.json()
 

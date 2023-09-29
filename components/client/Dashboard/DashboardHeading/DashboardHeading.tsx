@@ -24,7 +24,7 @@ export default async function DashboardHeading({ dictionary }:{ dictionary:Headi
                     <h4>{user.name}</h4>
                 </div>
                 <div className={style.right}>
-                    <Link href={"/dashboard/prizes"}>{dictionary.prizes}</Link>
+                    <Link href={"/dashboard/prizes"} as="/dashboard/prizes">{dictionary.prizes}</Link>
                 </div>
             </div>
         )

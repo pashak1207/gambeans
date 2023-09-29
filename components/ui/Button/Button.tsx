@@ -11,7 +11,7 @@ interface IButtonProps {
 export default function Button({title, onClickHandler, isLink, path} : IButtonProps) {
     if(isLink && path){
       return(
-        <Link className={styles.simpleButton} href={path}>{title}</Link>
+        <Link className={styles.simpleButton} href={path} as="/dashboard">{title}</Link>
       )
     }else{
       return (

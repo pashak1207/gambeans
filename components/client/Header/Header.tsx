@@ -9,7 +9,7 @@ export default async function Header() {
 
   return (
     <header className={styles.header} style={{background: color}}>
-      <Link href={"/dashboard"} >
+      <Link href={"/dashboard"} as="/dashboard" >
         <Image
             src={logo}
             priority
