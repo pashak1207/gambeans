@@ -3,12 +3,12 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
 model Users {
-  id                Int          @unique @default(autoincrement()) @db.UnsignedInt
+  id                Int          @unique @default(autoincrement()) @db.Integer
   name              String?
   phone             String
   email             String?
@@ -20,7 +20,7 @@ model Users {
   prizes            User_prize[]
   visits            Visits[]
   cafe              Cafes?       @relation(fields: [cafe_id], references: [id])
-  cafe_id           Int          @db.UnsignedInt
+  cafe_id           Int          @db.Integer
   verification_code String
   updated_at        DateTime     @updatedAt
   created_at        DateTime     @default(now())
@@ -29,14 +29,14 @@ model Users {
 }
 
 model Cafes {
-  id            Int         @id @default(autoincrement()) @db.UnsignedInt
+  id            Int         @id @default(autoincrement()) @db.Integer
   name          String
   email         String      @unique
   address       String?
   logo          String
   color         String
   send_phone    String      @unique
-  ftw           Int         @db.UnsignedInt
+  ftw           Int         @db.Integer
   link_eng      String?     @unique
   link_heb      String?     @unique
   env_version   Env_version @default(en)
@@ -50,34 +50,34 @@ model Cafes {
 }
 
 model Visits {
-  id         Int      @id @default(autoincrement()) @db.UnsignedInt
+  id         Int      @id @default(autoincrement()) @db.Integer
   user       Users    @relation(fields: [user_id], references: [id])
-  user_id    Int      @db.UnsignedInt
+  user_id    Int      @db.Integer
   cafe       Cafes    @relation(fields: [cafe_id], references: [id])
-  cafe_id    Int      @db.UnsignedInt
+  cafe_id    Int      @db.Integer
   visit_date DateTime @default(now())
 }
 
 model User_prize {
-  id          Int       @id @default(autoincrement()) @db.UnsignedInt
+  id          Int       @id @default(autoincrement()) @db.Integer
   prize       Prizes    @relation(fields: [prize_id], references: [id])
-  prize_id    Int       @db.UnsignedInt
+  prize_id    Int       @db.Integer
   used        DateTime?
   opened      DateTime?
   is_won      Boolean   @default(false)
   is_slot_won Boolean   @default(true)
   user        Users     @relation(fields: [user_id], references: [id])
-  user_id     Int       @db.UnsignedInt
+  user_id     Int       @db.Integer
   created_at  DateTime  @default(now())
   expires_at  DateTime?
 }
 
 model Prizes {
-  id             Int          @id @default(autoincrement()) @db.UnsignedInt
+  id             Int          @id @default(autoincrement()) @db.Integer
   cafe           Cafes        @relation(fields: [cafe_id], references: [id])
-  cafe_id        Int          @db.UnsignedInt
-  max_amount     Int          @db.UnsignedInt
-  current_amount Int          @db.UnsignedInt
+  cafe_id        Int          @db.Integer
+  max_amount     Int          @db.Integer
+  current_amount Int          @db.Integer
   text           String
   image          String
   step_image     String
