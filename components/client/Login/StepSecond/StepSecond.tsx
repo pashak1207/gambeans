@@ -4,7 +4,6 @@ import Link from "next/link";
 import React, { SetStateAction, useState, useEffect, useRef } from "react"
 import AuthClientService from "@/services/authClient.service";
 import { toast } from 'react-toastify';
-import { useRouter } from 'next/navigation'
 import UserUtils from "@/utils/userUtils";
 import { Second } from "@/dictionaries/type";
 
@@ -19,7 +18,6 @@ export default function StepFirst({state, setState, dictionary}:{state:ILoginReg
     const [code, setCode] = useState<(number | string)[]>(initCodeValues)
     const [timer, setTimer] = useState<boolean>(false)
     const [seconds, setSeconds] = useState(TIMER_DURATION_SECONDS);
-    const router = useRouter()
 
     const minutes = Math.floor(seconds / 60);
     const remainingSeconds = seconds % 60;
@@ -89,7 +87,7 @@ export default function StepFirst({state, setState, dictionary}:{state:ILoginReg
         
 
         if(isRegistrated){
-            router.push('/dashboard')                        
+            window.location.href ='/dashboard'                        
         }else{
             setState(prev =>{
                 return{

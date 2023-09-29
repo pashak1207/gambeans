@@ -17,7 +17,7 @@ export default function StepFifth({state, setState, dictionary, lang}:{ state:IL
     }
 
     const nextPageClickHandler = () => {        
-        router.push(state.path || "/dashboard")
+        window.location.href = state.path || "/dashboard"
     }
 
     return (
