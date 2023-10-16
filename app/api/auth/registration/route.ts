@@ -4,12 +4,14 @@ import JWT from '@/utils/jwtgenerate';
 import UserUtils from '@/utils/userUtils';
 import { Prize_type, Users_role } from '@/types/enums';
 import CafeUtils from '@/utils/cafeUtils';
+import { headers } from 'next/headers';
  
 export async function POST(request: NextRequest) {
     try{
         const body = await request.json()
         const { phone, name, dob, email } = body
         const cafe_id:number = +request.headers.get('x-cafe-id')!
+        const currentCafeLang:string = headers().get('x-language') || "en"
 
         const isPhoneValid = UserUtils.validatePhone(phone)
         const isNameValid = UserUtils.validateName(name)
@@ -78,8 +80,8 @@ export async function POST(request: NextRequest) {
                     status: 200
                 })
     
-                response.cookies.set(...await JWT.generateAccessToken(+user.id, user.role as any, request) as any)
-                response.cookies.set(...await JWT.generateRefreshToken(+user.id, user.role as any, request) as any)
+                response.cookies.set(...await JWT.generateAccessToken(+user.id, user.role as any, request, currentCafeLang) as any)
+                response.cookies.set(...await JWT.generateRefreshToken(+user.id, user.role as any, request, currentCafeLang) as any)
                 
                 return response
             }
@@ -137,8 +139,8 @@ export async function POST(request: NextRequest) {
                 status: 200
             })
 
-            response.cookies.set(...await JWT.generateAccessToken(+user.id, user.role as any, request) as any)
-            response.cookies.set(...await JWT.generateRefreshToken(+user.id, user.role as any, request) as any)
+            response.cookies.set(...await JWT.generateAccessToken(+user.id, user.role as any, request, currentCafeLang) as any)
+            response.cookies.set(...await JWT.generateRefreshToken(+user.id, user.role as any, request, currentCafeLang) as any)
             
             return response
 

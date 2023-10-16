@@ -35,13 +35,13 @@ const UserUtils = {
     },
 
     validateName(name:string) : boolean {
-        return !!name.trim()
+        return !!name.trim() && name.trim() !== "-"
     },
 
     validateNumber(text:string) : boolean {
         const number = Number(text);
         
-        if (!isNaN(number) && number >= 0 && number <= 100) {            
+        if (!isNaN(number) && number > 0 && number <= 100) {            
             return true;
         }
         

@@ -1,5 +1,5 @@
 import { Env_version } from '@/types/enums';
-import { headers } from 'next/headers';
+import { cookies, headers } from 'next/headers';
 
 const CafeServerService = {
     async getAllCafes(pagin = 1):Promise<{message?:string, cafes?:ICafe[], onPage?:number}> {
@@ -30,17 +30,24 @@ const CafeServerService = {
     },
 
     async getCafeId():Promise<{message?:string, cafeId?:number}> {
+        const accessToken = cookies().get('JWTAccessToken')?.value;
+
         const domain = headers().get('host')
         const proto = headers().get("x-forwarded-proto") ? "https://" : "http://";
-
-        const response = await fetch(`${proto}${domain}/api/cafes/cafe?id`)
         
-        return await response!.json()
+
+        const hds = new Headers({
+            'Authorization': `${accessToken}`,
+        });
+        
+        const response = await fetch(`${proto}${domain}/api/cafes/cafe?id`, { headers: hds })
+        
+        return await response!.json()   
     },
 
     async getCafeLang():Promise<{message?:string, cafeLang?:Env_version}>{
         const domain = headers().get('host')
-        const proto = headers().get("x-forwarded-proto") ? "https://" : "http://";
+        const proto = headers().get("x-forwarded-proto") ? "https://" : "http://";        
 
         const response = await fetch(`${proto}${domain}/api/cafes/cafe?lang`)
         

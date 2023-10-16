@@ -11,11 +11,11 @@ const REFRESH_MAX_AGE = process.env.REFRESH_MAX_AGE || 2592000
 const alg = 'HS256'
 
 const JWT = {
-    async generateAccessToken(user_id:number, user_role:Users_role, request: NextRequest, cafeId?:string) {
+    async generateAccessToken(user_id:number, user_role:Users_role, request: NextRequest,  lang: string, cafeId?:string) {
 
         const cafe_id = cafeId || await CafeUtils.getCurrentCafeId(request)        
         
-        const token = await new jose.SignJWT({ 'id': user_id, 'cafe_id': +cafe_id!, 'role': user_role })
+        const token = await new jose.SignJWT({ 'id': user_id, 'cafe_id': +cafe_id!, 'role': user_role, 'lang': lang})
                 .setProtectedHeader({ alg })
                 .setExpirationTime(`${ACCESS_MAX_AGE}s`)
                 .sign(new TextEncoder().encode(accessSecret))
@@ -45,11 +45,11 @@ const JWT = {
         return payload
     },
 
-    async generateRefreshToken(user_id:number, user_role:Users_role, request: NextRequest, cafeId?:string) {
+    async generateRefreshToken(user_id:number, user_role:Users_role, request: NextRequest,  lang: string, cafeId?:string) {
         
         const cafe_id = cafeId || await CafeUtils.getCurrentCafeId(request)        
         
-        const token = await new jose.SignJWT({ 'id': user_id, 'cafe_id': +cafe_id!, 'role': user_role })
+        const token = await new jose.SignJWT({ 'id': user_id, 'cafe_id': +cafe_id!, 'role': user_role, 'lang': lang })
                 .setProtectedHeader({ alg })
                 .setExpirationTime(`${REFRESH_MAX_AGE}s`)
                 .sign(new TextEncoder().encode(refreshSecret))

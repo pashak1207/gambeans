@@ -58,7 +58,7 @@ export default function AdminCafeClient({ cafeObj, proto, isCreate, dictionary, 
 
     async function editSaveBtn(){
         
-        if(!isEdit){
+        if(isEdit){
             if(!UserUtils.validateEmail(cafe.email)){                        
                 setValid("Please enter valid email address")
                 toast(valid, {
@@ -81,7 +81,7 @@ export default function AdminCafeClient({ cafeObj, proto, isCreate, dictionary, 
                 return
             }
             if(!UserUtils.validateNumber(cafe.ftw.toString())){
-                setValid("Please enter valid FTW number (0 - 100)")
+                setValid("Please enter valid FTW number (1 - 100)")
                 toast(valid, {
                     position: "top-center",
                 })

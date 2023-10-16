@@ -31,8 +31,8 @@ export default async function SuperAdminCafes({cafes}:{cafes: ICafe[]}) {
                                 <td>{item.users?.reduce((total:number, user:IUser) => total + (user.prizes.length ? user.prizes?.filter((prize:IUserPrize) => prize.used !== null).length : 0), 0) || "-"}</td>
                                 <td>{"$" + item.users?.reduce((total:number, user:IUser) => total + (user.prizes.length ? user.prizes?.reduce((total:number, prize:IUserPrize) => total + (prize.is_won && prize.used !== null ? prize.prize.revenue : 0), 0) : 0), 0) || "-"}</td>
                                 <td>{item.users?.length && item.users?.filter((user:IUser) => user.visits.find((visit:IVisit) => new Date(visit.visit_date).getTime() > new Date().setDate(new Date().getDate() - 7))).length || "-"}</td>
-                                <td>{item?.link_heb && <Link target="_blank" href={ proto + item?.link_heb } as="http://localhost:3000">{item?.link_heb}</Link> || "-"}</td>
-                                <td>{item?.link_eng && <Link target="_blank" href={ proto + item?.link_eng } as="http://localhost:3000">{item?.link_eng}</Link> || "-"}</td>
+                                <td>{item?.link_heb && <Link target="_blank" href={ proto + item?.link_heb }>{item?.link_heb}</Link> || "-"}</td>
+                                <td>{item?.link_eng && <Link target="_blank" href={ proto + item?.link_eng }>{item?.link_eng}</Link> || "-"}</td>
                                 <td>{new Date(item.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</td>
                                 <td>{item?.contact_name || "-"}</td>
                                 <td>{item?.contact_phone || "-"}</td>
