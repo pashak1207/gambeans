@@ -5,7 +5,7 @@ import { StatisticDoughnut } from "./StatisticDoughnut/StatisticDoughnut"
 
 export default async function StatisticDoughnutChart() {
     const initData = await CafeServerService.getUsersStages().then(data => data.users?.map(item => item._count.prizes)) as number[]   
-
+    
     const percentageData = userStepsToPersentage(initData)
 
     return <div className={styles.statisticDoughnutChart}>

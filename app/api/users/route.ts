@@ -177,7 +177,7 @@ export async function GET(request: NextRequest) {
             
             users = await prisma.users.findMany({
                 where:{
-                    cafe_id: cafeId,
+                    cafe_id: +cafeId!,
                     DOB: {
                         not: null
                     },

@@ -1,8 +1,8 @@
 export function userStepsToPersentage(array : number[]) : {filter: string, color: string, sum: string}[] {
-    const statisticData = [array.filter(i => i <= 5).length, 
-        array.filter(i => (i >= 5 && i <= 15)).length, 
-        array.filter(i => (i >= 15 && i <= 40)).length,
-        array.filter(i => i >= 40).length]
+    const statisticData = [array?.filter(i => i <= 5).length, 
+        array?.filter(i => (i >= 5 && i <= 15)).length, 
+        array?.filter(i => (i >= 15 && i <= 40)).length,
+        array?.filter(i => i >= 40).length]
 
     const filterData = ["1-5", "5-15", "15-40", "40+"]
 

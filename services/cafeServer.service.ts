@@ -30,17 +30,17 @@ const CafeServerService = {
     },
 
     async getCafeId():Promise<{message?:string, cafeId?:number}> {
-        const accessToken = cookies().get('JWTAccessToken')?.value;
+        const accessToken = cookies().get('JWTAccessToken')?.value || null;
 
         const domain = headers().get('host')
         const proto = headers().get("x-forwarded-proto") ? "https://" : "http://";
         
-
+        
         const hds = new Headers({
             'Authorization': `${accessToken}`,
         });
         
-        const response = await fetch(`${proto}${domain}/api/cafes/cafe?id`, { headers: hds })
+        const response = await fetch(`${proto}${domain}/api/cafes/cafe?id`, accessToken ? { headers: hds } : {})
         
         return await response!.json()   
     },
