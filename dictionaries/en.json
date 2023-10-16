@@ -85,7 +85,7 @@
             "titleEnd": " prizes that have not yet been redeemed",
             "won": "Yay! You’ve won 🎉",
             "noPrizes": "There are no prizes that have not been redeemed yet",
-            "button": "Back to the home"
+            "button": "Take me Home"
         },
         "prize":{
             "scratch": "Scratch the card and",

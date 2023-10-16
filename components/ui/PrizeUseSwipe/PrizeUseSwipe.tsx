@@ -3,10 +3,13 @@
 import React, { useEffect, useRef } from "react"
 import "./PrizeUseSwipe.scss"
 import { Swipe } from "@/dictionaries/type"
+import { useRouter } from "next/navigation"
 
 export default function PrizeUseSwipe({dictionary, swiped, setSwiped, lang}:{dictionary:Swipe, swiped:boolean, setSwiped: React.Dispatch<React.SetStateAction<boolean>>, lang:string}) {
     const button = useRef<HTMLButtonElement>(null)
     const wrapper = useRef<any>(null)
+    const router = useRouter()
+
     let active = false;
     let currentX:number;
     let initialX:number;
@@ -15,6 +18,10 @@ export default function PrizeUseSwipe({dictionary, swiped, setSwiped, lang}:{dic
     useEffect(() => {
         if(swiped){
             setTranslate((wrapper.current?.offsetWidth! - button.current?.offsetWidth! - (parseFloat(window.getComputedStyle(wrapper.current).paddingLeft) * 2)), button.current!);
+
+            setTimeout(() => {
+                router.push("/dashboard")
+            }, 1000)
         }
     }, [swiped])
 

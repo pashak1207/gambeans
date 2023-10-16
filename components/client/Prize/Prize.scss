@@ -1,7 +1,7 @@
 @import "~app/mixins.scss";
 
 .prize{
-    padding: 0 toRem(10) toRem(90);
+    padding: 0 toRem(10) 0;
     
     h2{
         color: var(--redeem-color);

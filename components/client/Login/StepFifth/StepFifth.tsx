@@ -1,12 +1,9 @@
 import Button from "@/components/ui/Button/Button"
 import React, { SetStateAction } from "react"
-import { useRouter } from "next/navigation"
 import Image from "next/image"
 import { Fifth } from "@/dictionaries/type"
 
 export default function StepFifth({state, setState, dictionary, lang}:{ state:ILoginRegistrationState,  setState : React.Dispatch<SetStateAction<ILoginRegistrationState>>, dictionary:Fifth, lang:string}) {
-    const router = useRouter()
-
     const prevPage = () => {
         setState(prev =>{
             return{

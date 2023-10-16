@@ -73,6 +73,17 @@ async function RootLayout({children}: {children: React.ReactNode}) {
                     draggable
                     pauseOnHover
                 />
+                <div itemScope itemType="https://schema.org/WebPage">
+                    <div itemProp="author" itemScope itemType="https://schema.org/Organization">
+                        <meta itemProp="name" content="Profi.Dev" />
+                        <meta itemProp="slogan" content="Profi.Dev – Your Technology Partner" />
+                        <meta
+                        itemProp="description"
+                        content="This website created by Profi.Dev, https://profi.dev/"
+                        />
+                        <link href="https://profi.dev/" itemProp="url" />
+                    </div>
+                </div>
             </body>
         </html>
     )

@@ -85,7 +85,7 @@ model Prizes {
   cost           Float
   revenue        Float
   probability    Float
-  is_active      Boolean      @default(false)
+  is_active      Boolean      @default(true)
   expires_at     Int          @default(1)
   created_at     DateTime     @default(now())
   cafe           Cafes        @relation(fields: [cafe_id], references: [id])

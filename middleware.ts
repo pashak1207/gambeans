@@ -10,22 +10,37 @@ const privateRoutes = ["/dashboard", "/admin", "/superadmin"]
 
 export async function middleware(request: NextRequest){
   const path:string = request.nextUrl.pathname
-  const currentCafeId:number = await CafeServerService.getCafeId().then(data => data.cafeId) as number
-  const currentCafeLang:string = await CafeServerService.getCafeLang().then(data => data.cafeLang) as string
+  let currentCafeId:number;
+  let currentCafeLang:string
   const requestHeaders = new Headers(request.headers)
+  const accessToken = request.cookies.get('JWTAccessToken')?.value
+  let payload;
+  
+
+  if(accessToken){
+    payload = await JWT.verfiyAccessToken(accessToken).then(data => data.payload)
+    currentCafeId = payload?.cafe_id as number
+    currentCafeLang = payload?.lang as string
+  }else if(requestHeaders.has('authorization')){
+    const payload = await JWT.verfiyAccessToken(requestHeaders.get("authorization")!).then(data => data.payload)
+    currentCafeId = payload?.cafe_id as number
+    currentCafeLang = payload?.lang as string
+  }else{
+    currentCafeId = await CafeServerService.getCafeId().then(data => data.cafeId) as number
+
+    if(!path.startsWith("/api") || (path.startsWith("/api/login") || path.startsWith("/api/registration"))){
+      currentCafeLang = await CafeServerService.getCafeLang().then(data => data.cafeLang) as string
+    }else{
+      currentCafeLang = "en"
+    }
+  }  
+
   requestHeaders.set('x-language', currentCafeLang)
 
-  if(!currentCafeId){
-    const accessToken:string|boolean = request.cookies.get('JWTAccessToken')?.value || false
-
-    if(accessToken){
-      const {payload:{role}} = await JWT.verfiyAccessToken(accessToken) 
-
-      if(role === Users_role.SUPERADMIN){
+  if(!currentCafeId && accessToken && payload){
+      if(payload.role === Users_role.SUPERADMIN){
         return Redirect.superadmin(request)
       }
-    }
-
     return Redirect.notFound(request)
   }
 
@@ -38,46 +53,38 @@ export async function middleware(request: NextRequest){
         headers: requestHeaders,
       }
     })
-  }else if(privateRoutes.some(route => path.startsWith(route))){
+  }
+  
+  
+  else if(privateRoutes.some(route => path.startsWith(route))){
+    
+    if(accessToken && payload){
 
-    let accessVerified = null
+      const user:IUser = await AuthServerService.getMe()        
 
-    const accessToken:string|boolean = request.cookies.get('JWTAccessToken')?.value || false
+      if(!user?.id || user.status === "BLOCKED"){         
+        const response = Redirect.loginPage(request);
 
-    if(accessToken){
-      try{  
-        accessVerified = await JWT.verfiyAccessToken(accessToken)        
+        response.cookies.delete('JWTRefreshToken');
+        response.cookies.delete('JWTAccessToken');
+        response.headers.set('x-language', currentCafeLang)
 
-        const user:IUser = await AuthServerService.getMe()        
-        
-        if(!user?.id || user.status === "BLOCKED"){         
-          const response = Redirect.loginPage(request);
-
-          response.cookies.delete('JWTRefreshToken');
-          response.cookies.delete('JWTAccessToken');
-          response.headers.set('x-language', currentCafeLang)
-
-          return response;
-        }
-
-        if(path.startsWith("/dashboard")){
-          await AuthServerService.getMe("visit")
-        }
-
-        if(path.startsWith("/admin") && user.role === "USER"){
-          return Redirect.notFound(request)
-        }  
-        
-        if(path.startsWith("/superadmin") && user.role !== "SUPERADMIN"){
-          return Redirect.notFound(request)
-        } 
-        
-      }catch(e){
-        accessVerified = null        
+        return response;
       }
+
+      if(path.startsWith("/dashboard")){
+        AuthServerService.getMe("visit")
+      }
+      if(path.startsWith("/admin") && user.role === "USER"){
+        return Redirect.notFound(request)
+      }  
+      
+      if(path.startsWith("/superadmin") && user.role !== "SUPERADMIN"){
+        return Redirect.notFound(request)
+      } 
     }
 
-    if(!accessToken || !accessVerified){      
+    if(!accessToken || !payload){      
 
       const refreshToken = request.cookies.get('JWTRefreshToken')?.value || false      
 
@@ -93,8 +100,8 @@ export async function middleware(request: NextRequest){
         
         if(payload?.id && payload?.role && payload?.cafe_id){
           const response = NextResponse.next()
-          response.cookies.set(...await JWT.generateAccessToken(+payload?.id, payload?.role as Users_role, request, payload?.cafe_id as string) as any)
-          response.cookies.set(...await JWT.generateRefreshToken(+payload?.id, payload?.role as Users_role, request, payload?.cafe_id as string) as any)
+          response.cookies.set(...await JWT.generateAccessToken(+payload?.id, payload?.role as Users_role, request, currentCafeLang,  payload?.cafe_id as string) as any)
+          response.cookies.set(...await JWT.generateRefreshToken(+payload?.id, payload?.role as Users_role, request, currentCafeLang, payload?.cafe_id as string) as any)
           response.headers.set('x-language', currentCafeLang)
           return response;
         }
@@ -116,24 +123,10 @@ export async function middleware(request: NextRequest){
   }
   
   
-  
-  
-  
-  else if(path.startsWith("/login")){
-    const accessToken:string|boolean = request.cookies.get('JWTAccessToken')?.value || false
-
-    if(accessToken){
-      let accessVerified = null;
-
-      try{        
-        accessVerified = await JWT.verfiyAccessToken(accessToken)
-      }catch(e){
-        accessVerified = null
-      }
-      
-      if(accessVerified){
+  else if(path.startsWith("/login") || path.trim() === "/"){
+    
+    if(accessToken && payload){
         return Redirect.dashboard(request)
-      }
     }
     
     return NextResponse.next({
@@ -147,6 +140,6 @@ export async function middleware(request: NextRequest){
 
 export const config = {
   matcher: [
-    '/((?!_next/static|_next/image|favicon.ico).*)',
+    '/((?!_next/static|_next/image|prizes/*|uploads/*|favicon.ico).*)',
   ],
 }

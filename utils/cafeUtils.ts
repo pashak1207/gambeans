@@ -2,7 +2,6 @@ import { NextRequest } from "next/server";
 import { prisma } from '@/prisma/client'
 import { cookies } from 'next/headers'
 import JWT from '@/utils/jwtgenerate';
-import UserUtils from "./userUtils";
 
 const CafeUtils = {
     async getCurrentCafe (request: NextRequest){
@@ -52,7 +51,14 @@ const CafeUtils = {
         const accesToken = cookieStore.get('JWTAccessToken')?.value
         let cafe_id;
 
-        if(!accesToken){
+        if(accesToken){
+            cafe_id = await JWT.verfiyAccessToken(accesToken!)
+                .then(data => data?.payload?.cafe_id)
+                .catch(err => console.log("Error to get cafeId from token: " + err.message))
+            
+        }else if(request.headers.has('x-cafe-id')){
+            cafe_id = request.headers.get('x-cafe-id')         
+        }else{
             try{
                 cafe_id = await prisma.cafes.findFirst({
                     where:{
@@ -72,11 +78,6 @@ const CafeUtils = {
             }catch (err){
                 console.log("Cafe not found: " + err);
             }
-     
-        }else{
-            cafe_id = await JWT.verfiyAccessToken(accesToken!)
-                .then(data => data?.payload?.cafe_id)
-                .catch(err => console.log("Error to get cafeId from token: " + err.message))
         }
         
         return cafe_id

@@ -7,7 +7,7 @@ import UserUtils from "@/utils/userUtils"
 import { First } from "@/dictionaries/type"
 
 export default function StepFirst({setState, dictionary}:{setState : React.Dispatch<SetStateAction<ILoginRegistrationState>>, dictionary:First}) {
-    const [telCode, setTelCode] = useState<string>("+1")
+    const [telCode, setTelCode] = useState<string>("+972")
     const [phone, setPhone] = useState<string>("")
     const [isValid, setIsValid] = useState<boolean>(true)
     const route = useRouter()

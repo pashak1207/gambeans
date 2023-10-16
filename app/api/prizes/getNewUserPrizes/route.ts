@@ -35,6 +35,7 @@ export async function POST(request: NextRequest) {
         const welcome_prize = await prisma.prizes.findMany({
             where: {
                 type: 'FIRST',
+                cafe_id: cafe_id,
                 is_active: true,
                 current_amount:{
                     gt: 0

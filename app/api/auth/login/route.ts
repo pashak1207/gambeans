@@ -2,13 +2,14 @@ import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/prisma/client'
 import JWT from '@/utils/jwtgenerate'
 import UserUtils from '@/utils/userUtils'
-import { cookies } from 'next/headers'
+import { cookies, headers } from 'next/headers'
  
 export async function POST(request: NextRequest) {    
     try{
         const body = await request.json()        
         const { phone, code }:{phone:string, code: string} = body
         const cafe_id:number = +request.headers.get('x-cafe-id')!
+        const currentCafeLang:string = headers().get('x-language') || "en"
         const cookiesStore = cookies()
         
         if(
@@ -50,8 +51,8 @@ export async function POST(request: NextRequest) {
 
             if(user?.DOB || user?.name){
                 isRegistrated = true;
-                cookiesStore.set(...await JWT.generateAccessToken(+user.id, user.role as any, request, cafe_id.toString()) as any)
-                cookiesStore.set(...await JWT.generateRefreshToken(+user.id, user.role as any, request, cafe_id.toString()) as any)
+                cookiesStore.set(...await JWT.generateAccessToken(+user.id, user.role as any, request, currentCafeLang, cafe_id.toString()) as any)
+                cookiesStore.set(...await JWT.generateRefreshToken(+user.id, user.role as any, request, currentCafeLang, cafe_id.toString()) as any)
                 
             }
 

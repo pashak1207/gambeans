@@ -6,15 +6,15 @@ import { Prizes } from "@/dictionaries/type";
 
 export default async function DashboardPrizes({ dictionary, lang }:{ dictionary:Prizes, lang:string }) {
 
-    const prizes = await UserServerService.getUserPrizes().then(data => data.prizes) as IUserPrize[]
+    const prizes = await UserServerService.getUserPrizes().then(data => data.prizes) as IUserPrize[]    
 
     return <div className={styles.prizes}>
                 {prizes.length > 0 && <>
                 <h2>{dictionary.titleStart} {prizes.length} {dictionary.titleEnd}</h2>
                 <div className={styles.inner}>
-                    {prizes?.length && prizes?.map((prize:IUserPrize) => {
+                    {prizes?.length && prizes?.map((prize:IUserPrize) => {                        
                         return <div key={prize.id} className={styles.item}>
-                            <Link href={`/dashboard/${prize.id}`} as="/dashboard/0" >
+                            <Link href={`/dashboard/${prize.id.toString()}`} >
                             <div className={styles.item__inner}>
                                 <Image 
                                     width={166}

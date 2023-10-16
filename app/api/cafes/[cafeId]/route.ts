@@ -64,7 +64,7 @@ export async function POST(request: NextRequest) {
         const body = await request.json()        
         const { cafeObj }:{cafeObj:ICafe} = body
 
-        const cafe = prisma.cafes.create({
+        const cafe = await prisma.cafes.create({
             data:{
                 name: cafeObj.name,
                 logo: cafeObj.logo,
@@ -80,11 +80,12 @@ export async function POST(request: NextRequest) {
                 ftw: cafeObj.ftw,
                 send_phone: cafeObj.send_phone,
             }
-        }).catch(err => console.log(err))
+        }).catch(err => console.log(err));
+        
 
         if(!cafe){
             return NextResponse.json({ 
-                message: "Cafe create cafe with data"
+                message: "Can`t create cafe with data"
             }, 
             {
                 status: 400
