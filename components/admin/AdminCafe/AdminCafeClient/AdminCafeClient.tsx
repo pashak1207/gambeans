@@ -57,7 +57,7 @@ export default function AdminCafeClient({ cafeObj, proto, isCreate, dictionary, 
 
 
     async function editSaveBtn(){
-        
+        let valid = false;
         if(isEdit){
             if(!UserUtils.validateEmail(cafe.email)){                        
                 setValid("Please enter valid email address")
@@ -91,14 +91,28 @@ export default function AdminCafeClient({ cafeObj, proto, isCreate, dictionary, 
 
         setValid("")
 
-        setIsEdit(prev => !prev)
 
         if(isEdit){
-            if(isCreate){          
-                await CafeClientService.createCafe(cafe).then(data => window.location.href = "/superadmin/cafes")
+            if(isCreate){ 
+                await CafeClientService.createCafe(cafe).then(data => {
+                    if(data.message){
+                        setValid("Enter unique data: links and send number")
+                        valid = false
+                        toast("Enter unique data: links and send number", {
+                            position: "top-center",
+                        })
+                    }else{
+                        valid = true
+                        window.location.href = "/superadmin/cafes"
+                    }
+                })
             }else{
                 CafeClientService.updateCafe(cafe)
             }
+        }
+        
+        if(valid || !isEdit){
+            setIsEdit(prev => !prev)
         }
     }
 

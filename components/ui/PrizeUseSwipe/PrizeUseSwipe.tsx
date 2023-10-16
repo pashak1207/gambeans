@@ -20,7 +20,7 @@ export default function PrizeUseSwipe({dictionary, swiped, setSwiped, lang}:{dic
             setTranslate((wrapper.current?.offsetWidth! - button.current?.offsetWidth! - (parseFloat(window.getComputedStyle(wrapper.current).paddingLeft) * 2)), button.current!);
 
             setTimeout(() => {
-                router.back()
+                router.push("/dashboard")
             }, 1000)
         }
     }, [swiped])
